@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BacenTools - Ferramentas para Meios de Pagamento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">BacenTools</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Ferramentas
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/pages/cotacoes.html">Cotações e Taxas</a></li>
+                            <li><a class="dropdown-item" href="/pages/pix.html">Ferramentas PIX</a></li>
+                            <li><a class="dropdown-item" href="/pages/jwt.html">Decoder JWT</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/sobre.html">Sobre</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <div class="jumbotron">
+            <h1 class="display-4">BacenTools</h1>
+            <p class="lead">Ferramentas para desenvolvedores e POs que trabalham com meios de pagamento.</p>
+            <hr class="my-4">
+            <p>Acesse nossas ferramentas para simplificar seu trabalho com integrações de pagamento e regulações do BACEN.</p>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cotações e Taxas</h5>
+                        <p class="card-text">Consulte cotações atualizadas do dólar, taxa SELIC, CDI e outros indicadores.</p>
+                        <a href="/pages/cotacoes.html" class="btn btn-primary">Acessar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Ferramentas PIX</h5>
+                        <p class="card-text">Gere e decodifique QR codes PIX, valide chaves e mais.</p>
+                        <a href="/pages/pix.html" class="btn btn-primary">Acessar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Decoder JWT</h5>
+                        <p class="card-text">Decodifique tokens JWT e entenda sua estrutura.</p>
+                        <a href="/pages/jwt.html" class="btn btn-primary">Acessar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light py-3 mt-5">
+        <div class="container text-center">
+            <p>BacenTools &copy; 2025 - Ferramentas para desenvolvedores</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

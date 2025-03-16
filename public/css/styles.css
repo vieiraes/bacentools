@@ -1,0 +1,16 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 60px;
+}
+
+.jumbotron {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 0.3rem;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
