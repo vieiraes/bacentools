@@ -14,3 +14,89 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+/* Adicione estes estilos ao arquivo existente */
+
+/* Estilos para o logo */
+.logo-container {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-right: 0.5rem;
+}
+
+.logo-container i:first-child {
+    color: #ffffff;
+    /* Branco na navbar */
+}
+
+.logo-container i:nth-child(2) {
+    font-size: 1.2rem;
+    color: #aac9ff;
+    /* Azul claro na navbar */
+}
+
+.logo-container i:last-child {
+    color: #ffffff;
+    /* Branco na navbar */
+}
+
+/* Versão maior do logo para o jumbotron */
+.logo-container.logo-lg {
+    font-size: 3rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.logo-container.logo-lg i:first-child {
+    color: #0d6efd;
+    /* Azul primário no corpo da página */
+}
+
+.logo-container.logo-lg i:nth-child(2) {
+    font-size: 2rem;
+    margin-top: 0.5rem;
+    color: #6c757d;
+    /* Cinza secundário */
+}
+
+.logo-container.logo-lg i:last-child {
+    color: #198754;
+    /* Verde sucesso */
+}
+
+/* Estilo para agrupar o logo e o texto na navbar */
+.brand-with-logo {
+    display: flex;
+    align-items: center;
+}
+
+/* Footer logo */
+footer .logo-container {
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+footer .logo-container i:first-child {
+    color: #0d6efd;
+}
+
+footer .logo-container i:nth-child(2) {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+footer .logo-container i:last-child {
+    color: #198754;
+}
+
+/* Para deixar os cards com a mesma altura */
+.card.h-100 {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card.h-100:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}

@@ -1,99 +1,132 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# BacenTools
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+![Logo BacenTools](https://img.shields.io/badge/BacenTools-Ferramentas%20para%20Meios%20de%20Pagamento-blue)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+BacenTools é uma coleção de ferramentas voltadas para desenvolvedores e POs (Product Owners) que trabalham com meios de pagamento e integrações com o sistema financeiro brasileiro.
 
-## Description
+🔗 **Acesse agora:** [bacentools.web.app](https://bacentools.web.app)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📌 Visão Geral
 
-## Project setup
+Este projeto visa simplificar o trabalho com integrações de pagamento e regulações do BACEN (Banco Central do Brasil), oferecendo ferramentas úteis para validação, consulta e visualização de informações relacionadas ao sistema financeiro nacional.
 
+![BacenTools Screenshot](https://via.placeholder.com/800x400?text=BacenTools+Screenshot)
+
+## 🚀 Funcionalidades
+
+- **Consulta de Bancos**: Busque informações sobre instituições financeiras por ISPB, código COMPE ou nome
+- **Cotações e Taxas**: Consulte cotações atualizadas de moedas e indicadores financeiros
+- **Ferramentas PIX**: Validação de chaves, geração e decodificação de QR codes
+- **Decoder JWT**: Ferramenta para decodificar e analisar tokens JWT usados em integrações financeiras
+
+> ⚙️ **Nota para POs**: Novas funcionalidades estão sendo implementadas constantemente. Se precisar de uma ferramenta específica, por favor crie uma issue detalhando a necessidade.
+
+## 🔧 Tecnologias Utilizadas
+
+- **Frontend**: HTML5, CSS3, JavaScript, Alpine.js, Bootstrap 5
+- **Backend**: Node.js, NestJS, TypeScript
+- **Implantação**: Fly.io (Backend), Firebase Hosting (Frontend)
+
+## 🏁 Começando
+
+### Acesso Online
+
+Acesse diretamente pelo navegador: [bacentools.web.app](https://bacentools.web.app)
+
+### Instalação Local
+
+#### Pré-requisitos
+
+- Node.js (versão 16 ou superior)
+- npm ou yarn
+
+#### Instalação
+
+1. Clone o repositório
+   ```bash
+   git clone https://github.com/seu-usuario/bacentools.git
+   cd bacentools
+   ```
+
+2. Instale as dependências
+   ```bash
+   npm install
+   ```
+
+3. Execute o projeto em modo de desenvolvimento
+   ```bash
+   npm run start:dev
+   ```
+
+4. Acesse o projeto em http://localhost:3000
+
+## 🧪 Testes
+
+Execute os testes com o comando:
 ```bash
-$ npm install
+npm test
 ```
 
-## Compile and run the project
+## 📱 API
 
-```bash
-# development
-$ npm run start
+A API BacenTools está disponível em:
+- **Desenvolvimento**: http://localhost:3344/api
+- **Produção**: https://bacentools-api.fly.dev/api
 
-# watch mode
-$ npm run start:dev
+### Endpoints principais:
 
-# production mode
-$ npm run start:prod
-```
+- `/api/banks` - Lista todas as instituições financeiras
+- `/api/banks/ispb/{ispb}` - Busca banco por ISPB
+- `/api/banks/code/{code}` - Busca banco por código COMPE
+- `/api/banks/search?name={query}` - Busca bancos por nome
 
-## Run tests
+> 📘 **Nota para desenvolvedores**: Documentação completa da API disponível em `/api/docs` (Swagger).
 
-```bash
-# unit tests
-$ npm run test
+## 📋 Para Product Owners
 
-# e2e tests
-$ npm run test:e2e
+### Valor de Negócio
 
-# test coverage
-$ npm run test:cov
-```
+BacenTools foi desenvolvido pensando em acelerar o trabalho de equipes de desenvolvimento e POs que lidam com integrações financeiras. Algumas aplicações práticas:
 
-## Deployment
+- **Validação rápida**: Verificar se uma chave PIX está no formato correto durante demonstrações ou testes
+- **Troubleshooting**: Decodificar tokens JWT em tempo real durante a investigação de problemas
+- **Consulta eficiente**: Obter informações precisas sobre instituições financeiras sem precisar navegar pelo site do BACEN
+- **Decisões informadas**: Acompanhar cotações e taxas para tomar decisões estratégicas sobre produtos financeiros
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Roadmap
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+O BacenTools é um projeto em constante evolução. Algumas funcionalidades planejadas:
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+1. **Validação de boletos**: Ferramenta para validar a linha digitável e o código de barras de boletos bancários
+2. **Simulador de cálculos financeiros**: Cálculos de juros, parcelamentos e CET (Custo Efetivo Total)
+3. **Dashboard de estatísticas**: Visualização gráfica de indicadores financeiros
+4. **Agenda BC**: Calendário de eventos e prazos importantes do BACEN
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+> 💡 **Sugestões são bem-vindas!** Se você tem uma ideia para uma nova ferramenta que seria útil no seu dia a dia com meios de pagamento, abra uma issue ou entre em contato.
 
-## Resources
+### Feedback dos Usuários
 
-Check out a few resources that may come in handy when working with NestJS:
+Estamos comprometidos em melhorar constantemente o BacenTools. Seu feedback é fundamental para isso. Por favor, compartilhe suas experiências e sugestões através das issues do GitHub ou pelo formulário de contato em nossa página "Sobre".
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 📄 Licença
 
-## Support
+Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE.md para detalhes.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🤝 Contribuindo
 
-## Stay in touch
+Contribuições são bem-vindas! Confira CONTRIBUTING.md para guidelines sobre como contribuir com este projeto.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## ✉️ Contato
 
-## License
+Para sugestões, dúvidas ou problemas, abra uma issue ou entre em contato através do email [contato@vieiraes.com].
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+<div align="center">
+  <p>Desenvolvido com ❤️ para a comunidade de desenvolvimento de meios de pagamento</p>
+  <div>
+    <i class="fas fa-university" style="color: #0d6efd;"></i>
+    <i class="fas fa-exchange-alt" style="color: #6c757d;"></i>
+    <i class="fas fa-code" style="color: #198754;"></i>
+  </div>
+</div>
