@@ -11,6 +11,8 @@ RUN apt-get update -y && \
 
 # Copiar os arquivos de dependências
 COPY package*.json ./
+COPY tsconfig.json ./
+
 
 # Instalar dependências
 RUN npm install

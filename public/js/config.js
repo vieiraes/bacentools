@@ -8,7 +8,7 @@
     window.CONFIG = {
         API_URL: isLocalhost
             ? "http://localhost:3344"
-            : "https://bacentools-api.fly.dev"
+            : "https://bacentools.fly.dev"
     };
 
     console.log("Ambiente detectado:", isLocalhost ? "Local" : "Produção");

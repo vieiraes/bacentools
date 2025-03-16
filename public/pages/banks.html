@@ -158,6 +158,14 @@
                     this.fetchAllBanks();
                 },
 
+                resetSearch() {
+                    console.log('Resetando busca...');
+                    this.ispbQuery = '';
+                    this.codeQuery = '';
+                    this.nameQuery = '';
+                    this.error = null;
+                    this.banks = [...this.allBanks];
+                },
                 async fetchAllBanks() {
                     console.log('Buscando todos os bancos...');
                     this.loading = true;
