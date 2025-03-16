@@ -2,107 +2,19 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BacenTools - Ferramentas para Meios de Pagamento</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Adicione o Font Awesome para os ícones do logo -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="css/styles.css" rel="stylesheet">
-    <script src="/js/config.js"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
-    <style>
-        /* Estilos para o logo */
-        .logo-container {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            margin-right: 0.5rem;
-        }
-
-        .logo-container i:first-child {
-            color: #ffffff;
-        }
-
-        .logo-container i:nth-child(2) {
-            font-size: 1.2rem;
-            color: #aac9ff;
-        }
-
-        .logo-container i:last-child {
-            color: #ffffff;
-        }
-
-        /* Versão maior do logo para o jumbotron */
-        .logo-container.logo-lg {
-            font-size: 3rem;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .logo-container.logo-lg i:first-child {
-            color: #0d6efd;
-        }
-
-        .logo-container.logo-lg i:nth-child(2) {
-            font-size: 2rem;
-            margin-top: 0.5rem;
-            color: #6c757d;
-        }
-
-        .logo-container.logo-lg i:last-child {
-            color: #198754;
-        }
-
-        /* Estilo para agrupar o logo e o texto na navbar */
-        .brand-with-logo {
-            display: flex;
-            align-items: center;
-        }
-    </style>
+    <!-- Template para meta tags e links de CSS/JS comuns -->
+    <div data-template="/components/meta.html"></div>
+    <script src="/js/template-loader.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <!-- Substitua o texto da marca pelo logo + texto -->
-            <a class="navbar-brand brand-with-logo" href="/">
-                <div class="logo-container">
-                    <i class="fas fa-university"></i>
-                    <i class="fas fa-exchange-alt"></i>
-                    <i class="fas fa-code"></i>
-                </div>
-                BacenTools
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            Ferramentas
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/pages/banks.html">Consulta de Bancos</a></li>
-                            <li><a class="dropdown-item" href="/pages/cotacoes.html">Cotações e Taxas</a></li>
-                            <li><a class="dropdown-item" href="/pages/pix.html">Ferramentas PIX</a></li>
-                            <li><a class="dropdown-item" href="/pages/jwt.html">Decoder JWT</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <!-- colocar os itens do menu aqui -->
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- Template para a barra de navegação -->
+    <div data-template="/components/navbar.html"></div>
 
     <main class="container mt-4">
+        <!-- Conteúdo específico da página inicial -->
         <div class="jumbotron">
-            <!-- Adicionar uma versão maior do logo no jumbotron -->
             <div class="logo-container logo-lg">
                 <i class="fas fa-university"></i>
                 <i class="fas fa-exchange-alt"></i>
@@ -169,19 +81,8 @@
         </div>
     </main>
 
-    <footer class="bg-light py-3 mt-5">
-        <div class="container text-center">
-            <div class="logo-container mb-2">
-                <i class="fas fa-university" style="color: #0d6efd;"></i>
-                <i class="fas fa-exchange-alt" style="color: #6c757d;"></i>
-                <i class="fas fa-code" style="color: #198754;"></i>
-            </div>
-            <p>BacenTools &copy; 2025 - Ferramentas para PO.</p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
+    <!-- Template para o rodapé -->
+    <div data-template="/components/footer.html"></div>
 </body>
 
 </html>
