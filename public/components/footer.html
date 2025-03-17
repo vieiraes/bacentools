@@ -29,54 +29,14 @@
                 new bootstrap.Dropdown(dropdownToggleEl);
             });
             
-            // Reinicializar tooltips (se houver)
+            // Inicializar tooltips (se houver)
             document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(tooltipTriggerEl) {
                 new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-            
-            // Reinicializar popovers (se houver)
-            document.querySelectorAll('[data-bs-toggle="popover"]').forEach(function(popoverTriggerEl) {
-                new bootstrap.Popover(popoverTriggerEl);
-            });
-            
-            // Garantir que os elementos de collapse funcionem corretamente
-            document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function(collapseEl) {
-                new bootstrap.Collapse(collapseEl, {
-                    toggle: false
-                });
-            });
-            
-            // Tratamento especial para o botão navbar-toggler
-            document.querySelectorAll('.navbar-toggler').forEach(toggler => {
-                toggler.addEventListener('click', function() {
-                    const targetId = this.getAttribute('data-bs-target');
-                    if (targetId) {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            const bsCollapse = bootstrap.Collapse.getInstance(targetElement) || 
-                                               new bootstrap.Collapse(targetElement, {toggle: false});
-                            bsCollapse.toggle();
-                        }
-                    }
-                });
             });
             
             console.log('Componentes Bootstrap reinicializados com sucesso');
         } catch (error) {
             console.error('Erro ao reinicializar componentes Bootstrap:', error);
-        }
-    });
-    
-    // Certificar-se de que o script do Bootstrap foi carregado
-    document.addEventListener('DOMContentLoaded', function() {
-        if (typeof bootstrap === 'undefined') {
-            console.warn('Bootstrap não foi detectado no carregamento inicial da página. Verificando novamente após um tempo...');
-            setTimeout(function() {
-                if (typeof bootstrap !== 'undefined') {
-                    console.log('Bootstrap carregado com atraso, reinicializando componentes...');
-                    document.dispatchEvent(new CustomEvent('all-templates-loaded'));
-                }
-            }, 1000);
         }
     });
 </script>
