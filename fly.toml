@@ -13,7 +13,7 @@ primary_region = 'gru'
 
 [env]
   NODE_ENV = 'production'
-  PORT = '8080'
+  PORT = '3344'
 
 [http_service]
   internal_port = 3344

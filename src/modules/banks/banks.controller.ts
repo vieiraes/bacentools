@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query, Logger } from '@nestjs/common';
 import { BanksService } from './banks.service';
 import { Bank } from './interfaces/bank.interface';
 
-@Controller('api/banks')
+@Controller('banks')
 export class BanksController {
   private readonly logger = new Logger(BanksController.name);
   
