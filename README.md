@@ -82,6 +82,52 @@ A API BacenTools está disponível em:
 
 > 📘 **Nota para desenvolvedores**: Documentação completa da API disponível em `/api/docs` (Swagger).
 
+# BacenTools API
+
+API de ferramentas relacionadas ao sistema financeiro brasileiro.
+
+## Descrição
+
+BacenTools API é um backend NestJS que oferece endpoints para consulta de informações do sistema financeiro brasileiro, como bancos, cotações e participantes do PIX.
+
+## Tecnologias
+
+- NestJS
+- TypeScript
+- Axios para chamadas externas
+- Fly.io para deployment
+
+## Endpoints
+
+### Bancos
+
+- `GET /api/banks` - Lista todos os bancos
+- `GET /api/banks/ispb/:ispb` - Busca banco por ISPB
+- `GET /api/banks/code/:code` - Busca banco por código COMPE
+- `GET /api/banks/search?name=:name` - Busca bancos por nome
+
+## Executando o projeto
+
+### Requisitos
+- Node.js (versão 16 ou superior)
+- npm ou yarn
+
+### Instalação
+
+```bash
+# Instalar dependências
+npm install
+
+# Iniciar em desenvolvimento
+npm run start:dev
+
+# Compilar para produção
+npm run build
+
+# Iniciar em produção
+npm run start:prod
+```
+
 ## 📋 Para Product Owners
 
 ### Valor de Negócio

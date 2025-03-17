@@ -13,7 +13,6 @@ RUN apt-get update -y && \
 COPY package*.json ./
 COPY tsconfig.json ./
 
-
 # Instalar dependências
 RUN npm install
 
@@ -23,8 +22,12 @@ COPY . .
 # Compilar o projeto
 RUN npm run build
 
-# Expor a porta da aplicação
-EXPOSE 8080
+# Expor a porta da API
+EXPOSE 3344
+
+# Definir variáveis de ambiente
+ENV PORT=3344
+ENV NODE_ENV=production
 
 # Iniciar a aplicação
 CMD ["node", "dist/main.js"]

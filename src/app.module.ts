@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { BanksModule } from './modules/banks/banks.module';
 import { ConfigModule } from '@nestjs/config';
 
@@ -9,12 +7,9 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-    }),
-    BanksModule, // Isso já importa o BanksController e BanksService
+    BanksModule, // Mantém apenas o módulo Banks
   ],
-  controllers: [], // Remova BanksController daqui
-  providers: [],   // Remova BanksService daqui
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
