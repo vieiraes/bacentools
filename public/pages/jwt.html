@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <title>Decoder JWT - BacenTools</title>
+    <!-- Template para meta tags e links de CSS/JS comuns -->
+    <div data-template="/components/meta.html"></div>
+    <script src="/js/template-loader.js"></script>
+
+    <!-- Carregar o Alpine.js somente após os templates -->
+    <script>
+        document.addEventListener('all-templates-loaded', function () {
+            console.log('Carregando Alpine.js após templates');
+            const script = document.createElement('script');
+            script.src = "https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js";
+            script.defer = true;
+            document.head.appendChild(script);
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Template para a barra de navegação -->
+    <div data-template="/components/navbar.html"></div>
+
+    <div x-data="jwtApp()" class="container mt-4">
+        <h1 class="mb-4">Decoder JWT</h1>
+
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Decodificar Token JWT</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="jwtToken" class="form-label">Cole seu token JWT:</label>
+                            <textarea class="form-control" id="jwtToken" rows="3" x-model="jwtToken"
+                                @input="decodeJwt()"
+                                placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"></textarea>
+                        </div>
+
+                        <div x-show="errorMessage" class="alert alert-danger" x-text="errorMessage"></div>
+
+                        <div x-show="!errorMessage && isDecoded" class="mt-4">
+                            <ul class="nav nav-tabs" id="jwtTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="header-tab" data-bs-toggle="tab"
+                                        data-bs-target="#header" type="button" role="tab" aria-controls="header"
+                                        aria-selected="true">
+                                        Header
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="payload-tab" data-bs-toggle="tab"
+                                        data-bs-target="#payload" type="button" role="tab" aria-controls="payload"
+                                        aria-selected="false">
+                                        Payload
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="signature-tab" data-bs-toggle="tab"
+                                        data-bs-target="#signature" type="button" role="tab" aria-controls="signature"
+                                        aria-selected="false">
+                                        Assinatura
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content p-3 border border-top-0 rounded-bottom" id="jwtTabContent">
+                                <div class="tab-pane fade show active" id="header" role="tabpanel"
+                                    aria-labelledby="header-tab">
+                                    <h6 class="mb-3">Cabeçalho do Token</h6>
+                                    <pre class="bg-light p-3 rounded"><code x-text="headerJson"></code></pre>
+                                </div>
+                                <div class="tab-pane fade" id="payload" role="tabpanel" aria-labelledby="payload-tab">
+                                    <h6 class="mb-3">Conteúdo do Token</h6>
+                                    <pre class="bg-light p-3 rounded"><code x-text="payloadJson"></code></pre>
+
+                                    <div x-show="hasExpiration" class="mt-3">
+                                        <h6>Informações de Expiração:</h6>
+                                        <div class="alert" :class="isExpired ? 'alert-danger' : 'alert-success'">
+                                            <div x-show="!isExpired">
+                                                <i class="fas fa-check-circle me-2"></i>
+                                                <strong>Token Válido</strong> - Expira em <span
+                                                    x-text="expirationTimeFormatted"></span>
+                                            </div>
+                                            <div x-show="isExpired">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                                <strong>Token Expirado</strong> - Expirou há <span
+                                                    x-text="expiredAgoFormatted"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="signature" role="tabpanel"
+                                    aria-labelledby="signature-tab">
+                                    <h6 class="mb-3">Assinatura</h6>
+                                    <p>A assinatura é usada para verificar que o remetente do JWT é quem diz ser e para
+                                        garantir que a mensagem não foi alterada.</p>
+                                    <pre class="bg-light p-3 rounded"><code x-text="signature"></code></pre>
+
+                                    <div class="alert alert-info mt-3">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Algoritmo de Assinatura:</strong> <span
+                                            x-text="headerDecoded.alg || 'Não especificado'"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4" x-show="!errorMessage && isDecoded && payloadDecoded">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Informações de Tempo</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4" x-show="payloadDecoded.iat">
+                                <div class="card mb-3">
+                                    <div class="card-header bg-info text-white">
+                                        Emitido em (iat)
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text" x-text="formatDate(payloadDecoded.iat)"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" x-show="payloadDecoded.nbf">
+                                <div class="card mb-3">
+                                    <div class="card-header bg-info text-white">
+                                        Válido a partir de (nbf)
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text" x-text="formatDate(payloadDecoded.nbf)"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" x-show="payloadDecoded.exp">
+                                <div class="card mb-3">
+                                    <div class="card-header bg-info text-white">
+                                        Expira em (exp)
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text" x-text="formatDate(payloadDecoded.exp)"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template para o rodapé -->
+    <div data-template="/components/footer.html"></div>
+
+    <script>
+        // Função Alpine.js para a página JWT Decoder
+        function jwtApp() {
+            return {
+                jwtToken: '',
+                headerDecoded: null,
+                payloadDecoded: null,
+                headerJson: '',
+                payloadJson: '',
+                signature: '',
+                errorMessage: '',
+                isDecoded: false,
+                hasExpiration: false,
+                isExpired: false,
+                expirationTimeFormatted: '',
+                expiredAgoFormatted: '',
+
+                // Decodificar o token JWT
+                decodeJwt() {
+                    this.errorMessage = '';
+                    this.isDecoded = false;
+
+                    if (!this.jwtToken || this.jwtToken.trim() === '') {
+                        return;
+                    }
+
+                    try {
+                        // Dividir o token em suas três partes
+                        const parts = this.jwtToken.trim().split('.');
+
+                        if (parts.length !== 3) {
+                            this.errorMessage = 'Token JWT inválido. Deve ter 3 partes separadas por pontos.';
+                            return;
+                        }
+
+                        // Decodificar header (Base64Url)
+                        const headerBase64 = parts[0];
+                        const payloadBase64 = parts[1];
+                        this.signature = parts[2];
+
+                        // Decodificar header e payload
+                        const header = this.base64UrlDecode(headerBase64);
+                        const payload = this.base64UrlDecode(payloadBase64);
+
+                        // Parsear como JSON
+                        this.headerDecoded = JSON.parse(header);
+                        this.payloadDecoded = JSON.parse(payload);
+
+                        // Formatar para exibição bonita
+                        this.headerJson = JSON.stringify(this.headerDecoded, null, 2);
+                        this.payloadJson = JSON.stringify(this.payloadDecoded, null, 2);
+
+                        // Verificar expiração
+                        this.checkExpiration();
+
+                        this.isDecoded = true;
+                    } catch (error) {
+                        console.error('Erro ao decodificar JWT:', error);
+                        this.errorMessage = `Erro ao decodificar token JWT: ${error.message}`;
+                    }
+                },
+
+                // Função para decodificar Base64Url para string
+                base64UrlDecode(input) {
+                    // Converter Base64Url para Base64
+                    let output = input
+                        .replace(/-/g, '+')
+                        .replace(/_/g, '/');
+
+                    // Adicionar padding se necessário
+                    switch (output.length % 4) {
+                        case 0:
+                            break;
+                        case 2:
+                            output += '==';
+                            break;
+                        case 3:
+                            output += '=';
+                            break;
+                        default:
+                            throw new Error('String Base64Url inválida');
+                    }
+
+                    // Decodificar Base64
+                    return decodeURIComponent(
+                        atob(output)
+                            .split('')
+                            .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                            .join('')
+                    );
+                },
+
+                // Verificar se o token está expirado
+                checkExpiration() {
+                    this.hasExpiration = false;
+                    this.isExpired = false;
+
+                    if (this.payloadDecoded && this.payloadDecoded.exp) {
+                        this.hasExpiration = true;
+
+                        const expTime = new Date(this.payloadDecoded.exp * 1000);
+                        const now = new Date();
+
+                        this.isExpired = now > expTime;
+
+                        if (this.isExpired) {
+                            // Token expirado
+                            const diffMs = now - expTime;
+                            this.expiredAgoFormatted = this.formatTimeDifference(diffMs);
+                        } else {
+                            // Token ainda válido
+                            const diffMs = expTime - now;
+                            this.expirationTimeFormatted = this.formatTimeDifference(diffMs);
+                        }
+                    }
+                },
+
+                // Formatar diferença de tempo
+                formatTimeDifference(ms) {
+                    const seconds = Math.floor(ms / 1000);
+                    const minutes = Math.floor(seconds / 60);
+                    const hours = Math.floor(minutes / 60);
+                    const days = Math.floor(hours / 24);
+
+                    if (days > 0) {
+                        return `${days} dia(s) e ${hours % 24} hora(s)`;
+                    } else if (hours > 0) {
+                        return `${hours} hora(s) e ${minutes % 60} minuto(s)`;
+                    } else if (minutes > 0) {
+                        return `${minutes} minuto(s) e ${seconds % 60} segundo(s)`;
+                    } else {
+                        return `${seconds} segundo(s)`;
+                    }
+                },
+
+                // Formatar timestamp para data legível
+                formatDate(timestamp) {
+                    if (!timestamp) return 'Não especificado';
+
+                    const date = new Date(timestamp * 1000);
+                    return new Intl.DateTimeFormat('pt-BR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        timeZoneName: 'short'
+                    }).format(date);
+                },
+
+                // Inicialização
+                init() {
+                    // Verificar se há um token na URL (para uso em compartilhamento)
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const tokenFromUrl = urlParams.get('token');
+
+                    if (tokenFromUrl) {
+                        this.jwtToken = tokenFromUrl;
+                        this.decodeJwt();
+                    }
+                }
+            };
+        }
+    </script>
+</body>
+
+</html>
