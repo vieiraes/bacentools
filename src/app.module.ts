@@ -1,15 +1,13 @@
 import { Module } from '@nestjs/common';
-import { BanksModule } from './modules/banks/banks.module';
 import { ConfigModule } from '@nestjs/config';
+import { BanksModule } from './modules/banks/banks.module';
+import { PixParticipantsModule } from './modules/pix-participants/pix-participants.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    BanksModule, // Mantém apenas o módulo Banks
+    ConfigModule.forRoot(),
+    BanksModule,
+    PixParticipantsModule
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
