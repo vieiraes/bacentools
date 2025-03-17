@@ -1,0 +1,62 @@
+<!-- Meta tags básicas -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<!-- Bootstrap CSS - Versão direta do CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+<!-- Font Awesome - Versão direta do CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<!-- CSS personalizado -->
+<link href="/css/styles.css" rel="stylesheet">
+
+<!-- Configuração da aplicação -->
+<script src="/js/config.js"></script>
+
+<!-- Script para verificar se os estilos foram carregados -->
+<script>
+    // Verificar se o CSS foi carregado corretamente
+    document.addEventListener('DOMContentLoaded', function() {
+        // Verificar Bootstrap CSS
+        const bootstrapLoaded = Array.from(document.styleSheets).some(sheet => {
+            try {
+                return sheet.href && sheet.href.includes('bootstrap');
+            } catch (e) {
+                return false;
+            }
+        });
+        
+        if (!bootstrapLoaded) {
+            console.warn('⚠️ Alerta: Bootstrap CSS não parece estar carregado!');
+            // Tentar recarregar o CSS do Bootstrap
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css';
+            document.head.appendChild(link);
+        } else {
+            console.log('✓ Bootstrap CSS carregado com sucesso');
+        }
+        
+        // Verificar Font Awesome
+        const fontAwesomeLoaded = Array.from(document.styleSheets).some(sheet => {
+            try {
+                return sheet.href && sheet.href.includes('font-awesome');
+            } catch (e) {
+                return false;
+            }
+        });
+        
+        if (!fontAwesomeLoaded) {
+            console.warn('⚠️ Alerta: Font Awesome não parece estar carregado!');
+            // Tentar recarregar o Font Awesome
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
+            document.head.appendChild(link);
+        } else {
+            console.log('✓ Font Awesome carregado com sucesso');
+        }
+    });
+</script>

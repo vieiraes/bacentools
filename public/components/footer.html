@@ -9,34 +9,71 @@
     </div>
 </footer>
 
-<!-- Importante: Script do Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap Bundle com Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
-<!-- Script para reinicializar componentes Bootstrap após carregamento dos templates -->
+<!-- Script para inicializar os componentes do Bootstrap -->
 <script>
-    document.addEventListener('all-templates-loaded', function() {
-        console.log('Reinicializando componentes do Bootstrap após carregamento completo');
+    // Verificar se o Bootstrap foi carregado
+    function checkBootstrap() {
+        if (typeof bootstrap !== 'undefined') {
+            console.log('Bootstrap carregado com sucesso!');
+            return true;
+        }
+        console.warn('Bootstrap ainda não está disponível');
+        return false;
+    }
+    
+    // Função para inicializar componentes do Bootstrap
+    function initBootstrapComponents() {
+        console.log('Tentando inicializar componentes Bootstrap...');
         
-        // Verificar se o Bootstrap está disponível
-        if (typeof bootstrap === 'undefined') {
-            console.warn('Bootstrap JS não foi carregado corretamente');
+        if (!checkBootstrap()) {
+            console.log('Tentando novamente em 200ms...');
+            setTimeout(initBootstrapComponents, 200);
             return;
         }
         
         try {
-            // Reinicializar dropdowns do Bootstrap
-            document.querySelectorAll('.dropdown-toggle').forEach(function(dropdownToggleEl) {
-                new bootstrap.Dropdown(dropdownToggleEl);
+            // Inicializar dropdowns
+            document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function(element) {
+                new bootstrap.Dropdown(element);
             });
             
-            // Inicializar tooltips (se houver)
-            document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(tooltipTriggerEl) {
-                new bootstrap.Tooltip(tooltipTriggerEl);
+            // Inicializar os togglers da navbar
+            document.querySelectorAll('.navbar-toggler').forEach(function(toggler) {
+                toggler.addEventListener('click', function() {
+                    const targetId = toggler.getAttribute('data-bs-target');
+                    if (targetId) {
+                        const target = document.querySelector(targetId);
+                        if (target && bootstrap.Collapse) {
+                            const collapse = bootstrap.Collapse.getInstance(target) || 
+                                            new bootstrap.Collapse(target, { toggle: false });
+                            collapse.toggle();
+                        }
+                    }
+                });
             });
             
-            console.log('Componentes Bootstrap reinicializados com sucesso');
+            console.log('Componentes Bootstrap inicializados com sucesso!');
         } catch (error) {
-            console.error('Erro ao reinicializar componentes Bootstrap:', error);
+            console.error('Erro ao inicializar componentes Bootstrap:', error);
         }
+    }
+    
+    // Notificar que o script do Bootstrap foi carregado
+    document.dispatchEvent(new CustomEvent('bootstrap-loaded'));
+    
+    // Inicializar quando todos os templates estiverem carregados
+    document.addEventListener('all-templates-loaded', function() {
+        console.log('Todos os templates carregados, inicializando Bootstrap...');
+        // Dar tempo para o script do Bootstrap ser processado
+        setTimeout(initBootstrapComponents, 100);
+    });
+    
+    // Também tentar inicializar quando a página estiver completamente carregada
+    window.addEventListener('load', function() {
+        console.log('Página totalmente carregada, verificando Bootstrap...');
+        initBootstrapComponents();
     });
 </script>

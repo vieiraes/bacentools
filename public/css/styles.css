@@ -15,7 +15,73 @@ footer {
     width: 100%;
 }
 
-/* Adicione estes estilos ao arquivo existente */
+/* Estilos personalizados para BacenTools */
+
+/* Logo container estilizado */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-container i {
+    font-size: 1.5rem;
+}
+
+/* Logo grande para página inicial */
+.logo-lg i {
+    font-size: 2.5rem;
+}
+
+/* Estilização para brand com logo */
+.brand-with-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-with-logo .logo-container {
+    display: inline-flex;
+}
+
+/* Estilos para cards de mesmo tamanho */
+.card-deck .card,
+.row .card.h-100 {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-deck .card .card-body,
+.row .card.h-100 .card-body {
+    flex: 1 0 auto;
+}
+
+/* Ajustes para tabelas responsivas */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Spinner de carregamento centralizado */
+.page-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    .logo-container i {
+        font-size: 1.2rem;
+    }
+    
+    .logo-lg i {
+        font-size: 2rem;
+    }
+}
 
 /* Estilos para o logo */
 .logo-container {
@@ -99,4 +165,23 @@ footer .logo-container i:last-child {
 .card.h-100:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para elementos do site */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+}
+
+.table {
+    background-color: white;
+}
+
+/* Evitar texto sobreposição em botões */
+.btn {
+    white-space: nowrap;
+}
+
+/* Ajuste para ícones em lista de navegação */
+.nav-link i {
+    margin-right: 4px;
 }

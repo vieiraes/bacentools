@@ -3,10 +3,8 @@
 
 <head>
     <title>Consulta de Bancos - BacenTools</title>
-    <!-- Template para meta tags e links de CSS/JS comuns -->
+    <!-- Template para meta tags -->
     <div data-template="/components/meta.html"></div>
-    
-    <!-- Importante: carregue o template-loader.js antes de qualquer outro script -->
     <script src="/js/template-loader.js"></script>
     
     <!-- Carregar o Alpine.js somente após os templates -->
@@ -27,7 +25,7 @@
 
     <div x-data="banksApp()" class="container mt-4">
         <h1 class="mb-4">Consulta de Bancos</h1>
-
+        
         <!-- Conteúdo específico da página banks.html -->
         <div class="row mb-4">
             <div class="col-md-4">
@@ -125,7 +123,6 @@
     <div data-template="/components/footer.html"></div>
 
     <script>
-        // O código Alpine.js específico para esta página
         function banksApp() {
             const apiUrl = window.CONFIG?.API_URL || 'http://localhost:3344';
             console.log("Inicializando banksApp, usando API URL:", apiUrl);
@@ -342,5 +339,4 @@
         }
     </script>
 </body>
-
 </html>
