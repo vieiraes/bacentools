@@ -19,5 +19,4 @@ export interface BacenInformeFilter {
     ano?: number;
     dataInicio?: Date;
     dataFim?: Date;
-    termo?: string;
 }

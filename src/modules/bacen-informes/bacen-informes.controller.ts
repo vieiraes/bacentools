@@ -16,7 +16,6 @@ export class BacenInformesController {
     @Query('ano') ano?: number,
     @Query('dataInicio') dataInicio?: string,
     @Query('dataFim') dataFim?: string,
-    @Query('termo') termo?: string,
     // Paginação
     @Query('skip') skip = 0,
     @Query('take') take = 50,
@@ -30,8 +29,7 @@ export class BacenInformesController {
       tipo: tipo as InformeType | 'todos',
       ano: ano ? Number(ano) : undefined,
       dataInicio: dataInicio ? new Date(dataInicio) : undefined,
-      dataFim: dataFim ? new Date(dataFim) : undefined,
-      termo
+      dataFim: dataFim ? new Date(dataFim) : undefined
     };
     
     // Preparar opções de paginação

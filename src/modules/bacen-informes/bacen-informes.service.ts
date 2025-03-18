@@ -43,24 +43,22 @@ export class BacenInformesService {
                 if (itemDate > filter.dataFim) return false;
             }
 
-            // Filtro por termo de busca
-            if (filter.termo) {
-                const normalizedTerm = filter.termo.toLowerCase();
-                if (!item.titulo.toLowerCase().includes(normalizedTerm)) return false;
-            }
+            // Removido o bloco de filtro por termo
 
             return true;
         });
 
         // Aplicar ordenação
-        const orderKey = Object.keys(options.orderBy || {})[0] || 'dataReferencia';
-        const orderDirection = options.orderBy?.[orderKey] || 'desc';
+        const orderDirection = options.orderBy?.dataReferencia || 'desc';
 
         result = result.sort((a, b) => {
+            const dateA = new Date(a.dataReferencia).getTime();
+            const dateB = new Date(b.dataReferencia).getTime();
+            
             if (orderDirection === 'desc') {
-                return a[orderKey] > b[orderKey] ? -1 : 1;
+                return dateB - dateA;
             } else {
-                return a[orderKey] < b[orderKey] ? -1 : 1;
+                return dateA - dateB;
             }
         });
 
