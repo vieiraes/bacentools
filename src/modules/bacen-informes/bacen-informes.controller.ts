@@ -20,9 +20,8 @@ export class BacenInformesController {
     // Paginação
     @Query('skip') skip = 0,
     @Query('take') take = 50,
-    // Ordenação
-    @Query('orderBy') orderBy = 'dataReferencia',
-    @Query('orderDir') orderDir: 'asc' | 'desc' = 'desc',
+    // Ordenação - Apenas direção, sempre por dataReferencia
+    @Query('orderBy') orderBy: 'asc' | 'desc' = 'desc',
   ): Promise<PaginatedResult<BacenInforme>> {
     this.logger.log(`Buscando informes com filtros e paginação`);
     
@@ -40,7 +39,7 @@ export class BacenInformesController {
       skip: Number(skip),
       take: Number(take),
       orderBy: {
-        [orderBy]: orderDir
+        dataReferencia: orderBy  // Sempre ordenar por dataReferencia
       }
     };
     
