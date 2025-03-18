@@ -4,3 +4,9 @@ export interface Bank {
   code: number | null;
   fullName: string;
 }
+
+export interface BankFilter {
+  ispb?: string;
+  code?: number;
+  name?: string;
+}
