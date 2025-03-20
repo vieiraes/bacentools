@@ -27,8 +27,7 @@ import Link from 'next/link';
 const navigationItems = [
   { text: 'Bancos', icon: <BankIcon />, path: '/banks' },
   { text: 'Participantes PIX', icon: <PaymentIcon />, path: '/pix-participants' },
-  { text: 'Relatórios SPI', icon: <DescriptionIcon />, path: '/spi-reports' },
-  { text: 'Relatórios STR', icon: <DescriptionIcon />, path: '/str-reports' },
+  { text: 'Relatórios SPI/STR', icon: <DescriptionIcon />, path: '/spi-reports' }
 ];
 
 const Header: FC = () => {
@@ -53,9 +52,9 @@ const Header: FC = () => {
       <List>
         {navigationItems.map((item) => (
           <ListItem key={item.text} disablePadding>
-            <ListItemButton 
-              component={Link} 
-              href={item.path} 
+            <ListItemButton
+              component={Link}
+              href={item.path}
               sx={{ textAlign: 'center' }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
@@ -84,7 +83,7 @@ const Header: FC = () => {
               <MenuIcon />
             </IconButton>
           )}
-          
+
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
             <Box sx={{ display: 'flex', mr: 1 }}>
               <AccountBalanceIcon fontSize={isMobile ? "medium" : "large"} />
@@ -103,7 +102,7 @@ const Header: FC = () => {
           {!isMobile && (
             <Box sx={{ display: 'flex' }}>
               {navigationItems.map((item) => (
-                <Button 
+                <Button
                   key={item.text}
                   component={Link}
                   href={item.path}
