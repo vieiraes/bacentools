@@ -25,16 +25,17 @@ const theme = createTheme({
   components: {
     MuiContainer: {
       styleOverrides: {
-        root: {
-          paddingLeft: {
-            xs: 8,
-            sm: 16,
+        // Corrigindo o formato para usar a notação correta do MUI
+        root: ({ theme }) => ({
+          [theme.breakpoints.down('sm')]: {
+            paddingLeft: 8,
+            paddingRight: 8,
           },
-          paddingRight: {
-            xs: 8,
-            sm: 16,
+          [theme.breakpoints.up('sm')]: {
+            paddingLeft: 16,
+            paddingRight: 16,
           },
-        },
+        }),
       },
     },
     MuiCard: {

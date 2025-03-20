@@ -14,7 +14,7 @@ export interface PaginationParams {
     limit?: number;
     sort?: string;
     order?: 'ASC' | 'DESC';
-    [key: string]: any;
+    [key: string]: string | number | boolean | undefined;  // Tipo explícito para substituir any
 }
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
@@ -34,10 +34,10 @@ export const api = {
                     .map(([key, value]) => [key, String(value)])
             ).toString()}`
             : '';
-        
+
         const fullUrl = `${API_BASE_URL}${url}${queryParams}`;
         console.log('Fetching URL:', fullUrl);
-        
+
         try {
             const response = await fetch(fullUrl, {
                 method: 'GET',
@@ -45,7 +45,7 @@ export const api = {
                     'Content-Type': 'application/json',
                 },
             });
-            
+
             console.log('Response status:', response.status);
             return handleResponse<ApiResponse<T>>(response);
         } catch (error) {

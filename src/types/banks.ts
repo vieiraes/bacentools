@@ -13,4 +13,5 @@ export interface BankFilters {
   take?: number;
   orderBy?: 'ispb' | 'name' | 'code';
   orderDir?: 'asc' | 'desc';
+  [key: string]: string | number | boolean | undefined; // Assinatura de índice necessária para compatibilidade
 }
