@@ -27,7 +27,7 @@ import Link from 'next/link';
 const navigationItems = [
   { text: 'Bancos', icon: <BankIcon />, path: '/banks' },
   { text: 'Participantes PIX', icon: <PaymentIcon />, path: '/pix-participants' },
-  { text: 'Relatórios SPI/STR', icon: <DescriptionIcon />, path: '/spi-reports' }
+  { text: 'Relatórios', icon: <DescriptionIcon />, path: '/informes' } // Atualizado o path para '/informes'
 ];
 
 const Header: FC = () => {
@@ -39,16 +39,38 @@ const Header: FC = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  // Logo component that links to home page
+  const LogoGroup = () => (
+    <Link href="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', cursor: 'pointer' }}>
+        <AccountBalanceIcon fontSize={isMobile ? "medium" : "large"} />
+        <SwapHorizIcon fontSize={isMobile ? "medium" : "large"} />
+        <CodeIcon fontSize={isMobile ? "medium" : "large"} />
+      </Box>
+      <Typography
+        variant={isMobile ? "subtitle1" : "h6"}
+        component="div"
+        sx={{ ml: 1 }}
+      >
+        BacenTools
+      </Typography>
+    </Link>
+  );
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-        <AccountBalanceIcon fontSize="large" />
-        <SwapHorizIcon fontSize="large" />
-        <CodeIcon fontSize="large" />
+        <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}>
+            <AccountBalanceIcon fontSize="large" />
+            <SwapHorizIcon fontSize="large" />
+            <CodeIcon fontSize="large" />
+          </Box>
+          <Typography variant="h6" sx={{ my: 2 }}>
+            BacenTools
+          </Typography>
+        </Link>
       </Box>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        BacenTools
-      </Typography>
       <List>
         {navigationItems.map((item) => (
           <ListItem key={item.text} disablePadding>
@@ -85,18 +107,7 @@ const Header: FC = () => {
           )}
 
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-            <Box sx={{ display: 'flex', mr: 1 }}>
-              <AccountBalanceIcon fontSize={isMobile ? "medium" : "large"} />
-              <SwapHorizIcon fontSize={isMobile ? "medium" : "large"} />
-              <CodeIcon fontSize={isMobile ? "medium" : "large"} />
-            </Box>
-            <Typography
-              variant={isMobile ? "subtitle1" : "h6"}
-              component="div"
-              sx={{ flexGrow: 1 }}
-            >
-              BacenTools
-            </Typography>
+            <LogoGroup />
           </Box>
 
           {!isMobile && (

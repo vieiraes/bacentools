@@ -27,7 +27,7 @@ const Footer: FC = () => {
           color="text.secondary" 
           align="center"
         >
-          © {new Date().getFullYear()} BacenTools - Ferramentas para consulta de informações do sistema financeiro brasileiro
+          © {new Date().getFullYear()} BacenTools - Ferramentas para PO.
         </Typography>
       </Container>
     </Box>

@@ -27,13 +27,9 @@ export default function Home() {
           component="h1"
           gutterBottom
         >
-          Bem-vindo ao BacenTools
+          BacenTools
         </Typography>
-        <Typography
-          variant={isMobile ? "body2" : "subtitle1"}
-        >
-          Ferramentas para consulta de informações do sistema financeiro brasileiro
-        </Typography>
+        
       </Box>
 
       <Grid container spacing={isMobile ? 2 : 3}>
@@ -55,6 +51,31 @@ export default function Home() {
                   size="small"
                 >
                   Ver bancos
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+
+        <Grid item xs={12} md={4}>
+          <Card raised>
+            <CardHeader
+              avatar={<DescriptionIcon color="primary" />}
+              title="Relatórios"
+            />
+            <CardContent>
+              <Typography variant="body2">
+                Acesse relatórios SPI e STR com informações detalhadas do sistema financeiro.
+              </Typography>
+              <Box sx={{ mt: 2 }}>
+                <Button
+                  component={Link}
+                  href="/informes"
+                  variant="outlined"
+                  size="small"
+                >
+                  Ver relatórios
                 </Button>
               </Box>
             </CardContent>
@@ -86,29 +107,6 @@ export default function Home() {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={4}>
-          <Card raised>
-            <CardHeader
-              avatar={<DescriptionIcon color="primary" />}
-              title="Relatórios"
-            />
-            <CardContent>
-              <Typography variant="body2">
-                Acesse relatórios SPI e STR com informações detalhadas do sistema financeiro.
-              </Typography>
-              <Box sx={{ mt: 2 }}>
-                <Button
-                  component={Link}
-                  href="/informes"
-                  variant="outlined"
-                  size="small"
-                >
-                  Ver relatórios
-                </Button>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
       </Grid>
     </MainLayout>
   );
