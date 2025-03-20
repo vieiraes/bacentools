@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Query, Logger } from '@nestjs/common';
 import { PixParticipantsService } from './pix-participants.service';
-import { PixParticipant } from './interfaces/pix-participant.interface';
+import { PixParticipant, PixParticipantFilter } from './interfaces/pix-participant.interface';
+import { PaginatedResult, PaginationOptions } from '../../common/interfaces/pagination.interface';
 
 @Controller('pix-participants')
 export class PixParticipantsController {
@@ -9,52 +10,54 @@ export class PixParticipantsController {
   constructor(private readonly pixParticipantsService: PixParticipantsService) {}
 
   @Get()
-  async getAllParticipants(): Promise<PixParticipant[]> {
-    this.logger.log('Requisição recebida para listar todos os participantes PIX');
+  async getParticipants(
+    // Filtros
+    @Query('ispb') ispb?: string,
+    @Query('nome') nome?: string,
+    @Query('tipoParticipacao') tipoParticipacao?: string,
+    @Query('modalidadeParticipacao') modalidadeParticipacao?: string, 
+    // Paginação
+    @Query('skip') skip = 0,
+    @Query('take') take = 50,
+    // Ordenação - Apenas direção, sempre por nome
+    @Query('orderDir') orderDir: 'asc' | 'desc' = 'asc',
+  ): Promise<PaginatedResult<PixParticipant>> {
+    this.logger.log('Requisição recebida para listar participantes PIX com filtros');
+    
+    // Preparar filtros
+    const filter: PixParticipantFilter = {
+      ispb,
+      nome,
+      tipoParticipacao,
+      modalidadeParticipacao
+    };
+    
+    // Preparar opções de paginação - Sempre ordenar por nome
+    const paginationOptions: PaginationOptions = {
+      skip: Number(skip),
+      take: Number(take),
+      orderBy: {
+        nome: orderDir  // Fixado para ordenar por nome
+      }
+    };
+    
     try {
-      const participants = await this.pixParticipantsService.getAllParticipants();
-      this.logger.log(`Retornando ${participants.length} participantes PIX`);
-      return participants;
+      return await this.pixParticipantsService.findAll(filter, paginationOptions);
     } catch (error) {
       this.logger.error(`Erro ao listar participantes PIX: ${error.message}`);
       throw error;
     }
   }
 
-  @Get('ispb/:ispb')
+  @Get(':ispb')
   async getParticipantByIspb(@Param('ispb') ispb: string): Promise<PixParticipant | { message: string }> {
     this.logger.log(`Buscando participante PIX com ISPB: ${ispb}`);
     const participant = await this.pixParticipantsService.getParticipantByIspb(ispb);
+    
     if (!participant) {
       return { message: `Participante PIX com ISPB ${ispb} não encontrado` };
     }
+    
     return participant;
-  }
-
-  @Get('search')
-  async searchParticipants(@Query('name') query: string): Promise<PixParticipant[]> {
-    this.logger.log(`Pesquisando participantes PIX com termo: "${query}"`);
-    if (!query || query.trim() === '') {
-      return [];
-    }
-    return this.pixParticipantsService.searchParticipantsByName(query);
-  }
-
-  @Get('tipo-participacao/:tipo')
-  async getParticipantsByTipoParticipacao(@Param('tipo') tipo: string): Promise<PixParticipant[]> {
-    this.logger.log(`Buscando participantes PIX com tipo de participação: ${tipo}`);
-    return this.pixParticipantsService.getParticipantsByTipoParticipacao(tipo);
-  }
-
-  @Get('modalidade-participacao/:modalidade')
-  async getParticipantsByModalidadeParticipacao(@Param('modalidade') modalidade: string): Promise<PixParticipant[]> {
-    this.logger.log(`Buscando participantes PIX com modalidade de participação: ${modalidade}`);
-    return this.pixParticipantsService.getParticipantsByModalidadeParticipacao(modalidade);
-  }
-
-  @Get('order-desc')
-  async getParticipantsOrderedByStartDate(): Promise<PixParticipant[]> {
-    this.logger.log('Requisição para listar participantes PIX ordenados por data de início (DESC)');
-    return this.pixParticipantsService.getParticipantsOrderedByStartDate();
   }
 }

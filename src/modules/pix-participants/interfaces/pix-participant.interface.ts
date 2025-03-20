@@ -1,8 +1,15 @@
 export interface PixParticipant {
-    ispb: string;
-    nome: string;
-    nome_reduzido: string;
-    modalidade_participacao: string;
-    tipo_participacao: string;
-    inicio_operacao: string;
+  ispb: string;
+  nome: string;
+  nomeReduzido: string;
+  modalidadeParticipacao: string;
+  tipoParticipacao: string;
+  inicioOperacao: string;
+}
+
+export interface PixParticipantFilter {
+  ispb?: string;
+  nome?: string;
+  tipoParticipacao?: string;
+  modalidadeParticipacao?: string;
 }

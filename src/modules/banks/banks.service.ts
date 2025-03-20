@@ -12,13 +12,18 @@ export class BanksService {
   private readonly CACHE_TTL = 3600000; // 1 hora em milissegundos
   private readonly logger = new Logger(BanksService.name);
 
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService) { }
 
   async getAllBanks(): Promise<Bank[]> {
     if (this.shouldFetchBanks()) {
       await this.fetchBanksFromAPI();
     }
     return this.banks;
+  }
+
+  async findOne(id: number): Promise<Bank | null> {
+    await this.ensureBanksLoaded();
+    return this.banks.find(bank => bank.code === id) || null;
   }
 
   async findAll(
@@ -30,8 +35,8 @@ export class BanksService {
     // Aplicar filtros
     let result = this.banks.filter(bank => {
       // Filtro por ISPB
-      if (filter.ispb && bank.ispb && 
-          !bank.ispb.toLowerCase().includes(filter.ispb.toLowerCase())) {
+      if (filter.ispb && bank.ispb &&
+        !bank.ispb.toLowerCase().includes(filter.ispb.toLowerCase())) {
         return false;
       }
 
@@ -43,7 +48,7 @@ export class BanksService {
       // Filtro por nome
       if (filter.name && (
         !bank.name || !bank.fullName ||
-        !(bank.name.toLowerCase().includes(filter.name.toLowerCase()) || 
+        !(bank.name.toLowerCase().includes(filter.name.toLowerCase()) ||
           bank.fullName.toLowerCase().includes(filter.name.toLowerCase()))
       )) {
         return false;
@@ -100,8 +105,8 @@ export class BanksService {
   async searchBanksByName(query: string): Promise<Bank[]> {
     await this.ensureBanksLoaded();
     const lowerQuery = query.toLowerCase();
-    return this.banks.filter(bank => 
-      (bank.name && bank.name.toLowerCase().includes(lowerQuery)) || 
+    return this.banks.filter(bank =>
+      (bank.name && bank.name.toLowerCase().includes(lowerQuery)) ||
       (bank.fullName && bank.fullName.toLowerCase().includes(lowerQuery))
     );
   }
@@ -116,7 +121,7 @@ export class BanksService {
     if (!this.lastFetch || this.banks.length === 0) {
       return true;
     }
-    
+
     const now = new Date();
     return now.getTime() - this.lastFetch.getTime() > this.CACHE_TTL;
   }
