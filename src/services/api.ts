@@ -44,10 +44,16 @@ export const api = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                mode: 'cors',
+                credentials: 'omit', // Alterado para 'omit' para evitar problemas de CORS
+                cache: 'no-cache', // Forçar refetch, evitar caching
             });
 
-            console.log('Response status:', response.status);
-            return handleResponse<ApiResponse<T>>(response);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            return await response.json();
         } catch (error) {
             console.error('API error:', error);
             throw error;
