@@ -12,6 +12,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
+import type { Metadata } from 'next';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Criando um novo QueryClient por requisição em componentes de cliente
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
@@ -40,6 +40,11 @@ export default function RootLayout({
 
   return (
     <html lang="pt-BR">
+      <head>
+        <meta name="google-site-verification" content="uszu0oNe5kKCBR-dx1L0QB737bByJF_7fTmC0Yyu8bc" />
+        <title>BacenTools</title>
+        <meta name="description" content="Ferramentas para o sistema financeiro brasileiro" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AppRouterCacheProvider>
           <QueryClientProvider client={queryClient}>
