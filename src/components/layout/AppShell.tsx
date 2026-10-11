@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { ToolIcon } from '@/components/ToolIcon';
-import { SITE, TOOLS } from '@/lib/tools';
+import { CRIADOR, SITE, TOOLS } from '@/lib/tools';
 
 /** Moldura do site: barra com as ferramentas (gaveta no celular), conteúdo e rodapé. */
 export function AppShell({ children }: { children: ReactNode }) {
@@ -54,6 +54,9 @@ export function AppShell({ children }: { children: ReactNode }) {
               </Button>
             ))}
           </Box>
+          <Button component={Link} href="/sobre/" color="inherit" aria-current={isActive('/sobre/') ? 'page' : undefined} sx={{ display: { xs: 'none', md: 'inline-flex' } }}>
+            Sobre
+          </Button>
           <IconButton color="inherit" component="a" href={SITE.repo} aria-label="Código-fonte no GitHub">
             <GitHubIcon />
           </IconButton>
@@ -70,6 +73,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <ListItemText primary={t.title} />
               </ListItemButton>
             ))}
+            <ListItemButton component={Link} href="/sobre/" selected={isActive('/sobre/')}>
+              <ListItemText primary="Sobre e contato" inset />
+            </ListItemButton>
           </List>
         </Box>
       </Drawer>
@@ -82,7 +88,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         <Container maxWidth="lg">
           <Typography variant="body2" color="text.secondary" align="center">
             {SITE.name}: ferramentas gratuitas, sem cadastro. Dados públicos do Banco Central (direto ou pela BrasilAPI). Não é um
-            serviço oficial do BCB. <a href={SITE.repo}>Código aberto no GitHub</a>.
+            serviço oficial do BCB. <a href={SITE.repo}>Código aberto no GitHub</a>. Criado por{' '}
+            <Link href="/sobre/">{CRIADOR.nome}</Link>, {CRIADOR.papel}. <Link href="/privacidade/">Privacidade</Link>.
           </Typography>
         </Container>
       </Box>

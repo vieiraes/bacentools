@@ -5,7 +5,9 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { LeadForm } from '@/components/LeadForm';
 import { ToolIcon } from '@/components/ToolIcon';
 import { SITE, TOOLS } from '@/lib/tools';
 
@@ -39,6 +41,15 @@ export default function Home() {
           </Grid>
         ))}
       </Grid>
+
+      <Paper component="section" aria-labelledby="newsletter" sx={{ mt: 4, p: { xs: 2, md: 3 } }}>
+        <Typography id="newsletter" variant="h2">Mudou no Pix</Typography>
+        <Typography color="text.secondary" sx={{ mt: 1, mb: 2, maxWidth: '70ch' }}>
+          Um e-mail curto quando o Banco Central mudar o Pix: versão nova do catálogo de erros, regulamento, informes do SPI e ferramentas
+          novas aqui no {SITE.name}. Sem spam.
+        </Typography>
+        <LeadForm tipo="newsletter" origem="inicio" />
+      </Paper>
     </>
   );
 }

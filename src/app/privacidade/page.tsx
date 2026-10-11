@@ -22,8 +22,9 @@ export default function Page() {
       <Typography component="h2" variant="h2" sx={{ mt: 3, mb: 1 }}>Dados que você nos envia</Typography>
       <Typography sx={{ mb: 2 }}>
         Se você se inscrever para receber novidades ou pedir contato, guardamos o que você informar (nome, e-mail, perfil, mensagem) no
-        Firebase, em servidores no Brasil (região de São Paulo), só para responder e mandar as novidades que você pediu. Você pode pedir a
-        exclusão a qualquer momento pelo e-mail do criador, na página <Link href="/sobre/">Sobre</Link>.
+        Firebase, em servidores no Brasil (região de São Paulo), só para responder e mandar as novidades que você pediu. Os dados não são
+        compartilhados com ninguém. Você pode pedir a exclusão a qualquer momento pelo formulário da página{' '}
+        <Link href="/sobre/#contato">Sobre</Link>, e ela é feita em até 15 dias.
       </Typography>
       <Typography component="h2" variant="h2" sx={{ mt: 3, mb: 1 }}>Mudar sua escolha</Typography>
       <Typography sx={{ mb: 2 }}>

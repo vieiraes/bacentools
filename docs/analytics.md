@@ -65,4 +65,14 @@ Entre em **analytics.google.com** › propriedade **bacentools**:
 
 ## Leads
 
-Os contatos deixados no site ficam no **Firestore** do projeto `bacentools`, na região de São Paulo. A lista fica numa página do site protegida por login Google, e só o e-mail do administrador entra. As regras de segurança do banco garantem isso, não só a tela. Ver `firestore.rules` e a página `/admin/`.
+**Onde entram:** newsletter "Mudou no Pix" na página inicial (e-mail + perfil) e formulário de contato/contratação em `/sobre/`. Cada envio gera o evento `generate_lead` no GA4, sem o e-mail.
+
+**Onde ficam:** coleção `leads` do **Firestore** do projeto `bacentools`, região `southamerica-east1` (São Paulo).
+
+**Como ver:** acesse **https://bacentools.web.app/admin/** e clique em **Entrar com Google** com a conta `vieira.es@gmail.com`. O painel mostra totais por tipo e perfil, filtros, busca, exclusão (pedido LGPD) e exportação em CSV (abre direto no Excel). O painel fica fora do Google (`noindex`, `robots.txt`, fora do sitemap).
+
+**Quem protege:** as regras em `firestore.rules`, não a tela. Qualquer visitante só consegue **criar** um lead válido (campos permitidos, e-mail no formato, consentimento marcado, data do servidor). Ler, alterar e apagar: só a conta do administrador, com e-mail verificado. Robôs que preenchem o campo-isca são descartados no navegador.
+
+**Publicar mudanças nas regras:** `firebase deploy --only firestore:rules --project bacentools`.
+
+**Atenção:** nas regras do Firestore, `\\s` dentro de `matches()` não é "espaço", é uma barra seguida de "s". Use classes como `[.]` e `[^@ ]`.

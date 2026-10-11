@@ -57,3 +57,10 @@ export const SITE = {
   tagline: 'Ferramentas gratuitas do Pix e do Banco Central para POs, QAs e devs',
   repo: 'https://github.com/vieiraes/bacentools',
 };
+
+/** Crédito do projeto (Apache-2.0 + NOTICE): aparece na página Sobre, no rodapé e no JSON-LD. */
+export const CRIADOR = {
+  nome: 'Bruno Vieira',
+  papel: 'QA especialista em meios de pagamento',
+  github: 'https://github.com/vieiraes',
+};

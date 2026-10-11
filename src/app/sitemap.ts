@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TOOLS.map((t) => ({ url: `${SITE.url}${t.path}`, priority: 0.8 })),
     { url: `${SITE.url}/erros-pix/`, priority: 0.8 },
     ...ERROS.map((e) => ({ url: `${SITE.url}/erros-pix/${slugDe(e)}/`, priority: 0.6 })),
+    { url: `${SITE.url}/sobre/`, priority: 0.5 },
     { url: `${SITE.url}/privacidade/`, priority: 0.2 },
   ];
 }

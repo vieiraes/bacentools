@@ -11,7 +11,7 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 [![CI](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml)
 [![Dados](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml)
 [![Licença](https://img.shields.io/badge/licença-Apache%202.0-0b4f9c)](LICENSE)
-![Testes](https://img.shields.io/badge/testes-104%20unit%20%2B%2054%20E2E-2e7d32)
+![Testes](https://img.shields.io/badge/testes-128%20unit%20%2B%2082%20E2E-2e7d32)
 ![Acessibilidade](https://img.shields.io/badge/axe-WCAG%202.2%20AA-0b4f9c)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs)
 
@@ -95,6 +95,7 @@ tests/unit · tests/e2e      Vitest · Playwright
 - **Sem servidor:** as fontes aceitam chamadas do navegador. O site sai de graça, simples e com menos pontos de falha.
 - **Cópia diária como reserva:** se a BrasilAPI cair, o site continua de pé e mostra a data da cópia.
 - **Regras isoladas em `lib/`:** dá para testar sem navegador.
+- **Leads no Firestore sem servidor:** o formulário grava direto do navegador; as `firestore.rules` só aceitam a criação de um lead válido e só o administrador lê. A mesma validação existe em `src/lib/leads.ts` (testada) e nas regras.
 
 **Stack:** Next.js 15 (Turbopack), React 19, TypeScript, MUI 9 + MUI X DataGrid, Motion, TanStack Query, zod, Vitest, fast-check, Playwright, axe-core, GitHub Actions e Firebase Hosting.
 
@@ -115,7 +116,7 @@ Contribuições são muito bem-vindas, de ferramentas novas a correções e test
 
 ## 👤 Criador
 
-Criado e mantido por **[Bruno Vieira](https://github.com/vieiraes)**, QA com experiência em meios de pagamento.
+Criado e mantido por **[Bruno Vieira](https://github.com/vieiraes)**, QA especialista em meios de pagamento. Precisa de QA para Pix (testes de SPI e DICT, homologação, automação E2E, testes de carga)? Fale comigo pela página **[Sobre](https://bacentools.web.app/sobre/#contato)**.
 
 Se o BacenTools te ajudou, deixe uma ⭐ no repositório.
 

@@ -1,0 +1,39 @@
+rules_version = '2';
+
+// Leads do BacenTools.
+// Qualquer visitante pode CRIAR um lead válido; ninguém lê, altera ou apaga pelo site,
+// exceto o administrador (login Google com e-mail verificado).
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'vieira.es@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    function validLead(d) {
+      return d.keys().hasOnly(['tipo', 'email', 'nome', 'perfil', 'empresa', 'mensagem', 'consentimento', 'origem', 'criadoEm'])
+        && d.keys().hasAll(['tipo', 'email', 'consentimento', 'criadoEm'])
+        && d.tipo in ['newsletter', 'contato']
+        && d.email is string && d.email.size() <= 254 && d.email.matches('[^@ ]+@[^@ ]+[.][^@ ]+')
+        && d.consentimento == true
+        && d.criadoEm == request.time
+        && (!('nome' in d) || (d.nome is string && d.nome.size() <= 120))
+        && (!('perfil' in d) || d.perfil in ['po', 'qa', 'dev', 'estudante', 'outro'])
+        && (!('empresa' in d) || (d.empresa is string && d.empresa.size() <= 120))
+        && (!('mensagem' in d) || (d.mensagem is string && d.mensagem.size() <= 2000))
+        && (!('origem' in d) || (d.origem is string && d.origem.size() <= 200))
+        && (d.tipo != 'contato' || ('nome' in d && d.nome.size() >= 2 && 'mensagem' in d && d.mensagem.size() >= 10));
+    }
+
+    match /leads/{id} {
+      allow create: if validLead(request.resource.data);
+      allow read, delete: if isAdmin();
+      allow update: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

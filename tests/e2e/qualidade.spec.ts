@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { test, expect, mockSources } from './fixtures';
 
-const PAGES = ['/', '/bancos/', '/participantes-pix/', '/informes/', '/cenarios-pix/', '/simulador-dict/', '/erros-pix/', '/erros-pix/ac06/', '/privacidade/'];
+const PAGES = ['/', '/bancos/', '/participantes-pix/', '/informes/', '/cenarios-pix/', '/simulador-dict/', '/erros-pix/', '/erros-pix/ac06/', '/privacidade/', '/sobre/', '/admin/'];
 
 test.describe('qualidade em todas as páginas', () => {
   for (const path of PAGES) {

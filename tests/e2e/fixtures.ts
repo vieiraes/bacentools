@@ -24,6 +24,8 @@ export const test = base.extend<{ consoleErrors: string[] }>({
   page: async ({ page }, use, info) => {
     // Google Analytics nunca sai para a rede nos testes; os eventos ficam no window.dataLayer para conferir
     await page.route('https://www.googletagmanager.com/**', (r) => r.fulfill({ status: 200, contentType: 'text/javascript', body: '' }));
+    // Firestore também nunca é tocado: um envio de formulário nos testes não grava lead de verdade
+    await page.route('https://firestore.googleapis.com/**', (r) => r.fulfill({ json: { commitTime: '2026-10-11T12:00:00Z', writeResults: [{ updateTime: '2026-10-11T12:00:00Z' }] } }));
     // o banner de cookies já vem respondido, exceto no teste do próprio banner (tag @consentimento)
     if (!info.title.includes('@consentimento')) await page.addInitScript(() => localStorage.setItem('bt_consent_v1', 'denied'));
     const goto = page.goto.bind(page);
@@ -62,4 +64,15 @@ export async function gaEvents(page: Page): Promise<{ name: string; params: Reco
       .filter((a) => a[0] === 'event')
       .map((a) => ({ name: a[1] as string, params: (a[2] ?? {}) as Record<string, unknown> })),
   );
+}
+
+/** Gravações enviadas ao Firestore (corpo do commit), para conferir o que o formulário mandou. */
+export async function capturarFirestore(page: Page, status = 200) {
+  const commits: Record<string, unknown>[] = [];
+  await page.route('https://firestore.googleapis.com/**', async (r) => {
+    commits.push(r.request().postDataJSON() ?? {});
+    if (status !== 200) return r.fulfill({ status, json: { error: { code: status, message: 'falhou', status: 'UNAVAILABLE' } } });
+    return r.fulfill({ json: { commitTime: '2026-10-11T12:00:00Z', writeResults: [{ updateTime: '2026-10-11T12:00:00Z' }] } });
+  });
+  return commits;
 }
