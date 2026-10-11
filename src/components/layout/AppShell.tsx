@@ -33,13 +33,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       </Box>
       <AppBar position="sticky" elevation={0}>
         <Toolbar sx={{ gap: 1 }}>
-          <IconButton color="inherit" edge="start" aria-label="Abrir menu" onClick={() => setOpen(true)} sx={{ display: { md: 'none' } }}>
+          <IconButton color="inherit" edge="start" aria-label="Abrir menu" onClick={() => setOpen(true)} sx={{ display: { lg: 'none' } }}>
             <MenuIcon />
           </IconButton>
-          <Typography component={Link} href="/" variant="h6" sx={{ fontWeight: 800, textDecoration: 'none', color: 'inherit', flexGrow: { xs: 1, md: 0 }, mr: 3 }}>
+          <Typography component={Link} href="/" variant="h6" sx={{ fontWeight: 800, textDecoration: 'none', color: 'inherit', flexGrow: { xs: 1, lg: 0 }, mr: 1.5 }}>
             {SITE.name}
           </Typography>
-          <Box component="nav" aria-label="Ferramentas" sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5, flexGrow: 1 }}>
+          <Box component="nav" aria-label="Ferramentas" sx={{ display: { xs: 'none', lg: 'flex' }, gap: 0.5, flexGrow: 1 }}>
             {TOOLS.map((t) => (
               <Button
                 key={t.path}
@@ -48,13 +48,13 @@ export function AppShell({ children }: { children: ReactNode }) {
                 color="inherit"
                 aria-current={isActive(t.path) ? 'page' : undefined}
                 startIcon={<ToolIcon icon={t.icon} fontSize="small" />}
-                sx={{ borderBottom: '2px solid', borderColor: isActive(t.path) ? 'currentColor' : 'transparent', borderRadius: 0 }}
+                sx={{ whiteSpace: 'nowrap', borderBottom: '2px solid', borderColor: isActive(t.path) ? 'currentColor' : 'transparent', borderRadius: 0 }}
               >
                 {t.short}
               </Button>
             ))}
           </Box>
-          <Button component={Link} href="/sobre/" color="inherit" aria-current={isActive('/sobre/') ? 'page' : undefined} sx={{ display: { xs: 'none', md: 'inline-flex' } }}>
+          <Button component={Link} href="/sobre/" color="inherit" aria-current={isActive('/sobre/') ? 'page' : undefined} sx={{ display: { xs: 'none', lg: 'inline-flex' } }}>
             Sobre
           </Button>
           <IconButton color="inherit" component="a" href={SITE.repo} aria-label="Código-fonte no GitHub">

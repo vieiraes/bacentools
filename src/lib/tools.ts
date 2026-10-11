@@ -4,7 +4,7 @@ export interface Tool {
   title: string;
   short: string;
   description: string;
-  icon: 'bank' | 'pix' | 'docs' | 'bucket' | 'flow';
+  icon: 'bank' | 'pix' | 'docs' | 'bucket' | 'flow' | 'qr' | 'id';
   source: string;
 }
 
@@ -40,6 +40,22 @@ export const TOOLS: Tool[] = [
     description: 'Veja o Pix passar pelo SPI e o que acontece em cada erro: quem rejeita, com qual código e o que mostrar ao usuário, com a fonte oficial do BCB.',
     icon: 'flow',
     source: 'Catálogo de Mensagens do SPI e manuais do Pix (BCB)',
+  },
+  {
+    path: '/decodificador-pix/',
+    title: 'Decodificador de QR Code Pix',
+    short: 'QR Code Pix',
+    description: 'Cole um Pix Copia e Cola e veja chave, valor, txid, URL e CRC, com cada campo conferido contra o Manual de Padrões do BCB.',
+    icon: 'qr',
+    source: 'Manual de Padrões para Iniciação do Pix 2.10.0 (BCB)',
+  },
+  {
+    path: '/identificadores-pix/',
+    title: 'Decodificador de EndToEndId e UUID',
+    short: 'EndToEndId',
+    description: 'Descubra quem gerou um EndToEndId ou RtrId de devolução, quando (UTC e Brasília) e se o formato está certo. Também lê UUID, inclusive a data do v7.',
+    icon: 'id',
+    source: 'Catálogo de Mensagens do SPI 5.13.2 (BCB) e RFC 9562',
   },
   {
     path: '/simulador-dict/',

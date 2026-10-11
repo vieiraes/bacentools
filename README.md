@@ -11,7 +11,7 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 [![CI](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml)
 [![Dados](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml)
 [![Licença](https://img.shields.io/badge/licença-Apache%202.0-0b4f9c)](LICENSE)
-![Testes](https://img.shields.io/badge/testes-128%20unit%20%2B%2082%20E2E-2e7d32)
+![Testes](https://img.shields.io/badge/testes-159%20unit%20%2B%2094%20E2E-2e7d32)
 ![Acessibilidade](https://img.shields.io/badge/axe-WCAG%202.2%20AA-0b4f9c)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs)
 
@@ -27,6 +27,8 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 | 💠 | **[Participantes do Pix](https://bacentools.web.app/participantes-pix/)** | As 880 instituições do Pix, com modalidade, participação direta ou indireta e início da operação | BrasilAPI (dados do BCB) |
 | 📄 | **[Informes SPI e STR](https://bacentools.web.app/informes/)** | Os informes operacionais publicados pelo Banco Central, por ano, com o PDF | Banco Central |
 | 🔀 | **[Cenários e erros do Pix](https://bacentools.web.app/cenarios-pix/)** | Animação do caminho do Pix (pagador → SPI → recebedor) em cada erro: quem rejeita, com qual código e o que mostrar ao usuário. São 75 códigos, cada um com a fonte oficial | Catálogo de Mensagens do SPI 5.13.2 e manuais do Pix |
+| 🔳 | **[Decodificador de QR Code Pix](https://bacentools.web.app/decodificador-pix/)** | Cole um Pix Copia e Cola: tipo (estático, dinâmico, composto), chave, valor, txid, URL e CRC, com cada campo conferido e a seção do manual. Mostra o CRC certo quando o informado está errado | Manual de Padrões para Iniciação do Pix 2.10.0 |
+| 🆔 | **[Decodificador de EndToEndId e UUID](https://bacentools.web.app/identificadores-pix/)** | Quem gerou um EndToEndId ou RtrId (nome da instituição pelo ISPB), quando (UTC e Brasília) e o que está fora do formato. Também lê UUID, inclusive a data do v7 | Catálogo do SPI 5.13.2 e RFC 9562 |
 | 💧 | **[Simulador de fichas do DICT](https://bacentools.web.app/simulador-dict/)** | O *token bucket* das consultas de chave Pix: 200, 404, 429, reposição e devolução por pagamento | Especificação da API do DICT |
 
 <details>
@@ -69,6 +71,8 @@ Este projeto também é uma vitrine de QA. A pirâmide de testes é esta:
 | Cenários do Pix | O ACSC ao pagador vinha antes do ACCC ao recebedor | Teste comparando com o Manual de Fluxos 2.1, seção 3.1.1 |
 | Site | A data da base mudava de dia conforme o fuso do visitante e quebrava a hidratação do React (erro #418) | E2E na CI, onde o build roda em UTC |
 | Site | Contraste insuficiente no laranja de aviso e no botão não selecionado do ToggleButton | axe |
+| Decodificador de QR Code (versão da extensão QA Tools) | O CRC era procurado pelo **primeiro** `6304` do texto: uma chave como `ana6304@ex.com` fazia um código válido ser dado como inválido | Teste de regressão; o CRC agora é o último elemento da estrutura |
+| Decodificador de QR Code | Nos exemplos reais de cobrança com vencimento, o valor vem no BR Code dinâmico, que o app pagador deve ignorar (seção 2.7) | Virou aviso na conferência e teste com URL de 77 caracteres (o limite) |
 | Site | "1 instituições" | Revisão visual, depois virou teste da função `plural` |
 
 A avaliação que deu início a esse trabalho está em [docs/historico/](docs/historico/avaliacao-simulador-dict-2026-10.md).

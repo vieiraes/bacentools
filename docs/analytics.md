@@ -22,6 +22,7 @@ Tudo é do Google e gratuito: **Google Analytics 4** (propriedade ligada ao proj
 | `scenario_play` | Rodou a animação de um cenário do Pix | `item_id`, `mode` |
 | `simulator_action` | Consulta 200/404 ou Pix enviado no simulador do DICT | `action`, `key_type` |
 | `copy_ispb` | Copiou um ISPB | `item_id` |
+| `decode` | Colou algo no decodificador de QR Code Pix ou de EndToEndId/UUID (só quando para de digitar; o código colado não é enviado) | `area` (brcode, identificador), `item_id` (tipo), `result` |
 | `file_download` | Abriu o PDF de um informe do BCB | `file_name`, `link_url`, `area` |
 | `source_fallback` | A BrasilAPI caiu e o site usou a cópia diária | `source` |
 | `consent_choice` | Aceitou ou recusou o aviso de cookies | `choice` |
@@ -36,7 +37,7 @@ Entre em **analytics.google.com** › propriedade **bacentools**:
 
 1. **Admin › Fluxos de dados › bacentools › Medição otimizada:** confira se tudo está ligado, principalmente "Mudanças de página com base no histórico do navegador".
 2. **Admin › Definições personalizadas › Criar dimensão personalizada.** Escopo: evento. Uma para cada:
-   - `search_term`, `area`, `content_type`, `item_id`, `action`, `key_type`, `lead_type`, `perfil` e `channel`.
+   - `search_term`, `area`, `content_type`, `item_id`, `action`, `key_type`, `lead_type`, `perfil`, `channel` e `result`.
    - Sem isso, os parâmetros não aparecem nos relatórios. Só vale daqui para frente.
 3. **Admin › Eventos-chave:** marque `generate_lead` e `contact_click`. Eles são as "conversões".
 4. **Admin › Retenção de dados:** 14 meses.

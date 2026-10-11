@@ -47,6 +47,7 @@ export type EventName =
   | 'scenario_play' // rodou a animação de um cenário do Pix
   | 'simulator_action' // operação no simulador do DICT
   | 'copy_ispb'
+  | 'decode' // colou algo no decodificador de QR Code Pix ou de identificadores
   | 'file_download' // PDF de informe do BCB
   | 'generate_lead' // deixou contato (newsletter ou contratação)
   | 'contact_click' // clicou em e-mail/LinkedIn/site do criador
