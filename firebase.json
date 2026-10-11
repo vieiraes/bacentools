@@ -1,16 +1,17 @@
 {
   "hosting": {
     "public": "out",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "cleanUrls": false,
+    "trailingSlash": true,
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      { "source": "/banks{,/**}", "destination": "/bancos/", "type": 301 },
+      { "source": "/pix-participants{,/**}", "destination": "/participantes-pix/", "type": 301 }
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
+    "headers": [
+      { "source": "/data/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] },
+      { "source": "/_next/static/**", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+    ],
+    "rewrites": [{ "source": "**", "destination": "/404.html" }]
   }
 }

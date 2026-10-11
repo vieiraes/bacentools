@@ -1,0 +1,114 @@
+[
+ {
+  "ispb": "24313102",
+  "nome": "99PAY IP S.A.",
+  "nome_reduzido": "99PAY IP S.A.",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "35534511",
+  "nome": "A27 IP S/A",
+  "nome_reduzido": "A27 IP S/A",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Indireta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "48756121",
+  "nome": "A55 SCD S.A.",
+  "nome_reduzido": "A55 SCD S.A.",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "37715993",
+  "nome": "ACCREDITO SCD S.A.",
+  "nome_reduzido": "ACCREDITO SCD S.A.",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "36947229",
+  "nome": "COBUCCIO S.A. SCFI",
+  "nome_reduzido": "COBUCCIO S.A. SCFI",
+  "modalidade_participacao": "Liquidante Especial",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "39908427",
+  "nome": "STARK SCD S.A.",
+  "nome_reduzido": "STARK SCD S.A.",
+  "modalidade_participacao": "Liquidante Especial",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "43394419",
+  "nome": "GOOGLE PAY BRASIL IP LTDA.",
+  "nome_reduzido": "GOOGLE PAY BRASIL IP LTDA.",
+  "modalidade_participacao": "Iniciador",
+  "tipo_participacao": "Indireta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "00394460",
+  "nome": "STN",
+  "nome_reduzido": "STN",
+  "modalidade_participacao": "Ente Governamental",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "00000000",
+  "nome": "BCO DO BRASIL S.A.",
+  "nome_reduzido": "BCO DO BRASIL S.A.",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "00360305",
+  "nome": "CAIXA ECONOMICA FEDERAL",
+  "nome_reduzido": "CAIXA ECONOMICA FEDERAL",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "10573521",
+  "nome": "MERCADO PAGO IP LTDA.",
+  "nome_reduzido": "MERCADO PAGO IP LTDA.",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "18236120",
+  "nome": "NU PAGAMENTOS - IP",
+  "nome_reduzido": "NU PAGAMENTOS - IP",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "22896431",
+  "nome": "PICPAY",
+  "nome_reduzido": "PICPAY",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ },
+ {
+  "ispb": "09516419",
+  "nome": "PICPAY BANK - BANCO MÚLTIPLO S.A",
+  "nome_reduzido": "PICPAY BANK - BANCO MÚLTIPLO S.A",
+  "modalidade_participacao": "Provedor de Conta Transacional",
+  "tipo_participacao": "Direta",
+  "inicio_operacao": null
+ }
+]
