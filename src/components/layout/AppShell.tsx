@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState, type MouseEvent, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import AppBar from '@mui/material/AppBar';
@@ -13,16 +13,24 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import HandymanIcon from '@mui/icons-material/Handyman';
 import { ToolIcon } from '@/components/ToolIcon';
 import { CRIADOR, SITE, TOOLS } from '@/lib/tools';
 
 /** Moldura do site: barra com as ferramentas (gaveta no celular), conteúdo e rodapé. */
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [menuEl, setMenuEl] = useState<HTMLElement | null>(null);
+  const principais = TOOLS.filter((t) => !t.menu);
+  const avulsas = TOOLS.filter((t) => t.menu);
   const pathname = usePathname() ?? '/';
   const isActive = (p: string) => pathname === p || pathname === p.replace(/\/$/, '');
 
@@ -40,7 +48,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             {SITE.name}
           </Typography>
           <Box component="nav" aria-label="Ferramentas" sx={{ display: { xs: 'none', lg: 'flex' }, gap: 0.5, flexGrow: 1 }}>
-            {TOOLS.map((t) => (
+            {principais.map((t) => (
               <Button
                 key={t.path}
                 component={Link}
@@ -53,6 +61,27 @@ export function AppShell({ children }: { children: ReactNode }) {
                 {t.short}
               </Button>
             ))}
+            <Button
+              id="menu-ferramentas"
+              color="inherit"
+              aria-haspopup="true"
+              aria-expanded={menuEl ? 'true' : undefined}
+              aria-controls={menuEl ? 'lista-ferramentas' : undefined}
+              onClick={(e: MouseEvent<HTMLElement>) => setMenuEl(e.currentTarget)}
+              startIcon={<HandymanIcon fontSize="small" />}
+              endIcon={<ExpandMoreIcon />}
+              sx={{ whiteSpace: 'nowrap', borderBottom: '2px solid', borderColor: avulsas.some((t) => isActive(t.path)) ? 'currentColor' : 'transparent', borderRadius: 0 }}
+            >
+              Ferramentas
+            </Button>
+            <Menu id="lista-ferramentas" anchorEl={menuEl} open={!!menuEl} onClose={() => setMenuEl(null)} slotProps={{ list: { 'aria-labelledby': 'menu-ferramentas' } }}>
+              {avulsas.map((t) => (
+                <MenuItem key={t.path} component={Link} href={t.path} selected={isActive(t.path)} onClick={() => setMenuEl(null)}>
+                  <ListItemIcon><ToolIcon icon={t.icon} fontSize="small" /></ListItemIcon>
+                  <ListItemText primary={t.menu} />
+                </MenuItem>
+              ))}
+            </Menu>
           </Box>
           <Button component={Link} href="/sobre/" color="inherit" aria-current={isActive('/sobre/') ? 'page' : undefined} sx={{ display: { xs: 'none', lg: 'inline-flex' } }}>
             Sobre
@@ -67,10 +96,17 @@ export function AppShell({ children }: { children: ReactNode }) {
         <Box component="nav" aria-label="Ferramentas" sx={{ width: 280 }} onClick={() => setOpen(false)}>
           <Typography variant="h6" component="p" sx={{ p: 2, fontWeight: 800 }}>{SITE.name}</Typography>
           <List>
-            {TOOLS.map((t) => (
+            {principais.map((t) => (
               <ListItemButton key={t.path} component={Link} href={t.path} selected={isActive(t.path)}>
                 <ListItemIcon><ToolIcon icon={t.icon} /></ListItemIcon>
                 <ListItemText primary={t.title} />
+              </ListItemButton>
+            ))}
+            <ListSubheader component="p" disableSticky>Ferramentas</ListSubheader>
+            {avulsas.map((t) => (
+              <ListItemButton key={t.path} component={Link} href={t.path} selected={isActive(t.path)}>
+                <ListItemIcon><ToolIcon icon={t.icon} /></ListItemIcon>
+                <ListItemText primary={t.menu} />
               </ListItemButton>
             ))}
             <ListItemButton component={Link} href="/sobre/" selected={isActive('/sobre/')}>

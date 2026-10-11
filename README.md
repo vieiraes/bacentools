@@ -11,7 +11,7 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 [![CI](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml)
 [![Dados](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml)
 [![Licença](https://img.shields.io/badge/licença-Apache%202.0-0b4f9c)](LICENSE)
-![Testes](https://img.shields.io/badge/testes-159%20unit%20%2B%2094%20E2E-2e7d32)
+![Testes](https://img.shields.io/badge/testes-159%20unit%20%2B%2096%20E2E-2e7d32)
 ![Acessibilidade](https://img.shields.io/badge/axe-WCAG%202.2%20AA-0b4f9c)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs)
 

@@ -6,6 +6,8 @@ export interface Tool {
   description: string;
   icon: 'bank' | 'pix' | 'docs' | 'bucket' | 'flow' | 'qr' | 'id';
   source: string;
+  /** Ferramentas avulsas ficam no menu "Ferramentas" da barra do topo, com este nome curto */
+  menu?: string;
 }
 
 export const TOOLS: Tool[] = [
@@ -47,6 +49,7 @@ export const TOOLS: Tool[] = [
     short: 'QR Code Pix',
     description: 'Cole um Pix Copia e Cola e veja chave, valor, txid, URL e CRC, com cada campo conferido contra o Manual de Padrões do BCB.',
     icon: 'qr',
+    menu: 'Decodificador Pix (QR Code)',
     source: 'Manual de Padrões para Iniciação do Pix 2.10.0 (BCB)',
   },
   {
@@ -55,6 +58,7 @@ export const TOOLS: Tool[] = [
     short: 'EndToEndId',
     description: 'Descubra quem gerou um EndToEndId ou RtrId de devolução, quando (UTC e Brasília) e se o formato está certo. Também lê UUID, inclusive a data do v7.',
     icon: 'id',
+    menu: 'Decodificador UUID v7 e EndToEndId',
     source: 'Catálogo de Mensagens do SPI 5.13.2 (BCB) e RFC 9562',
   },
   {

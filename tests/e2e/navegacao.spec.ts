@@ -22,6 +22,21 @@ test.describe('navegação e SEO', () => {
     }
   });
 
+  test('menu "Ferramentas" da barra do topo leva aos decodificadores (gaveta no celular)', async ({ page, isMobile }) => {
+    await mockSources(page);
+    await page.goto('/');
+    for (const [item, path] of [['Decodificador Pix (QR Code)', '/decodificador-pix/'], ['Decodificador UUID v7 e EndToEndId', '/identificadores-pix/']] as const) {
+      if (isMobile) {
+        await page.getByRole('button', { name: 'Abrir menu' }).click();
+        await page.getByRole('link', { name: item }).click();
+      } else {
+        await page.getByRole('banner').getByRole('button', { name: 'Ferramentas' }).click();
+        await page.getByRole('menuitem', { name: item }).click();
+      }
+      await expect(page).toHaveURL(path);
+    }
+  });
+
   test('cada página tem título próprio para buscadores', async ({ page }) => {
     await mockSources(page);
     for (const [path, title] of [['/bancos/', /Bancos por ISPB e código COMPE · BacenTools/], ['/simulador-dict/', /Simulador de fichas do DICT/]] as const) {
