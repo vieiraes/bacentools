@@ -19,8 +19,18 @@ export async function mockSources(page: Page, opts: { brasilapi?: 'ok' | 'down';
   await page.route('https://cdn.jsdelivr.net/**', (r) => r.fulfill({ status: 200, contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg"/>' }));
 }
 
-/** Toda página: rede simulada e falha automática se aparecer erro no console. */
+/** Toda página: espera a hidratação do React depois de cada navegação e falha se aparecer erro no console. */
 export const test = base.extend<{ consoleErrors: string[] }>({
+  page: async ({ page }, use) => {
+    const goto = page.goto.bind(page);
+    page.goto = async (url, opts) => {
+      const res = await goto(url, opts);
+      // clicar antes da hidratação perde o clique (o CI é mais lento que a máquina local)
+      await page.locator('html[data-hydrated="true"]').waitFor({ timeout: 15_000 });
+      return res;
+    };
+    await use(page);
+  },
   consoleErrors: [async ({ page }, use) => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(e.message));

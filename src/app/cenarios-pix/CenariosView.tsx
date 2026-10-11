@@ -146,7 +146,7 @@ export function CenariosView() {
       <Box component="section" aria-labelledby="catalogo">
         <Typography id="catalogo" variant="h2" sx={{ mb: 1 }}>Catálogo completo ({ERROS.length} códigos)</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Toque num código para ver o cenário animado. Base levantada em {new Date(BASE.geradoEm).toLocaleDateString('pt-BR')} nos documentos oficiais do BCB.
+          Toque num código para ver o cenário animado. Base levantada em {new Date(BASE.geradoEm).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })} nos documentos oficiais do BCB.
         </Typography>
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 12, md: 8 }}>
