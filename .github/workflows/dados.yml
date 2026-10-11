@@ -1,0 +1,31 @@
+name: Atualizar dados
+
+# Cópia diária de bancos e participantes do Pix (fallback quando a BrasilAPI cai).
+# Se mudou algo, faz commit na main, o que dispara a CI e a publicação.
+on:
+  schedule:
+    - cron: '0 9 * * *' # 06:00 em Brasília
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/snapshot-data.mjs
+      - name: Commit se houver mudança nos dados
+        run: |
+          # o script só regrava um arquivo quando a lista mudou
+          if git diff --quiet -- public/data; then
+            echo "Sem mudança nas listas." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data
+          git commit -m "chore(dados): atualiza cópia de bancos e participantes do Pix"
+          git push

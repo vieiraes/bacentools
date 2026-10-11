@@ -1,0 +1,202 @@
+{
+ "SPI": {
+  "conteudo": [
+   {
+    "titulo": "Informe SPI-018-2026",
+    "DataModificacao": "2026-10-06T13:42:54Z",
+    "dataCriacao": "2026-10-05T13:11:54Z",
+    "Id": 173,
+    "dataReferencia": "2026-10-02T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "154422",
+     "Name": "InformeSPI-018-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informesspi/InformeSPI-018-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informesspi/InformeSPI-018-2026.pdf",
+    "DataPublicacao": "2026-10-05T13:15:28Z",
+    "Tamanho": "154422"
+   },
+   {
+    "titulo": "Informe SPI-017-2026",
+    "DataModificacao": "2026-09-29T14:00:56Z",
+    "dataCriacao": "2026-09-29T13:59:35Z",
+    "Id": 172,
+    "dataReferencia": "2026-09-28T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "143200",
+     "Name": "InformeSPI-017-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informesspi/InformeSPI-017-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informesspi/InformeSPI-017-2026.pdf",
+    "DataPublicacao": "2026-09-29T14:00:55Z",
+    "Tamanho": "143200"
+   },
+   {
+    "titulo": "Informe SPI-016-2026",
+    "DataModificacao": "2026-09-28T13:05:06Z",
+    "dataCriacao": "2026-09-28T13:03:51Z",
+    "Id": 171,
+    "dataReferencia": "2026-09-25T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "228758",
+     "Name": "InformeSPI-016-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informesspi/InformeSPI-016-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informesspi/InformeSPI-016-2026.pdf",
+    "DataPublicacao": "2026-09-28T13:05:05Z",
+    "Tamanho": "228758"
+   },
+   {
+    "titulo": "Informe SPI-015-2026",
+    "DataModificacao": "2026-09-18T13:22:42Z",
+    "dataCriacao": "2026-09-18T13:21:16Z",
+    "Id": 170,
+    "dataReferencia": "2026-09-17T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "217632",
+     "Name": "InformeSPI-015-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informesspi/InformeSPI-015-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informesspi/InformeSPI-015-2026.pdf",
+    "DataPublicacao": "2026-09-18T13:22:41Z",
+    "Tamanho": "217632"
+   },
+   {
+    "titulo": "Informe SPI-014-2026",
+    "DataModificacao": "2026-09-16T13:12:12Z",
+    "dataCriacao": "2026-09-16T13:10:56Z",
+    "Id": 169,
+    "dataReferencia": "2026-09-15T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "260738",
+     "Name": "InformeSPI-014-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informesspi/InformeSPI-014-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informesspi/InformeSPI-014-2026.pdf",
+    "DataPublicacao": "2026-09-16T13:12:11Z",
+    "Tamanho": "260738"
+   },
+   {
+    "titulo": "Informe SPI-013-2026",
+    "DataModificacao": "2026-09-02T14:15:37Z",
+    "dataCriacao": "2026-09-02T14:14:30Z",
+    "Id": 168,
+    "dataReferencia": "2026-09-01T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "266783",
+     "Name": "InformeSPI-013-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informesspi/InformeSPI-013-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informesspi/InformeSPI-013-2026.pdf",
+    "DataPublicacao": "2026-09-02T14:15:36Z",
+    "Tamanho": "266783"
+   }
+  ]
+ },
+ "STR": {
+  "conteudo": [
+   {
+    "titulo": "Informe STR-018-2026",
+    "DataModificacao": "2026-10-06T13:45:09Z",
+    "dataCriacao": "2026-10-05T13:22:59Z",
+    "Id": 178,
+    "dataReferencia": "2026-10-02T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "257527",
+     "Name": "InformeSTR-018-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informes_STR/InformeSTR-018-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informes_STR/InformeSTR-018-2026.pdf",
+    "DataPublicacao": "2026-10-05T13:23:46Z",
+    "Tamanho": "257527"
+   },
+   {
+    "titulo": "Informe STR-017-2026",
+    "DataModificacao": "2026-09-28T13:12:34Z",
+    "dataCriacao": "2026-09-28T13:11:25Z",
+    "Id": 177,
+    "dataReferencia": "2026-09-25T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "273714",
+     "Name": "InformeSTR-017-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informes_STR/InformeSTR-017-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informes_STR/InformeSTR-017-2026.pdf",
+    "DataPublicacao": "2026-09-28T13:12:33Z",
+    "Tamanho": "273714"
+   },
+   {
+    "titulo": "Informe STR-016-2026",
+    "DataModificacao": "2026-09-16T13:07:47Z",
+    "dataCriacao": "2026-09-16T13:06:29Z",
+    "Id": 176,
+    "dataReferencia": "2026-09-15T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "295456",
+     "Name": "InformeSTR-016-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informes_STR/InformeSTR-016-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informes_STR/InformeSTR-016-2026.pdf",
+    "DataPublicacao": "2026-09-16T13:07:47Z",
+    "Tamanho": "295456"
+   },
+   {
+    "titulo": "Informe STR-015-2026",
+    "DataModificacao": "2026-09-11T13:45:01Z",
+    "dataCriacao": "2026-09-11T13:40:04Z",
+    "Id": 175,
+    "dataReferencia": "2026-09-11T03:05:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "257744",
+     "Name": "InformeSTR-015-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informes_STR/InformeSTR-015-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informes_STR/InformeSTR-015-2026.pdf",
+    "DataPublicacao": "2026-09-11T13:41:54Z",
+    "Tamanho": "257744"
+   },
+   {
+    "titulo": "Informe STR-014-2026",
+    "DataModificacao": "2026-09-11T13:41:40Z",
+    "dataCriacao": "2026-09-11T13:39:56Z",
+    "Id": 174,
+    "dataReferencia": "2026-09-11T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "251351",
+     "Name": "InformeSTR-014-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informes_STR/InformeSTR-014-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informes_STR/InformeSTR-014-2026.pdf",
+    "DataPublicacao": "2026-09-11T13:41:39Z",
+    "Tamanho": "251351"
+   },
+   {
+    "titulo": "Informe STR-013-2026",
+    "DataModificacao": "2026-08-17T13:18:15Z",
+    "dataCriacao": "2026-08-17T13:16:19Z",
+    "Id": 173,
+    "dataReferencia": "2026-08-14T03:00:00Z",
+    "descricao": null,
+    "arquivo": {
+     "Length": "283600",
+     "Name": "InformeSTR-013-2026.pdf",
+     "ServerRelativeUrl": "/content/estabilidadefinanceira/informes_STR/InformeSTR-013-2026.pdf"
+    },
+    "Url": "/content/estabilidadefinanceira/informes_STR/InformeSTR-013-2026.pdf",
+    "DataPublicacao": "2026-08-17T13:18:14Z",
+    "Tamanho": "283600"
+   }
+  ]
+ }
+}

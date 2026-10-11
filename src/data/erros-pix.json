@@ -1,0 +1,2074 @@
+{
+  "geradoEm": "2026-10-11",
+  "escopo": "Códigos de rejeição da pacs.002, motivos de devolução da pacs.004, admi.002 e tipos de erro da API DICT, extraídos dos documentos oficiais do BCB.",
+  "fontes": [
+    {
+      "id": "bcb-catalogo-spi-5.13.2",
+      "titulo": "Catálogo de Mensagens do SPI: definições detalhadas (spi.5.13.2.zip: planilhas xlsx, XSDs, exemplos e Notas de Versão)",
+      "versao": "5.13.2 (pacs.002.spi.1.18; pacs.004 v1.4+; admi.002.spi.1.5)",
+      "data": "2026-10-02",
+      "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/spi.5.13.2.zip",
+      "observacao": "Fonte principal dos códigos ISO. Indicado como referência nº 1 do Catálogo de Serviços do SFN, Vol. VI. As planilhas trazem, para cada código, o \"Participante que gera o Erro\"."
+    },
+    {
+      "id": "bcb-catalogo-servicos-sfn-vol6-5.13",
+      "titulo": "Catálogo de Serviços do SFN, Volume VI: Pagamentos Instantâneos",
+      "versao": "5.13",
+      "data": "2026-07-24 (arquivo spi.5.13.2.zip publicado em 2026-10-02)",
+      "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Catalogo_de_Servicos_do_SFN_Volume_VI_Versao_513.pdf",
+      "observacao": "Explica a estrutura do zip, os canais, a idempotência e a lista de mensagens. Não traz a tabela de códigos, que fica no zip."
+    },
+    {
+      "id": "bcb-notas-versao-spi-5.13.2",
+      "titulo": "Catálogo de Mensagens do SPI: Notas de Versão",
+      "versao": "5.13.2",
+      "data": "2026-10-02",
+      "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/spi.5.13.2.zip",
+      "observacao": "Arquivo NotasDeVersao.pdf dentro do zip. Usado para o histórico de códigos incluídos e excluídos (DS0H, DS24, BE15, AG01, DS02, DU03)."
+    },
+    {
+      "id": "bcb-manual-tempos-7.0",
+      "titulo": "Manual de Tempos do Pix",
+      "versao": "7.0",
+      "data": "2025-11-23 (último registro no histórico: 2026-02-02)",
+      "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Regulamento_Pix/IX_ManualdeTemposdoPix.pdf",
+      "observacao": "Limites de tempo (40 s / 45 min), quem rejeita por timeout e indicadores de ANS (t0' a t6a)."
+    },
+    {
+      "id": "bcb-manual-fluxos-2.1",
+      "titulo": "Manual de Fluxos do Processo de Efetivação do Pix",
+      "versao": "2.1 (vigente; a 2.2 entra em vigor em 01/02/2027)",
+      "data": "2025-06-05",
+      "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Regulamento_Pix/III_ManualdeFluxosdoProcessodeEfetivacaodoPix.pdf",
+      "observacao": "Fluxos passo a passo de consulta ao DICT (2.1.1), liquidação imediata (3.1.1) e devolução (4.1). Descreve só o caminho feliz; as rejeições não são detalhadas em etapas."
+    },
+    {
+      "id": "bcb-api-dict-2.12.1",
+      "titulo": "Especificação da API do DICT",
+      "versao": "2.12.1",
+      "data": "não informada na página",
+      "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/pix/API-DICT.html",
+      "observacao": "Página Redoc com o OpenAPI embutido. A tabela de erros fica na seção \"Tratamento de erros\"; o rate limiting fica em \"Segurança > Limitação de requisições\"."
+    },
+    {
+      "id": "bcb-requisitos-ux-7.3",
+      "titulo": "Requisitos Mínimos para a Experiência do Usuário (Pix)",
+      "versao": "7.3 (a 7.4 entra em vigor em 01/03/2027)",
+      "data": "2025-12",
+      "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Regulamento_Pix/IV_RequisitosMinimosparaExperienciadoUsuario.pdf",
+      "observacao": "Mensagens obrigatórias ao usuário: formato de chave inválido (req. 04), chave não encontrada/bloqueada (req. 05), falha de comunicação com o DICT (req. 08) e erros de liquidação (req. 10), jornada de pagamento por chave, p. 13-15."
+    },
+    {
+      "id": "bcb-regulamento-pix-res1",
+      "titulo": "Resolução BCB nº 1/2020: Regulamento do arranjo Pix (texto compilado)",
+      "versao": "versão normativa 43 (texto consolidado no site do BCB)",
+      "data": "2020-08-12 (com alterações posteriores)",
+      "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20BCB&numero=1",
+      "observacao": "Arts. 38 e 39 (rejeição pelo PSP do pagador e pelo do recebedor), 39-B (bloqueio cautelar de até 72 h) e 40/41 (devolução). Lido pela API do site do BCB (api/conteudo/app/normativos/exibenormativo)."
+    }
+  ],
+  "codigos": [
+    {
+      "codigo": "AB03",
+      "nomeIso": "AbortedSettlementTimeout",
+      "descricaoIso": "Settlement aborted due to timeout.",
+      "descricao": "Liquidação da transação interrompida devido a timeout no SPI. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AB03",
+      "cenario": "O PSP do recebedor não devolveu a pacs.002 a tempo e a liquidação não terminou dentro do limite de 40 s do canal primário; o SPI interrompe a liquidação.",
+      "acaoRecomendada": "Mostrar que o Pix não foi concluído por tempo esgotado, deixando claro que o erro é do PSP (Requisitos Mínimos UX v7.3, req. 10). Desfazer o bloqueio do valor; nova tentativa exige novo EndToEndId.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R7",
+      "fonteOficial": true,
+      "observacao": "O vínculo \"timeout do recebedor => AB03\" é dedução: o catálogo define AB03 como \"Liquidação interrompida devido a timeout no SPI\" (gerado pelo SPI) e o Manual de Tempos v7.0 (4.1.2.1) fala em \"liquidação interrompida devido a timeout do PSP do recebedor no SPI\". Nenhum documento diz literalmente \"use AB03 quando o recebedor não responder\". O exemplo oficial pacs.002_ERRO_1_msg.xml usa RJCT + AB03."
+    },
+    {
+      "codigo": "AB09",
+      "nomeIso": "ErrorCreditorAgent",
+      "descricaoIso": "Transaction stopped due to error at the Creditor Agent.",
+      "descricao": "Transação interrompida devido a erro no participante do usuário recebedor. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AB09",
+      "cenario": "Falha interna no PSP do recebedor ao processar o crédito (ex.: sistema de contas fora do ar).",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado por erro de processamento/falha técnica, deixando claro que o erro é do PSP e não do usuário (Requisitos Mínimos UX v7.3, req. 10). Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R8",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AB11",
+      "nomeIso": "TimeoutDebtorAgent",
+      "descricaoIso": "Transaction stopped due to timeout at the Debtor Agent.",
+      "descricao": "Timeout do participante emissor da ordem de pagamento. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AB11",
+      "cenario": "O SPI atribui o estouro de tempo ao participante emissor da ordem (PSP do pagador ou seu liquidante). Cenário exato não descrito no catálogo; ver \"observacao\".",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado por erro de processamento/falha técnica, deixando claro que o erro é do PSP e não do usuário (Requisitos Mínimos UX v7.3, req. 10). Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R9",
+      "fonteOficial": true,
+      "observacao": "O catálogo diz apenas \"Timeout do participante emissor da ordem de pagamento\" e que o SPI gera o erro. Não achei texto oficial com o cenário exato; o cenário é interpretação."
+    },
+    {
+      "codigo": "AC03",
+      "nomeIso": "InvalidCreditorAccountNumber",
+      "descricaoIso": "Creditor account number invalid or missing",
+      "descricao": "Número da agência e/ou conta transacional do usuário recebedor inexistente ou inválido. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AC03",
+      "cenario": "Pix manual (agência/conta digitadas) para uma conta que não existe no PSP do recebedor.",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado porque a conta do destinatário não existe (Requisitos Mínimos UX v7.3, req. 10). Desfazer o bloqueio do valor e orientar a conferir os dados.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R10",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AC06",
+      "nomeIso": "BlockedAccount",
+      "descricaoIso": "Account specified is blocked, prohibiting posting of transactions against it.",
+      "descricao": "Conta transacional do usuário recebedor encontra-se bloqueada. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AC06",
+      "cenario": "Conta do recebedor bloqueada (ex.: bloqueio cadastral ou judicial que impede créditos).",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado e que a conta do destinatário está indisponível (Requisitos Mínimos UX v7.3, req. 10). Desfazer o bloqueio do valor na conta do pagador.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R11",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AC07",
+      "nomeIso": "ClosedCreditorAccountNumber",
+      "descricaoIso": "Creditor account number closed",
+      "descricao": "Número da conta transacional do usuário recebedor encerrada. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AC07",
+      "cenario": "Conta do recebedor encerrada.",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado e que a conta do destinatário está indisponível (Requisitos Mínimos UX v7.3, req. 10). Desfazer o bloqueio do valor na conta do pagador.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R12",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AC14",
+      "nomeIso": "InvalidCreditorAccountType",
+      "descricaoIso": "Creditor account type missing or invalid",
+      "descricao": "Tipo incorreto para a conta transacional do usuário recebedor. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AC14",
+      "cenario": "Tipo de conta informado não confere (ex.: enviado como conta corrente, mas a conta é poupança ou de pagamento).",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado e pedir que o usuário confira os dados do recebedor. Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R13",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AG01",
+      "nomeIso": "TransactionForbidden",
+      "descricaoIso": "Transaction forbidden on this type of account (formerly NoAgreement)",
+      "descricao": "Transação relativa a ingresso de novos recursos em conta transacional destinados a exploração de loteria de apostas de quota fixa ilegais. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AG01",
+      "cenario": "Pix de entrada de recursos numa conta usada para exploração de apostas de quota fixa (bets) ilegais.",
+      "acaoRecomendada": "Mostrar que o Pix não foi realizado; não detalhar indícios. Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R14",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AG03",
+      "nomeIso": "TransactionNotSupported",
+      "descricaoIso": "Transaction type not supported/authorized on this account",
+      "descricao": "Tipo de transação não é suportado/autorizado na conta transacional do usuário recebedor. Exemplo: transferência para conta salário. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AG03",
+      "cenario": "Transação não aceita pelo tipo de conta, como no exemplo do próprio BCB: transferência para conta salário.",
+      "acaoRecomendada": "Mostrar que o Pix não foi realizado porque a conta de destino não aceita esse tipo de transação. Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R15",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AG12",
+      "nomeIso": "NotAllowedBookTransfer",
+      "descricaoIso": "Payment orders made by transferring funds from one account to another at the same financial institution (bank or payment institution) are not allowed.",
+      "descricao": "Não é permitida ordem de pagamento/devolução no SPI cujos recursos sejam transferidos de uma conta transacional para outra em uma mesma instituição participante ou entre participantes que utilizem o serviço de liquidação de um mesmo participante liquidante no SPI (booktransfer). Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AG12",
+      "cenario": "Pagador e recebedor no mesmo PSP (ou PSPs com o mesmo liquidante) e a ordem foi enviada ao SPI em vez de liquidada nos livros (booktransfer).",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R16",
+      "fonteOficial": true,
+      "observacao": "Notas de versão 5.13.1: AG12, DS27, RC09 e RC10 foram excluídos de CAMT.029, PAIN.012 e PAIN.014, mas continuam na tabela da pacs.002 v1.18."
+    },
+    {
+      "codigo": "AG13",
+      "nomeIso": "ForbiddenReturnPayment",
+      "descricaoIso": "Returned payments derived from previously returned transactions are not allowed.",
+      "descricao": "Não é permitido devolver a devolução de um pagamento instantâneo. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AG13",
+      "cenario": "Tentativa de devolver (pacs.004) uma devolução já recebida.",
+      "acaoRecomendada": "Bloquear a opção \"devolver\" para créditos que já são devolução; informar que não é permitido devolver uma devolução.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R17",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AGNT",
+      "nomeIso": "IncorrectAgent",
+      "descricaoIso": "Agent in the payment workflow is incorrect",
+      "descricao": "Participante direto não é liquidante do participante do usuário pagador. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AGNT",
+      "cenario": "O participante direto que enviou a mensagem não é o liquidante do PSP do pagador.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R18",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AM01",
+      "nomeIso": "ZeroAmount",
+      "descricaoIso": "Specified message amount is equal to zero",
+      "descricao": "Ordem de pagamento instantâneo com valor zero. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AM01",
+      "cenario": "Ordem de pagamento com valor R$ 0,00.",
+      "acaoRecomendada": "Validar no app antes de enviar: valor deve ser maior que zero.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R19",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AM02",
+      "nomeIso": "NotAllowedAmount",
+      "descricaoIso": "Specific transaction/message amount is greater than allowed maximum",
+      "descricao": "Ordem de pagamento/devolução em valor que faz superar o limite permitido para o tipo de conta transacional creditada. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AM02",
+      "cenario": "O crédito faria a conta do recebedor passar do limite permitido para o tipo de conta (ex.: conta com limite de saldo).",
+      "acaoRecomendada": "Mostrar que o Pix não foi realizado porque a conta de destino não pode receber esse valor; sugerir valor menor. Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R20",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AM04",
+      "nomeIso": "InsufficientFunds",
+      "descricaoIso": "Amount of funds available to cover specified message amount is insufficient.",
+      "descricao": "Saldo insuficiente na conta PI do participante do usuário pagador. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AM04",
+      "cenario": "Saldo insuficiente na Conta PI (conta de liquidação no BCB) do PSP do pagador. Não é o saldo do cliente.",
+      "acaoRecomendada": "Problema de liquidez do PSP: desfazer o bloqueio do valor e mostrar \"erro de processamento\" deixando claro que o erro é do PSP; não dizer ao usuário que ele está sem saldo.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R21",
+      "fonteOficial": true,
+      "observacao": "Conta PI = conta de liquidação do PSP no BCB. O saldo insuficiente do cliente é tratado pelo PSP do pagador antes de enviar a pacs.008 e não gera código no SPI."
+    },
+    {
+      "codigo": "AM09",
+      "nomeIso": "WrongAmount",
+      "descricaoIso": "Amount received is not the amount agreed or expected",
+      "descricao": "Devolução de pagamento em valor que faz superar o valor da ordem de pagamento instantâneo correspondente. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AM09",
+      "cenario": "Devolução (pacs.004) cujo valor, somado às devoluções anteriores, supera o valor do Pix original. Quem rejeita é o PSP que recebe a devolução.",
+      "acaoRecomendada": "Limitar no app o valor devolvível ao saldo restante do Pix original.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R22",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AM12",
+      "nomeIso": "InvalidAmount",
+      "descricaoIso": "Amount is invalid or missing",
+      "descricao": "Divergência entre a somatória dos valores do bloco valorDoDinheiroOuCompra e o campo valor. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AM12",
+      "cenario": "Pix Saque/Troco em que a soma do bloco valorDoDinheiroOuCompra difere do campo valor.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R23",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AM18",
+      "nomeIso": "InvalidNumberOfTransactions",
+      "descricaoIso": "Number of transactions is invalid or missing. Generic usage if cannot specify between group and payment information levels.",
+      "descricao": "Quantidade de transações inválida. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AM18",
+      "cenario": "Mensagem com quantidade de transações inválida.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R24",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "AM23",
+      "nomeIso": "AmountExceedsSettlementLimit",
+      "descricaoIso": "Transaction amount exceeds settlement limit.",
+      "descricao": "Soma dos tributos informados resulta em valor inválido (superior ao valor da transação). Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=AM23",
+      "cenario": "Soma dos tributos informados maior que o valor da transação.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R25",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "BE01",
+      "nomeIso": "InconsistenWithEndCustomer",
+      "descricaoIso": "Identification of end customer is not consistent with associated account number. (formerly CreditorConsistency).",
+      "descricao": "CPF/CNPJ do usuário recebedor não é consistente com o titular da conta transacional especificada. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=BE01",
+      "cenario": "O CPF/CNPJ informado como recebedor não é o do titular da conta de destino.",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado e pedir que o usuário confira os dados do recebedor. Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R26",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "BE05",
+      "nomeIso": "UnrecognisedInitiatingParty",
+      "descricaoIso": "Party who initiated the message is not recognised by the end customer",
+      "descricao": "CNPJ do iniciador de pagamento não se encontra cadastrado no arranjo Pix. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=BE05",
+      "cenario": "Pix via iniciador (ITP) cujo CNPJ não está cadastrado no arranjo Pix.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R27",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "BE15",
+      "nomeIso": "InvalidIdentificationCode",
+      "descricaoIso": "Identification code missing or invalid.",
+      "descricao": "Campo idConciliacaoRecebedor indevidamente não preenchido ou preenchido incorretamente. Participante que gera o erro: Participante do usuário recebedor.",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=BE15",
+      "cenario": "Pagamento de cobrança sem o idConciliacaoRecebedor (txid) ou com ele incorreto.",
+      "acaoRecomendada": "Mostrar que o Pix não foi realizado por problema nos dados da cobrança; sugerir ler o QR Code de novo.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R28",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "BE17",
+      "nomeIso": "InvalidCreditorIdentificationCode",
+      "descricaoIso": "Creditor or Ultimate Creditor identification code missing or invalid",
+      "descricao": "QR Code rejeitado pelo participante do usuário recebedor. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=BE17",
+      "cenario": "QR Code rejeitado pelo PSP do recebedor (ex.: cobrança inexistente ou inválida).",
+      "acaoRecomendada": "Mostrar que o QR Code não pôde ser pago; sugerir pedir um novo QR Code ao recebedor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R29",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "CH11",
+      "nomeIso": "CreditorIdentifierIncorrect",
+      "descricaoIso": "Value in Creditor Identifier is incorrect",
+      "descricao": "CPF/CNPJ do usuário recebedor incorreto. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=CH11",
+      "cenario": "CPF/CNPJ do recebedor incorreto.",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado e pedir que o usuário confira os dados do recebedor. Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R30",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "CH16",
+      "nomeIso": "ElementContentFormallyIncorrect",
+      "descricaoIso": "Content is incorrect",
+      "descricao": "Preenchimento do conteúdo da mensagem incorreto ou incompatível com as regras de negócio. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=CH16",
+      "cenario": "Conteúdo da mensagem preenchido de forma incorreta ou incompatível com as regras de negócio.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R31",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "CN01",
+      "nomeIso": "AuthorisationCancelled",
+      "descricaoIso": "Authorisation is cancelled.",
+      "descricao": "Agendamento de pagamento recorrente cancelado com statusDoCancelamento igual a \"ACCR (confirmado)\". Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=CN01",
+      "cenario": "Pix Automático: o agendamento já tinha sido cancelado (statusDoCancelamento = ACCR) e mesmo assim a ordem foi enviada.",
+      "acaoRecomendada": "Não enviar ordens de agendamentos cancelados; informar o pagador que o débito foi cancelado.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R32",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "DS02",
+      "nomeIso": "OrderCancelled",
+      "descricaoIso": "An authorized user has cancelled the order",
+      "descricao": "Ordem de pagamento rejeitada em função de configurações pré-estabelecidos pelos operadores da instituição no SPI-Web: - bloqueio manual de envio de Pix; - bloqueio automático de envio de Pix; ou - atingimento do limite mínimo operacional da Conta PI. Participante que gera o erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=DS02",
+      "cenario": "O PSP do pagador está com envio de Pix bloqueado no SPI-Web (bloqueio manual ou automático) ou atingiu o limite mínimo operacional da Conta PI.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R33",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "DS04",
+      "nomeIso": "OrderRejected",
+      "descricaoIso": "The order was rejected by the bank side (for reasons concerning content)",
+      "descricao": "Ordem rejeitada pelo participante do usuário recebedor. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=DS04",
+      "cenario": "O PSP do recebedor rejeita a ordem por motivo de conteúdo não coberto por outro código.",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado por erro de processamento/falha técnica, deixando claro que o erro é do PSP e não do usuário (Requisitos Mínimos UX v7.3, req. 10). Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R34",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "DS0G",
+      "nomeIso": "NotAllowedPayment",
+      "descricaoIso": "Signer is not allowed to sign this operation type.",
+      "descricao": "Participante que assinou a mensagem não é autorizado a realizar a operação na conta PI debitada. No caso em que o participante que assinou a mensagem não é o titular da conta PI debitada nem é o liquidante no SPI do participante do usuário pagador. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=DS0G",
+      "cenario": "Quem assinou a mensagem não é titular da Conta PI debitada nem liquidante do PSP do pagador.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R35",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "DS27",
+      "nomeIso": "UserNotYetActivated",
+      "descricaoIso": "The user is not yet activated",
+      "descricao": "Participante não se encontra cadastrado ou ainda não iniciou a operação no SPI. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=DS27",
+      "cenario": "Participante ainda não cadastrado no SPI ou que não iniciou a operação.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R36",
+      "fonteOficial": true,
+      "observacao": "Ver observação de AG12."
+    },
+    {
+      "codigo": "DT02",
+      "nomeIso": "InvalidCreationDate",
+      "descricaoIso": "Invalid creation date and time in Group Header (eg, historic date)",
+      "descricao": "Data e Hora do envio da mensagem inválida Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=DT02",
+      "cenario": "Data/hora de criação da mensagem (CreDtTm) inválida, ex.: data no passado.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R37",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "DT05",
+      "nomeIso": "InvalidCutOffDate",
+      "descricaoIso": "Associated message, payment information block or transaction was received after agreed processing cut-off date, i.e., date in the past.",
+      "descricao": "Transação extrapola o prazo máximo para devolução de pagamento instantâneo regulamentado pelo arranjo Pix. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=DT05",
+      "cenario": "Devolução enviada depois do prazo máximo do arranjo (90 dias da transação original).",
+      "acaoRecomendada": "Esconder/bloquear a opção de devolução após o prazo; informar que o prazo de devolução expirou.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R38",
+      "fonteOficial": true,
+      "observacao": "Prazo de 90 dias citado no Manual de Fluxos v2.1, seção 4.1, etapa 9. O art. 42 do Regulamento (90 dias) foi revogado pela Res. BCB 103/2021."
+    },
+    {
+      "codigo": "DU03",
+      "nomeIso": "DuplicateTransaction",
+      "descricaoIso": "Transaction is not unique.",
+      "descricao": "Ordem de pagamento rejeitada para evitar pagamento em duplicidade, quando a cobrança já tiver sido liquidada por outro arranjo de pagamento, por exemplo, boleto.  Participante que gera o erro: Participante do usuário recebedor.",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=DU03",
+      "cenario": "Pagar por Pix uma cobrança que já foi liquidada por outro meio, ex.: boleto (QR Code no boleto).",
+      "acaoRecomendada": "Mostrar que a cobrança já foi paga; não debitar o usuário.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R39",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "DUPL",
+      "nomeIso": "DuplicatePayment",
+      "descricaoIso": "Payment is a duplicate of another payment",
+      "descricao": "Pagamento efetuado em duplicidade nos casos em que as ordens de pagamento possuem IdConciliacaoDoRecebedor iguais para um mesmo usuário recebedor. É permitido que duas cobranças tenham o mesmo IdConciliacaoDoRecebedor desde que correspondam a usuários recebedores diferentes. Participante que gera o erro: Participante do usuário recebedor.",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=DUPL",
+      "cenario": "Segundo pagamento com o mesmo idConciliacaoRecebedor para o mesmo recebedor.",
+      "acaoRecomendada": "Mostrar que a cobrança já foi paga; não debitar o usuário.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R40",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "ED05",
+      "nomeIso": "SettlementFailed",
+      "descricaoIso": "Settlement of the transaction has failed",
+      "descricao": "Erro no processamento do pagamento instantâneo (erro genérico). Participante que gera o Erro: SPI Participante do usuário recebedor",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=ED05",
+      "cenario": "Erro genérico de processamento. Pode ser gerado pelo SPI ou pelo PSP do recebedor (o catálogo cita os dois).",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado por erro de processamento/falha técnica, deixando claro que o erro é do PSP e não do usuário (Requisitos Mínimos UX v7.3, req. 10). Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R41",
+      "fonteOficial": true,
+      "observacao": "O catálogo lista \"SPI / Participante do usuário recebedor\" como geradores."
+    },
+    {
+      "codigo": "FF07",
+      "nomeIso": "InvalidPurpose",
+      "descricaoIso": "Purpose is missing or invalid.",
+      "descricao": "Inconsistência entre a finalidade da transação e o preenchimento do bloco elementos Structured <Strd>. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=FF07",
+      "cenario": "Finalidade da transação incoerente com o bloco Structured <Strd> (ex.: finalidade de saque sem os dados de saque).",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R42",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "FF08",
+      "nomeIso": "InvalidEndToEndId",
+      "descricaoIso": "End to End Id missing or invalid",
+      "descricao": "Identificador da operação mal formatado. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=FF08",
+      "cenario": "EndToEndId mal formatado.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R43",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "FRAD",
+      "nomeIso": "FraudulentOrigin",
+      "descricaoIso": "Cancellation requested following a transaction that was originated fraudulently. The use of the FraudulentOrigin code should be governed by jurisdictions.",
+      "descricao": "Ordem de pagamento rejeitada por fundada suspeita de fraude. Participante que gera o erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=FRAD",
+      "cenario": "O PSP do recebedor identificou fundada suspeita de fraude e rejeitou o Pix.",
+      "acaoRecomendada": "Mostrar que o Pix não foi realizado; não revelar detalhes de prevenção à fraude. Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R44",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "INDT",
+      "nomeIso": "InvalidDetails",
+      "descricaoIso": "Details is not valid for this field",
+      "descricao": "Conteúdo da mensagem incompatível com os parâmetros atribuídos à cobrança (QR Code) ou à instrução de pagamento (pain.013) que a originou. Participante que gera o Erro: Participante do usuário recebedor.",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=INDT",
+      "cenario": "Valor ou dados do Pix diferentes dos parâmetros da cobrança (QR Code) ou da instrução de pagamento (pain.013) que a originou.",
+      "acaoRecomendada": "Mostrar que o Pix não foi realizado porque os dados não conferem com a cobrança; sugerir ler o QR Code de novo.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R45",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "MD01",
+      "nomeIso": "NoMandate",
+      "descricaoIso": "No Mandate",
+      "descricao": "ISPB do participante facilitador de serviço Pix Saque ou Pix Troco inexistente. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=MD01",
+      "cenario": "Pix Saque/Troco com ISPB do facilitador de serviço de saque inexistente.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R46",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "RC09",
+      "nomeIso": "InvalidDebtorClearingSystemMemberIdentifier",
+      "descricaoIso": "Debtor ClearingSystemMember identifier is invalid or missing",
+      "descricao": "ISPB do participante do usuário pagador inválido ou inexistente. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=RC09",
+      "cenario": "ISPB do PSP do pagador inválido ou inexistente.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R47",
+      "fonteOficial": true,
+      "observacao": "Ver observação de AG12."
+    },
+    {
+      "codigo": "RC10",
+      "nomeIso": "InvalidCreditorClearingSystemMemberIdentifier",
+      "descricaoIso": "Creditor ClearingSystemMember identifier is invalid or missing",
+      "descricao": "ISPB do participante do usuário recebedor inválido ou inexistente. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=RC10",
+      "cenario": "ISPB do PSP do recebedor inválido ou inexistente (ex.: Pix manual com instituição errada).",
+      "acaoRecomendada": "Mostrar que o Pix NÃO foi realizado e pedir que o usuário confira os dados do recebedor. Desfazer o bloqueio do valor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R48",
+      "fonteOficial": true,
+      "observacao": "Ver observação de AG12."
+    },
+    {
+      "codigo": "RR04",
+      "nomeIso": "Regulatory Reason",
+      "descricaoIso": "Regulatory Reason",
+      "descricao": "Ordem de pagamento em que o usuário pagador é sancionado por resolução do Conselho de Segurança das Nações Unidas (CSNU). Nos casos em que o usuário recebedor for o sancionado, a ordem de pagamento não deve ser rejeitada. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=RR04",
+      "cenario": "Pagador sancionado por resolução do Conselho de Segurança da ONU (CSNU). Se o sancionado for o recebedor, a ordem NÃO deve ser rejeitada.",
+      "acaoRecomendada": "Mostrar que o Pix não foi realizado; não detalhar o motivo regulatório.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R49",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "RR06",
+      "nomeIso": "TaxInformationInvalid",
+      "descricaoIso": "Tax information missing, incomplete or invalid.",
+      "descricao": "O bloco de elementos somente poderá ser preenchido quando os campos cpfCnpjUsuarioPagador e cpfCnpjUsuarioRecebedor forem ambos Pessoa Jurídica (14 caracteres) e o campo formaDeIniciacao for igual a 'QRES', 'APES', 'MANU' ou 'DICT'. Participante que gera o Erro: SPI",
+      "origem": "SPI",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=RR06",
+      "cenario": "Bloco de tributos preenchido quando pagador e recebedor não são ambos PJ ou a formaDeIniciacao não é QRES, APES, MANU ou DICT.",
+      "acaoRecomendada": "Erro técnico do PSP pagador ou do seu liquidante (não do usuário): corrigir a mensagem/configuração, desfazer o bloqueio do valor e mostrar \"erro de processamento\" ao usuário (Requisitos Mínimos UX v7.3, req. 10).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R50",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "SL02",
+      "nomeIso": "SpecificServiceOfferedByCreditorAgent",
+      "descricaoIso": "Due to specific service offered by the Creditor Agent",
+      "descricao": "A transação referenciada na mensagem de devolução (pacs.004) original não está relacionada aos serviços de Pix Saque ou Pix Troco. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=SL02",
+      "cenario": "Devolução com motivo SL02 para um Pix que não é Pix Saque nem Pix Troco; o PSP que recebe a devolução rejeita.",
+      "acaoRecomendada": "Usar SL02 só em devoluções de Pix Saque/Troco.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R51",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "UPAY",
+      "nomeIso": "UnduePayment",
+      "descricaoIso": "Payment is not justified",
+      "descricao": "Pagamento é indevido por ausência de recorrência válida/ativa. Participante que gera o Erro: Participante do usuário recebedor",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.002 com TxSts=RJCT e StsRsnInf/Rsn/Cd=UPAY",
+      "cenario": "Pix Automático sem recorrência válida/ativa.",
+      "acaoRecomendada": "Não enviar ordens sem recorrência ativa; informar o pagador.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS002.xlsx (pacs.002.spi.1.18), aba \"Tabela de Domínios\", elemento TxInfAndSts/StsRsnInf/Rsn/Cd, linha R52",
+      "fonteOficial": true
+    },
+    {
+      "codigo": "BE08",
+      "nomeIso": "BankError",
+      "descricaoIso": "Returned as a result of a bank error.",
+      "descricao": "Devolução de pagamento iniciada pelo participante do usuário recebedor no âmbito do Mecanismo Especial de Devolução. Deve ser preenchido sempre que uma solicitação de devolução for iniciada pelo participante do usuário pagador com o motivo falha operacional do PSP do pagador ou sempre que a devolução for iniciada pelo participante do usuário recebedor por falha operacional em seus próprios sistemas.",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.004 (devolução), campo TxInf/RtrRsnInf/Rsn/Cd (codigoDevolucao) = BE08",
+      "cenario": "Devolução por falha operacional (do PSP do pagador ou do próprio PSP que devolve), no âmbito do MED.",
+      "acaoRecomendada": "Ao receber: creditar o pagador original e mostrar o crédito como devolução por falha operacional.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS004.xlsx, aba \"Tabela de Domínios\", elemento TxInf/RtrRsnInf/Rsn/Cd, linha R8",
+      "fonteOficial": true,
+      "observacao": "Motivo de devolução (pacs.004), não código de rejeição. Quem envia a pacs.004 é o PSP do recebedor do Pix original."
+    },
+    {
+      "codigo": "FR01",
+      "nomeIso": "Fraud",
+      "descricaoIso": "Returned as a result of fraud.",
+      "descricao": "Devolução de pagamento, iniciada pelo participante do usuário recebedor no âmbito do Mecanismo Especial de Devolução, motivada por fundada suspeita de fraude. Deve ser preenchido sempre que uma solicitação de devolução for iniciada pelo participante do usuário pagador com o motivo fundada suspeita de fraude ou sempre que a devolução for iniciada pelo participante do usuário recebedor por fundada suspeita de fraude.",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.004 (devolução), campo TxInf/RtrRsnInf/Rsn/Cd (codigoDevolucao) = FR01",
+      "cenario": "Devolução por fundada suspeita de fraude, no âmbito do MED (ex.: golpe confirmado depois de notificação de infração no DICT).",
+      "acaoRecomendada": "Ao receber: creditar o pagador original e mostrar o crédito como devolução por fraude (MED).",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS004.xlsx, aba \"Tabela de Domínios\", elemento TxInf/RtrRsnInf/Rsn/Cd, linha R9",
+      "fonteOficial": true,
+      "observacao": "Motivo de devolução (pacs.004), não código de rejeição. Quem envia a pacs.004 é o PSP do recebedor do Pix original."
+    },
+    {
+      "codigo": "MD06",
+      "nomeIso": "RefundRequestByEndCustomer",
+      "descricaoIso": "Return of funds requested by end customer",
+      "descricao": "Devolução de pagamento solicitado pelo usuário recebedor.",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.004 (devolução), campo TxInf/RtrRsnInf/Rsn/Cd (codigoDevolucao) = MD06",
+      "cenario": "O próprio recebedor decide devolver o Pix (ex.: cliente pediu estorno de uma compra).",
+      "acaoRecomendada": "Ao receber: creditar o pagador original e mostrar como devolução pedida pelo recebedor.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS004.xlsx, aba \"Tabela de Domínios\", elemento TxInf/RtrRsnInf/Rsn/Cd, linha R10",
+      "fonteOficial": true,
+      "observacao": "Motivo de devolução (pacs.004), não código de rejeição. Quem envia a pacs.004 é o PSP do recebedor do Pix original."
+    },
+    {
+      "codigo": "SL02",
+      "nomeIso": "SpecificServiceOfferedByCreditorAgent",
+      "descricaoIso": "Due to specific service offered by the Creditor Agent",
+      "descricao": "Devolução de pagamento solicitada pelo usuário recebedor motivada por um erro na transação ou desacordo entre as partes relacionados ao Pix Saque ou ao Pix Troco.",
+      "origem": "PSP_RECEBEDOR",
+      "mensagem": "pacs.004 (devolução), campo TxInf/RtrRsnInf/Rsn/Cd (codigoDevolucao) = SL02",
+      "cenario": "Devolução de Pix Saque ou Pix Troco por erro na transação ou desacordo entre as partes.",
+      "acaoRecomendada": "Ao receber: creditar o pagador original e mostrar como devolução de Saque/Troco.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "spi.5.13.2.zip > xlsx/PACS004.xlsx, aba \"Tabela de Domínios\", elemento TxInf/RtrRsnInf/Rsn/Cd, linha R11",
+      "fonteOficial": true,
+      "observacao": "Motivo de devolução (pacs.004), não código de rejeição. Quem envia a pacs.004 é o PSP do recebedor do Pix original. SL02 também existe como código de rejeição na pacs.002, com outro significado."
+    },
+    {
+      "codigo": "Forbidden",
+      "nomeIso": null,
+      "descricao": "Requisição de participante autenticado viola alguma regra de autorização",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 403 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/Forbidden",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 403,
+      "grupoDict": "Geral",
+      "cenario": "Participante autenticado tenta uma operação que não pode fazer (regra de autorização).",
+      "acaoRecomendada": "Erro técnico do PSP: mostrar falha técnica ao usuário."
+    },
+    {
+      "codigo": "BadRequest",
+      "nomeIso": null,
+      "descricao": "Requisição com formato inválido",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/BadRequest",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Geral",
+      "cenario": "Requisição ao DICT com formato inválido.",
+      "acaoRecomendada": "Validar a chave antes de enviar; se o formato for inválido, a chave nem deve ir ao DICT (Requisitos Mínimos UX v7.3, req. 04)."
+    },
+    {
+      "codigo": "NotFound",
+      "nomeIso": null,
+      "descricao": "Entidade não encontrada",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 404 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/NotFound",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 404,
+      "grupoDict": "Geral",
+      "cenario": "Chave consultada não existe no DICT (ex.: e-mail digitado errado). Na consulta, cada 404 também consome fichas do balde antivarredura (20 fichas por usuário, 3 por participante).",
+      "acaoRecomendada": "Mostrar que o Pix não foi realizado e que a chave não existe ou está indisponível (Requisitos Mínimos UX v7.3, req. 05)."
+    },
+    {
+      "codigo": "ResourceConflict",
+      "nomeIso": null,
+      "descricao": "Este recurso está sendo processado por outra operação no momento. Indica-se que a requisição seja feita novamente em instantes.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 409 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ResourceConflict",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 409,
+      "grupoDict": "Geral",
+      "cenario": "O recurso está sendo processado por outra operação naquele momento.",
+      "acaoRecomendada": "Repetir a requisição em instantes."
+    },
+    {
+      "codigo": "Gone",
+      "nomeIso": null,
+      "descricao": "Recurso não está mais disponível",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 410 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/Gone",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 410,
+      "grupoDict": "Geral",
+      "cenario": "Recurso não está mais disponível",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "RateLimited",
+      "nomeIso": null,
+      "descricao": "Limite de requisições foi atingido Ver seção sobre limitação de requisições",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 429 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RateLimited",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 429,
+      "grupoDict": "Geral",
+      "cenario": "Muitas consultas de chave pelo mesmo usuário ou participante (balde de fichas zerado, política antivarredura).",
+      "acaoRecomendada": "Não deixar o usuário repetir a consulta; mostrar falha e pedir para tentar mais tarde."
+    },
+    {
+      "codigo": "InternalServerError",
+      "nomeIso": null,
+      "descricao": "Condição inesperada ao processar requisição.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 500 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InternalServerError",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 500,
+      "grupoDict": "Geral",
+      "cenario": "Condição inesperada no DICT.",
+      "acaoRecomendada": "Mostrar falha de comunicação e pedir nova tentativa (Requisitos Mínimos UX v7.3, req. 08)."
+    },
+    {
+      "codigo": "ServiceUnavailable",
+      "nomeIso": null,
+      "descricao": "Serviço não está disponível no momento. Pode estar em manutenção ou fora da janela de funcionamento.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 503 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ServiceUnavailable",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 503,
+      "grupoDict": "Geral",
+      "cenario": "DICT em manutenção ou fora da janela de funcionamento.",
+      "acaoRecomendada": "Mostrar falha de comunicação e pedir nova tentativa (Requisitos Mínimos UX v7.3, req. 08)."
+    },
+    {
+      "codigo": "RequestSignatureInvalid",
+      "nomeIso": null,
+      "descricao": "Assinatura digital da requisição enviada é inválida.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RequestSignatureInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Geral",
+      "cenario": "Assinatura digital da requisição enviada é inválida.",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "RequestIdAlreadyUsed",
+      "nomeIso": null,
+      "descricao": "Requisição foi feita com mesmo `RequestId` de requisição feita anteriormente, mas com parâmetros diferentes.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RequestIdAlreadyUsed",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Geral",
+      "cenario": "Requisição foi feita com mesmo `RequestId` de requisição feita anteriormente, mas com parâmetros diferentes.",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "InvalidReason",
+      "nomeIso": null,
+      "descricao": "Requisição foi feita com uma razão inválida para a operação",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InvalidReason",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Geral",
+      "cenario": "Requisição foi feita com uma razão inválida para a operação",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "ParticipantInvalid",
+      "nomeIso": null,
+      "descricao": "O participante não pode participar na operação solicitada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ParticipantInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Geral",
+      "cenario": "O participante não pode participar na operação solicitada.",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "TaxIdNumberBlocked",
+      "nomeIso": null,
+      "descricao": "O CPF/CNPJ encontra-se bloqueado por ordem judicial.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/TaxIdNumberBlocked",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Geral",
+      "cenario": "O CPF/CNPJ encontra-se bloqueado por ordem judicial.",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "UserOrAccountWithFraudRelatedRestriction",
+      "nomeIso": null,
+      "descricao": "Conta/usuário com restrição motivada por fundada suspeita de fraude em transações Pix.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/UserOrAccountWithFraudRelatedRestriction",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Geral",
+      "cenario": "Conta/usuário com restrição motivada por fundada suspeita de fraude em transações Pix.",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "DeprecatedResource",
+      "nomeIso": null,
+      "descricao": "Este recurso foi deprecado.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 410 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/DeprecatedResource",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Geral\"",
+      "fonteOficial": true,
+      "httpStatus": 410,
+      "grupoDict": "Geral",
+      "cenario": "Este recurso foi deprecado.",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "EntryInvalid",
+      "nomeIso": null,
+      "descricao": "Existem campos inválidos ao tentar criar ou atualizar vínculo",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "Existem campos inválidos ao tentar criar ou atualizar vínculo",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "EntryLimitExceeded",
+      "nomeIso": null,
+      "descricao": "Número de vínculos associados a conta transacional excedeu o limite máximo",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryLimitExceeded",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "No cadastro de chave: a conta já tem o número máximo de chaves.",
+      "acaoRecomendada": "Informar o limite e sugerir excluir uma chave."
+    },
+    {
+      "codigo": "EntryAlreadyExists",
+      "nomeIso": null,
+      "descricao": "Já existe vínculo para essa chave com o mesmo participante e dono",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryAlreadyExists",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "No cadastro de chave: a mesma chave já existe para o mesmo dono e PSP.",
+      "acaoRecomendada": "Informar que a chave já está cadastrada."
+    },
+    {
+      "codigo": "EntryCannotBeQueriedForBookTransfer",
+      "nomeIso": null,
+      "descricao": "Vínculo consultado está custodiado no mesmo PSP do usuário pagador para quem está sendo feita a consulta. Quando o pagador e o recebedor estão no mesmo PSP, não deve ser feita consulta ao DICT.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryCannotBeQueriedForBookTransfer",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "A chave pertence a um cliente do mesmo PSP do pagador; nesse caso o PSP não deve consultar o DICT.",
+      "acaoRecomendada": "Erro do PSP: resolver a chave na própria base e liquidar internamente."
+    },
+    {
+      "codigo": "EntryKeyOwnedByDifferentPerson",
+      "nomeIso": null,
+      "descricao": "Já existe vínculo para essa chave mas ela é possuída por outra pessoa. Indica-se que seja feita uma reivindicação de posse.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryKeyOwnedByDifferentPerson",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "No cadastro de chave: a chave já é de outra pessoa.",
+      "acaoRecomendada": "Oferecer ao usuário abrir reivindicação de posse."
+    },
+    {
+      "codigo": "EntryKeyInCustodyOfDifferentParticipant",
+      "nomeIso": null,
+      "descricao": "Já existe vínculo para essa chave com o mesmo dono, mas ela encontra-se associada a outro participante. Indica-se que seja feita uma reivindicação de portabilidade.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryKeyInCustodyOfDifferentParticipant",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "No cadastro de chave: a chave é do mesmo dono, mas está em outro PSP.",
+      "acaoRecomendada": "Oferecer ao usuário abrir reivindicação de portabilidade."
+    },
+    {
+      "codigo": "EntryLockedByClaim",
+      "nomeIso": null,
+      "descricao": "Existe uma reivindicação com status diferente de concluída ou cancelada para a chave do vínculo. Enquanto estiver nessa situação, o vínculo não pode ser excluído.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryLockedByClaim",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "Existe uma reivindicação com status diferente de concluída ou cancelada para a chave do vínculo. Enquanto estiver nessa situação, o vínculo não pode ser excluído.",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "EntryTaxIdNumberByDifferentOwner",
+      "nomeIso": null,
+      "descricao": "CPF/CNPJ do vínculo diferente do CPF/CNPJ do dono da chave.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryTaxIdNumberByDifferentOwner",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "CPF/CNPJ do vínculo diferente do CPF/CNPJ do dono da chave.",
+      "acaoRecomendada": "Ver a descrição; tratamento não detalhado na fonte."
+    },
+    {
+      "codigo": "EntryBlocked",
+      "nomeIso": null,
+      "descricao": "O vínculo encontra-se bloqueado por ordem judicial e não pode ser consultado.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryBlocked",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "A chave consultada está bloqueada por ordem judicial.",
+      "acaoRecomendada": "Mostrar que a chave está indisponível (Requisitos Mínimos UX v7.3, req. 05)."
+    },
+    {
+      "codigo": "EntryWithFraudRelatedRestriction",
+      "nomeIso": null,
+      "descricao": "O vínculo encontra-se bloqueado devido à associação da conta/usuário com restrição motivada por fundada suspeita de fraude em transações Pix.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/EntryWithFraudRelatedRestriction",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Vínculo\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Vínculo",
+      "cenario": "A chave está bloqueada porque a conta/usuário tem restrição por fundada suspeita de fraude.",
+      "acaoRecomendada": "Mostrar que a chave está indisponível (Requisitos Mínimos UX v7.3, req. 05)."
+    }
+  ],
+  "dictOutrosTiposDeErro": [
+    {
+      "codigo": "ClaimInvalid",
+      "nomeIso": null,
+      "descricao": "Existem campos inválidos ao tentar criar ou atualizar reivindicação",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ClaimInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Reivindicação\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Reivindicação"
+    },
+    {
+      "codigo": "ClaimTypeInconsistent",
+      "nomeIso": null,
+      "descricao": "Tipo de reivindicação pedida é inconsistente. Esse erro ocorre nas situações em que se tenta criar a) reivindicação de posse , mas vínculo existente tem como dona a mesma pessoa que reivindica ou b) reinvidicação de portabilidade , mas vínculo existente tem como dona pessoa diferente da que reivindica.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ClaimTypeInconsistent",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Reivindicação\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Reivindicação"
+    },
+    {
+      "codigo": "ClaimKeyNotFound",
+      "nomeIso": null,
+      "descricao": "Não existe vínculo registrado com a chave que está sendo reivindicada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 404 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ClaimKeyNotFound",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Reivindicação\"",
+      "fonteOficial": true,
+      "httpStatus": 404,
+      "grupoDict": "Reivindicação"
+    },
+    {
+      "codigo": "ClaimAlreadyExistsForKey",
+      "nomeIso": null,
+      "descricao": "Existe uma reivindicação com status diferente de concluída ou cancelada para a chave reivindicada. Nova reivindicação para a chave só pode ser criada se a atual foi concluída ou cancelada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ClaimAlreadyExistsForKey",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Reivindicação\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Reivindicação"
+    },
+    {
+      "codigo": "ClaimResultingEntryAlreadyExists",
+      "nomeIso": null,
+      "descricao": "Vínculo que resultaria ao processar reivindicação já existe, com mesma chave, participante e dono.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ClaimResultingEntryAlreadyExists",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Reivindicação\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Reivindicação"
+    },
+    {
+      "codigo": "ClaimOperationInvalid",
+      "nomeIso": null,
+      "descricao": "Status atual da reivindicação não permite que operação seja feita.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ClaimOperationInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Reivindicação\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Reivindicação"
+    },
+    {
+      "codigo": "ClaimResolutionPeriodNotEnded",
+      "nomeIso": null,
+      "descricao": "Para reivindicação de posse, PSP doador não pode confirmar antes do término do período resolução. Para portabilidade, PSP doador não pode cancelar por fim de prazo antes do término do período resolução.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ClaimResolutionPeriodNotEnded",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Reivindicação\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Reivindicação"
+    },
+    {
+      "codigo": "ClaimCompletionPeriodNotEnded",
+      "nomeIso": null,
+      "descricao": "Para reivindicação de posse, se PSP reivindicador tenta encerrar antes do término do período encerramento.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/ClaimCompletionPeriodNotEnded",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Reivindicação\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Reivindicação"
+    },
+    {
+      "codigo": "InfractionReportInvalid",
+      "nomeIso": null,
+      "descricao": "Existem campos inválidos ao tentar criar ou atualizar a notificação de infração.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InfractionReportInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Notificação de infração\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Notificação de infração"
+    },
+    {
+      "codigo": "InfractionReportOperationInvalid",
+      "nomeIso": null,
+      "descricao": "Status atual da notificação de infração não permite que operação seja feita ou ela é vinculada a uma Recuperação de Valores e não pode ser cancelada por este endpoint.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InfractionReportOperationInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Notificação de infração\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Notificação de infração"
+    },
+    {
+      "codigo": "InfractionReportTransactionNotFound",
+      "nomeIso": null,
+      "descricao": "A transação definida na notificação de infração não foi encontrada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InfractionReportTransactionNotFound",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Notificação de infração\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Notificação de infração"
+    },
+    {
+      "codigo": "InfractionReportTransactionNotSettled",
+      "nomeIso": null,
+      "descricao": "A transação definida na notificação de infração não foi liquidada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InfractionReportTransactionNotSettled",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Notificação de infração\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Notificação de infração"
+    },
+    {
+      "codigo": "InfractionReportAlreadyBeingProcessedForTransaction",
+      "nomeIso": null,
+      "descricao": "Já existe uma notificação de infração em andamento para a transação informada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InfractionReportAlreadyBeingProcessedForTransaction",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Notificação de infração\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Notificação de infração"
+    },
+    {
+      "codigo": "InfractionReportAlreadyProcessedForTransaction",
+      "nomeIso": null,
+      "descricao": "Já existe uma notificação de infração fechado para a transação informada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InfractionReportAlreadyProcessedForTransaction",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Notificação de infração\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Notificação de infração"
+    },
+    {
+      "codigo": "InfractionReportPeriodExpired",
+      "nomeIso": null,
+      "descricao": "O prazo para a notificação de infração sobre a transação expirou.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/InfractionReportPeriodExpired",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Notificação de infração\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Notificação de infração"
+    },
+    {
+      "codigo": "FraudMarkerInvalid",
+      "nomeIso": null,
+      "descricao": "Existem campos inválidos ao tentar criar a marcação de fraude.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FraudMarkerInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Marcação de fraude\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Marcação de fraude"
+    },
+    {
+      "codigo": "RefundInvalid",
+      "nomeIso": null,
+      "descricao": "Existem campos inválidos ao tentar criar ou atualizar a solicitação de devolução.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "RefundOperationInvalid",
+      "nomeIso": null,
+      "descricao": "Status atual da solicitação de devolução não permite que operação seja feita ou ela é vinculada a uma Recuperação de Valores e não pode ser cancelada por este endpoint.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundOperationInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "RefundTransactionNotFound",
+      "nomeIso": null,
+      "descricao": "A transação definida na solicitação de devolução não foi encontrada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundTransactionNotFound",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "RefundTransactionNotSettled",
+      "nomeIso": null,
+      "descricao": "A transação definida na solicitação de devolução não foi liquidada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundTransactionNotSettled",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "RefundTransactionInvalid",
+      "nomeIso": null,
+      "descricao": "A transação definida na solicitação de devolução é inválida (por ser igual à transação original ou por não possuir finalidade 'IPRT').",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundTransactionInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "RefundAlreadyProcessedForTransaction",
+      "nomeIso": null,
+      "descricao": "Já existe uma solicitação de devolução processada para a transação informada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundAlreadyProcessedForTransaction",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "RefundAlreadyBeingProcessedForTransaction",
+      "nomeIso": null,
+      "descricao": "Já existe uma solicitação de devolução em processamento para a transação informada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundAlreadyBeingProcessedForTransaction",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "RefundPeriodExpired",
+      "nomeIso": null,
+      "descricao": "O prazo para solicitar devolução para a transação expirou.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundPeriodExpired",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "TransactionNotRefundable",
+      "nomeIso": null,
+      "descricao": "A transação informada na requisição não permite devolução.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/TransactionNotRefundable",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "RefundInfractionReportNotFound",
+      "nomeIso": null,
+      "descricao": "Uma notificação de infração correspondente à transação informada não foi encontrada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/RefundInfractionReportNotFound",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "TransactionRefundable",
+      "nomeIso": null,
+      "descricao": "Transação informada permite devolução.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/TransactionRefundable",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "TransactionTypeInvalid",
+      "nomeIso": null,
+      "descricao": "Transação informada tem um tipo inválido para a operação. Considere realizar uma PACS.008.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/TransactionTypeInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Solicitação de Devolução\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Solicitação de Devolução"
+    },
+    {
+      "codigo": "FundsRecoveryInvalid",
+      "nomeIso": null,
+      "descricao": "Existem campos inválidos ao tentar criar a recuperação de valores.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores"
+    },
+    {
+      "codigo": "FundsRecoveryOperationInvalid",
+      "nomeIso": null,
+      "descricao": "Status atual da recuperação de valores não permite que operação seja feita.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryOperationInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores"
+    },
+    {
+      "codigo": "FundsRecoveryTrackingGraphParameterInvalid",
+      "nomeIso": null,
+      "descricao": "Existem campos inválidos nos parâmetros de geração do grafo de rastreamento.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryTrackingGraphParameterInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores"
+    },
+    {
+      "codigo": "FundsRecoveryTrackingTimeout",
+      "nomeIso": null,
+      "descricao": "Tempo limite para geração do grafo de rastreamento se esgotou.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryTrackingTimeout",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores"
+    },
+    {
+      "codigo": "FundsRecoveryTransactionNotIndexed",
+      "nomeIso": null,
+      "descricao": "A transação raiz da recuperação de valores não existe, ainda não foi indexada caso seja um booktransfer, ou não atende aos parâmetros do grafo de rastreio informados.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryTransactionNotIndexed",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores"
+    },
+    {
+      "codigo": "FundsRecoveryForTransactionAlreadyExists",
+      "nomeIso": null,
+      "descricao": "Já existe uma recuperação de valores com a mesma transação raiz.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryForTransactionAlreadyExists",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores"
+    },
+    {
+      "codigo": "FundsRecoveryTransactionNotEligible",
+      "nomeIso": null,
+      "descricao": "Transação raiz não é elegível para recuperação de valores. Possíveis motivos: Transação raiz fora da janela de tempo Transação raiz não foi liquidada Transação raiz informada é uma devolução de camada subsequente (Finalidade IPRT) e não pode ser utilizada para abertura de Recuperação de Valores Transação raiz é uma transação de reembolso, mas foi utilizada para encerrar um reembolso com o motivo FALHA OPERACIONAL.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryTransactionNotEligible",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores"
+    },
+    {
+      "codigo": "FundsRecoveryPrioritizationInvalid",
+      "nomeIso": null,
+      "descricao": "Lista de priorização na solicitação de bloqueio é inválida.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryPrioritizationInvalid",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores",
+      "observacao": "Marcado como Deprecated na especificação."
+    },
+    {
+      "codigo": "FundsRecoveryTransactionNotSettled",
+      "nomeIso": null,
+      "descricao": "A transação definida na recuperação de valores não foi liquidada.",
+      "origem": "DICT",
+      "mensagem": "Resposta HTTP 400 do DICT (application/problem+xml, RFC 7807), type = https://dict.pi.rsfn.net.br/api/v2/error/FundsRecoveryTransactionNotSettled",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "API DICT v2.12.1, seção \"Tratamento de erros\", tabela de tipos de erro, grupo \"Recuperação de Valores\"",
+      "fonteOficial": true,
+      "httpStatus": 400,
+      "grupoDict": "Recuperação de Valores"
+    }
+  ],
+  "mensagensDeErroSemCodigo": [
+    {
+      "mensagem": "admi.002",
+      "descricao": "Rejeição de mensagem por erro de formato, assinatura ou processamento, emitida pelo SPI/ICOM. Sem código ISO: RjctgPtyRsn em texto livre (máx. 35 caracteres), ex.: \"Assinatura XML inválida\", \"XML inválido\" ou \"Erro no processamento do SPI\"; ErrorLocation, RsnDesc e AddtlData (EndToEndId=... / ReturnId=...) são opcionais. Ref: PI-ResourceId (33 caracteres, começa com R) ou MsgId.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "xlsx/ADMI002.xlsx, aba admi.002 (linhas R3-R10); exemplos admi.002_SPI_M_msg.xml e admi.002_SPI_R_msg.xml",
+      "fonteOficial": true
+    },
+    {
+      "mensagem": "admi.004",
+      "descricao": "Notificação de evento do sistema (EvtCd = \"SPI\", EvtDesc em texto livre). Não é rejeição de transação.",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "xlsx/ADMI004.xlsx",
+      "fonteOficial": true
+    }
+  ],
+  "statusPacs002": [
+    {
+      "status": "ACCC",
+      "nomeIso": "AcceptedSettlementCompleted",
+      "descricaoIso": "Settlement on the creditor's account has been completed.",
+      "descricao": "Notificação do SPI da conclusão da transação ao participante do usuário recebedor.",
+      "quemEnvia": "SPI -> PSP do recebedor",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "xlsx/PACS002.xlsx, aba \"Tabela de Domínios\", elemento TxInfAndSts/TxSts, linha R3",
+      "fonteOficial": true
+    },
+    {
+      "status": "ACSC",
+      "nomeIso": "AcceptedSettlementCompletedDebitorAccount",
+      "descricaoIso": "Settlement completed. / Usage : this can be used by a Market Infrastructure reporting to Infrastructure Participant or an Account Servicer to Account Owner to report that the transaction account entry has been completed.",
+      "descricao": "Notificação do SPI da conclusão da transação ao participante do usuário pagador.",
+      "quemEnvia": "SPI -> PSP do pagador",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "xlsx/PACS002.xlsx, aba \"Tabela de Domínios\", elemento TxInfAndSts/TxSts, linha R4",
+      "fonteOficial": true
+    },
+    {
+      "status": "ACSP",
+      "nomeIso": "AcceptedSettlementInProcess",
+      "descricaoIso": "All preceding checks such as technical validation and customer profile were successful and therefore the payment instruction has been accepted for execution.",
+      "descricao": "Ordem de pagamento aceita após as validações realizadas pelo participante do usuário recebedor.",
+      "quemEnvia": "PSP do recebedor -> SPI",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "xlsx/PACS002.xlsx, aba \"Tabela de Domínios\", elemento TxInfAndSts/TxSts, linha R5",
+      "fonteOficial": true
+    },
+    {
+      "status": "RJCT",
+      "nomeIso": "Rejected",
+      "descricaoIso": "Payment instruction has been rejected.",
+      "descricao": "Ordem de pagamento/devolução rejeitada pelo SPI ou pelo participante do usuário recebedor por erro de negócio.",
+      "quemEnvia": "PSP do recebedor -> SPI (rejeição de negócio) ou SPI -> PSPs (rejeição do SPI ou repasse da rejeição)",
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "xlsx/PACS002.xlsx, aba \"Tabela de Domínios\", elemento TxInfAndSts/TxSts, linha R6",
+      "fonteOficial": true,
+      "observacao": "Direção do RJCT: o catálogo diz \"rejeitada pelo SPI ou pelo participante do usuário recebedor por erro de negócio\". O Manual de Tempos 1.1 diz que a rejeição por tempo \"é sempre efetivada pelo SPI e comunicada aos participantes\". Que o SPI repassa ao PSP do pagador o RJCT do recebedor com o mesmo código é inferência a partir dos fluxos; não achei texto literal."
+    }
+  ],
+  "prazos": [
+    {
+      "id": "limite-canal-primario",
+      "descricao": "Tempo máximo de um Pix enviado ao canal primário do SPI (de t0', quando o PSP do pagador recebe a ordem, até t4, a liquidação). Passou disso, o Pix é rejeitado, sempre pelo SPI.",
+      "valor": "40 segundos",
+      "codigoRelacionado": "AB03 (dedução; ver observação do código)",
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seção 1.1, p. 3"
+    },
+    {
+      "id": "limite-canal-secundario",
+      "descricao": "Tempo máximo de um Pix enviado ao canal secundário (Pix Agendado e Pix Cobrança com vencimento agendado: pacs.008 NORM + PAGAGD), contado de t1' a t4.",
+      "valor": "45 minutos",
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seção 1.2, p. 3-4"
+    },
+    {
+      "id": "limite-fora-spi",
+      "descricao": "Ordens liquidadas fora do SPI (livros do PSP): 40 s, ou 45 min para agendados. A rejeição cabe ao participante liquidante.",
+      "valor": "40 segundos / 45 minutos",
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seção 1.3, p. 4"
+    },
+    {
+      "id": "autorizacao-suspeita-fraude",
+      "descricao": "Tempo máximo para o PSP do pagador autorizar uma transação com suspeita de fraude (exceto saque/troco e Transferências Inteligentes). Durante a análise, o usuário deve ser avisado e poder cancelar.",
+      "valor": "30 minutos (8h-20h em dias úteis) / 60 minutos (demais horários)",
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seção 2, p. 5"
+    },
+    {
+      "id": "ans-recebedor-autorizacao",
+      "descricao": "ANS do PSP do recebedor para responder a pacs.008 (t3' - t2). Operações interrompidas por timeout no SPI não entram no cálculo.",
+      "valor": "p50 1,4 s; p95 2,3 s",
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seção 4.1.1.2, p. 10"
+    },
+    {
+      "id": "ans-pagador-iniciacao",
+      "descricao": "ANS do PSP do pagador (ou seu liquidante) na iniciação (t1 - t0').",
+      "valor": "p95 1,5 s",
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seção 4.1.1.1, p. 9-10"
+    },
+    {
+      "id": "ans-experiencia-pagador",
+      "descricao": "Experiência do usuário pagador, do pedido até o aviso de conclusão (t6a - t0').",
+      "valor": "p50 6,0 s; p99 10,0 s",
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seção 4.1.2.1, p. 11"
+    },
+    {
+      "id": "prazo-devolucao",
+      "descricao": "O PSP do destinatário da devolução verifica se ela \"atende ao prazo de noventa dias\". Fora do prazo, o SPI rejeita com DT05.",
+      "valor": "90 dias da transação original",
+      "codigoRelacionado": "DT05",
+      "fonteId": "bcb-manual-fluxos-2.1",
+      "localNaFonte": "Seção 4.1, etapa 9, p. 52"
+    },
+    {
+      "id": "bloqueio-cautelar",
+      "descricao": "Bloqueio cautelar pelo PSP do recebedor, em caso de suspeita de fraude, simultâneo ao crédito.",
+      "valor": "até 72 horas",
+      "fonteId": "bcb-regulamento-pix-res1",
+      "localNaFonte": "Art. 39-B, § 4º"
+    },
+    {
+      "id": "dict-antiscan-usuario",
+      "descricao": "Balde antivarredura da consulta de chave por usuário final (ENTRIES_READ_USER_ANTISCAN e _V2): 200 tira 1 ficha, 404 tira 20 e um Pix enviado devolve 1 (PF) ou 2 (PJ). Balde zerado gera HTTP 429 RateLimited.",
+      "valor": "PF: 2 fichas/min, balde de 100; PJ: 20 fichas/min, balde de 1.000",
+      "codigoRelacionado": "RateLimited",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "Segurança > Limitação de requisições > Regras de contagem das políticas"
+    },
+    {
+      "id": "dict-antiscan-participante",
+      "descricao": "Balde antivarredura por participante (ENTRIES_READ_PARTICIPANT_ANTISCAN): 200 tira 1 ficha, 404 tira 3 e um Pix enviado devolve 1.",
+      "valor": "Categoria A: 25.000/min, balde de 50.000 ... Categoria H: 2/min, balde de 50",
+      "codigoRelacionado": "RateLimited",
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "Segurança > Limitação de requisições > Regras de contagem das políticas"
+    },
+    {
+      "id": "pix-automatico-pain012",
+      "descricao": "Pix Automático: resposta pain.012 à solicitação de permissão (1 min); confirmação da autorização pelo PSP do recebedor (1 h); confirmação de cancelamento pain.011->pain.012 e camt.055->camt.029 (12 h).",
+      "valor": "1 min / 1 h / 12 h",
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seções 3.1 a 3.4, p. 5-7"
+    }
+  ],
+  "fluxos": [
+    {
+      "id": "sucesso",
+      "titulo": "Pix com liquidação imediata entre participantes diretos (sucesso)",
+      "passos": [
+        {
+          "de": "Usuário pagador",
+          "para": "PSP do pagador",
+          "mensagem": "(canal do PSP)",
+          "detalhe": "Pagador confirma a ordem (t0')."
+        },
+        {
+          "de": "PSP do pagador",
+          "para": "PSP do pagador",
+          "mensagem": "(ação interna)",
+          "detalhe": "Bloqueia o valor na conta do pagador."
+        },
+        {
+          "de": "PSP do pagador",
+          "para": "SPI",
+          "mensagem": "pacs.008",
+          "detalhe": "Ordem de pagamento (t1 criação, t1' recebimento)."
+        },
+        {
+          "de": "SPI",
+          "para": "SPI",
+          "mensagem": "(ação interna)",
+          "detalhe": "Bloqueia o valor na Conta PI do PSP do pagador."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP do recebedor",
+          "mensagem": "pacs.008",
+          "detalhe": "Repassa os dados da transferência (t2)."
+        },
+        {
+          "de": "PSP do recebedor",
+          "para": "SPI",
+          "mensagem": "pacs.002 TxSts=ACSP",
+          "detalhe": "Valida a conta, anota crédito provisório e aceita (t3')."
+        },
+        {
+          "de": "SPI",
+          "para": "SPI",
+          "mensagem": "(ação interna)",
+          "detalhe": "Troca de saldos nas Contas PI: finality (t4)."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP do recebedor",
+          "mensagem": "pacs.002 TxSts=ACCC",
+          "detalhe": "Confirmação de conclusão; o PSP credita o recebedor e o notifica."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP do pagador",
+          "mensagem": "pacs.002 TxSts=ACSC",
+          "detalhe": "Confirmação de conclusão (t5a); o PSP efetiva o débito e notifica o pagador (t6a)."
+        }
+      ],
+      "codigos": [
+        "ACSP",
+        "ACCC",
+        "ACSC"
+      ],
+      "fonteId": "bcb-manual-fluxos-2.1",
+      "localNaFonte": "Seção 3.1.1, etapas 1-21, p. 30-31; nomes das mensagens e status: Manual de Tempos 7.0 seção 4.1 (t0'...t6a) e PACS002.xlsx (TxSts)",
+      "observacao": "O Manual de Fluxos descreve as etapas sem citar o nome das mensagens. Os nomes pacs.008/pacs.002 e os status vêm do Manual de Tempos 4.1 e do catálogo."
+    },
+    {
+      "id": "rejeicao-recebedor",
+      "titulo": "Rejeição pelo PSP do recebedor (ex.: conta encerrada, AC07)",
+      "passos": [
+        {
+          "de": "PSP do pagador",
+          "para": "SPI",
+          "mensagem": "pacs.008",
+          "detalhe": "Ordem de pagamento."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP do recebedor",
+          "mensagem": "pacs.008",
+          "detalhe": "Repasse da ordem."
+        },
+        {
+          "de": "PSP do recebedor",
+          "para": "SPI",
+          "mensagem": "pacs.002 TxSts=RJCT, Rsn/Cd=AC07",
+          "detalhe": "Recebedor valida a conta e rejeita (Regulamento, art. 39: problemas na identificação do recebedor, fraude etc.)."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP do pagador",
+          "mensagem": "pacs.002 TxSts=RJCT",
+          "detalhe": "Rejeição comunicada ao PSP do pagador; nenhuma troca de saldo nas Contas PI."
+        },
+        {
+          "de": "PSP do pagador",
+          "para": "Usuário pagador",
+          "mensagem": "(canal do PSP)",
+          "detalhe": "Desbloqueia o valor e mostra a mensagem específica (UX req. 10: \"conta do destinatário indisponível\")."
+        }
+      ],
+      "codigos": [
+        "AC03",
+        "AC06",
+        "AC07",
+        "AC14",
+        "AG03",
+        "AM02",
+        "BE01",
+        "CH11",
+        "DS04",
+        "FRAD",
+        "RR04",
+        "BE17",
+        "INDT",
+        "DU03",
+        "DUPL"
+      ],
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "PACS002.xlsx, Tabela de Domínios (TxSts RJCT; códigos com \"Participante que gera o Erro: Participante do usuário recebedor\")",
+      "observacao": "O Manual de Fluxos v2.1 não tem tabela de etapas para a rejeição. A sequência foi montada a partir do catálogo (quem gera cada código) e dos arts. 39 e 39-A do Regulamento. O repasse do RJCT ao PSP do pagador é inferência."
+    },
+    {
+      "id": "rejeicao-spi",
+      "titulo": "Rejeição pelo próprio SPI (ex.: Conta PI do PSP do pagador sem saldo, AM04; envio bloqueado no SPI-Web, DS02)",
+      "passos": [
+        {
+          "de": "PSP do pagador",
+          "para": "SPI",
+          "mensagem": "pacs.008",
+          "detalhe": "Ordem de pagamento."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP do pagador",
+          "mensagem": "pacs.002 TxSts=RJCT, Rsn/Cd=AM04",
+          "detalhe": "O SPI rejeita na validação de negócio; a ordem não chega ao PSP do recebedor."
+        },
+        {
+          "de": "PSP do pagador",
+          "para": "Usuário pagador",
+          "mensagem": "(canal do PSP)",
+          "detalhe": "Desbloqueia o valor; mostra \"erro de processamento\" deixando claro que o erro é do PSP."
+        }
+      ],
+      "codigos": [
+        "AM04",
+        "DS02",
+        "AM01",
+        "AG12",
+        "AGNT",
+        "BE05",
+        "CH16",
+        "DS0G",
+        "DS27",
+        "DT02",
+        "FF07",
+        "FF08",
+        "MD01",
+        "RC09",
+        "RC10",
+        "AM12",
+        "AM18",
+        "AM23",
+        "RR06"
+      ],
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "PACS002.xlsx, Tabela de Domínios (códigos com \"Participante que gera o Erro: SPI\")",
+      "observacao": "Que a ordem rejeitada pelo SPI não segue ao recebedor é inferência a partir da ordem das etapas do Manual de Fluxos 3.1.1 (bloqueio na Conta PI na etapa 5, antes do repasse na etapa 6)."
+    },
+    {
+      "id": "erro-estrutural-admi002",
+      "titulo": "Mensagem inválida ou assinatura inválida (admi.002)",
+      "passos": [
+        {
+          "de": "PSP do pagador",
+          "para": "SPI (ICOM)",
+          "mensagem": "pacs.008 com XML malformado ou assinatura XMLDSig inválida",
+          "detalhe": "Falha na validação de formato ou assinatura."
+        },
+        {
+          "de": "SPI (ICOM)",
+          "para": "PSP do pagador",
+          "mensagem": "admi.002",
+          "detalhe": "RjctgPtyRsn em texto livre, ex.: \"Assinatura XML inválida\" / \"XML inválido\", ou \"Erro no processamento do SPI\"; AddtlData pode trazer EndToEndId=..."
+        }
+      ],
+      "codigos": [],
+      "fonteId": "bcb-catalogo-spi-5.13.2",
+      "localNaFonte": "ADMI002.xlsx (aba admi.002, campos RjctgPtyRsn/RsnDesc/AddtlData; a Tabela de Domínios não tem códigos) e exemplos/admi002/admi.002_SPI_M_msg.xml e admi.002_SPI_R_msg.xml",
+      "observacao": "A admi.002 não tem código ISO de motivo: o erro vem em texto livre (até 35 caracteres no RjctgPtyRsn)."
+    },
+    {
+      "id": "timeout-recebedor",
+      "titulo": "Timeout: PSP do recebedor não responde a tempo",
+      "passos": [
+        {
+          "de": "PSP do pagador",
+          "para": "SPI",
+          "mensagem": "pacs.008",
+          "detalhe": "Ordem de pagamento (canal primário)."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP do recebedor",
+          "mensagem": "pacs.008",
+          "detalhe": "Repasse da ordem."
+        },
+        {
+          "de": "PSP do recebedor",
+          "para": "-",
+          "mensagem": "(sem pacs.002)",
+          "detalhe": "Não responde antes do limite (40 s contados de t0')."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP do pagador e PSP do recebedor",
+          "mensagem": "pacs.002 TxSts=RJCT, Rsn/Cd=AB03",
+          "detalhe": "O SPI interrompe a liquidação e comunica os participantes; o bloqueio na Conta PI é desfeito."
+        },
+        {
+          "de": "PSP do pagador",
+          "para": "Usuário pagador",
+          "mensagem": "(canal do PSP)",
+          "detalhe": "Desbloqueia o valor; mostra \"tempo extrapolado\", deixando claro que o erro é do PSP (UX req. 10)."
+        }
+      ],
+      "codigos": [
+        "AB03"
+      ],
+      "fonteId": "bcb-manual-tempos-7.0",
+      "localNaFonte": "Seção 1.1, p. 3 (\"A rejeição do Pix, após o recebimento da ordem pelo SPI (t1'), é sempre efetivada pelo SPI e comunicada aos participantes\"); código AB03: PACS002.xlsx linha R7; exemplo pacs.002_ERRO_1_msg.xml (RJCT + AB03)",
+      "observacao": "Usar AB03 nesse cenário é dedução (ver observação do código AB03). Que o PSP do recebedor também recebe o RJCT segue de \"comunicada aos participantes\"."
+    },
+    {
+      "id": "devolucao",
+      "titulo": "Devolução (pacs.004) entre participantes diretos",
+      "passos": [
+        {
+          "de": "Usuário recebedor original",
+          "para": "PSP remetente (recebedor original)",
+          "mensagem": "(canal do PSP)",
+          "detalhe": "Pede a devolução (MD06), ou o PSP inicia via MED (BE08/FR01), ou o caso é Saque/Troco (SL02)."
+        },
+        {
+          "de": "PSP remetente",
+          "para": "SPI",
+          "mensagem": "pacs.004",
+          "detalhe": "RtrRsnInf/Rsn/Cd = BE08 | FR01 | MD06 | SL02; SttlmPrty HIGH ou NORM."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP destinatário (pagador original)",
+          "mensagem": "pacs.004",
+          "detalhe": "Repasse da devolução (o SPI rejeita antes com DT05 se o prazo passou, AG13 se for devolução de devolução)."
+        },
+        {
+          "de": "PSP destinatário",
+          "para": "SPI",
+          "mensagem": "pacs.002 TxSts=ACSP ou RJCT",
+          "detalhe": "Confere o prazo de 90 dias, se o destinatário é cliente, o valor (AM09 se exceder) e se a conta está ativa."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP destinatário",
+          "mensagem": "pacs.002 TxSts=ACCC",
+          "detalhe": "Confirmação; credita o destinatário."
+        },
+        {
+          "de": "SPI",
+          "para": "PSP remetente",
+          "mensagem": "pacs.002 TxSts=ACSC",
+          "detalhe": "Confirmação; debita o remetente."
+        }
+      ],
+      "codigos": [
+        "BE08",
+        "FR01",
+        "MD06",
+        "SL02",
+        "AM09",
+        "DT05",
+        "AG13"
+      ],
+      "fonteId": "bcb-manual-fluxos-2.1",
+      "localNaFonte": "Seção 4.1, etapas 1-23, p. 51-52; motivos: PACS004.xlsx, Tabela de Domínios; rejeições: PACS002.xlsx",
+      "observacao": "O Manual de Fluxos não cita nomes de mensagens. Os nomes pacs.004/pacs.002 vêm do catálogo (pacs.002 OrgnlInstrId \"ordem de pagamento ou de sua devolução\"; RJCT \"Ordem de pagamento/devolução rejeitada\")."
+    },
+    {
+      "id": "dict-consulta",
+      "titulo": "Consulta de chave no DICT antes do Pix (com erros possíveis)",
+      "passos": [
+        {
+          "de": "Usuário pagador",
+          "para": "PSP do pagador",
+          "mensagem": "(canal do PSP)",
+          "detalhe": "Informa a chave. Formato inválido: a chave nem vai ao DICT (UX req. 04)."
+        },
+        {
+          "de": "PSP do pagador",
+          "para": "DICT",
+          "mensagem": "GET /entries/{Key}",
+          "detalhe": "Consulta do vínculo (headers PI-RequestingParticipant, PI-PayerId...)."
+        },
+        {
+          "de": "DICT",
+          "para": "PSP do pagador",
+          "mensagem": "HTTP 200 GetEntryResponse | 400 | 404 NotFound | 429 RateLimited (problem+xml)",
+          "detalhe": "Respostas possíveis da operação getEntry."
+        },
+        {
+          "de": "PSP do pagador",
+          "para": "Usuário pagador",
+          "mensagem": "(canal do PSP)",
+          "detalhe": "Com 200, mostra os dados do recebedor para confirmação; com 404/EntryBlocked, \"chave inexistente ou indisponível\" (req. 05); falha de comunicação, req. 08."
+        }
+      ],
+      "codigos": [
+        "NotFound",
+        "RateLimited",
+        "BadRequest",
+        "EntryBlocked",
+        "EntryWithFraudRelatedRestriction",
+        "EntryCannotBeQueriedForBookTransfer",
+        "ServiceUnavailable",
+        "Forbidden"
+      ],
+      "fonteId": "bcb-api-dict-2.12.1",
+      "localNaFonte": "Operação GET /entries/{Key} (\"Consultar Vínculo\", respostas 200/400/404/429); tabela \"Tratamento de erros\"; passos do fluxo: Manual de Fluxos 2.1, seção 2.1.1, etapas 1-13, p. 5"
+    }
+  ],
+  "naoConfirmado": [
+    {
+      "item": "DS0H (NotAllowedAccount)",
+      "situacao": "Existiu: incluído no catálogo 5.02.1 (pacs.002 v1.5) e EXCLUÍDO na pacs.002 v1.9 (Notas de Versão). Não está na tabela vigente (5.13.2).",
+      "fonteId": "bcb-notas-versao-spi-5.13.2"
+    },
+    {
+      "item": "DS24 (WaitingTimeExpired)",
+      "situacao": "Incluído na pacs.002 v1.9 (tempo entre a pain.013 e a pacs.008) e EXCLUÍDO na pacs.002 v1.12. Não está na tabela vigente.",
+      "fonteId": "bcb-notas-versao-spi-5.13.2"
+    },
+    {
+      "item": "BE15",
+      "situacao": "Excluído na v1.9 e reincluído na v1.12 com outro significado (idConciliacaoRecebedor). Vigente.",
+      "fonteId": "bcb-notas-versao-spi-5.13.2"
+    },
+    {
+      "item": "EntryNotFound (DICT)",
+      "situacao": "Esse tipo não existe na API DICT v2.12.1. A chave inexistente retorna o tipo genérico NotFound (HTTP 404).",
+      "fonteId": "bcb-api-dict-2.12.1"
+    },
+    {
+      "item": "Código usado pelo SPI no timeout do recebedor",
+      "situacao": "Nenhum texto oficial liga literalmente \"recebedor não respondeu\" a AB03. A associação é deduzida do texto do AB03 e do Manual de Tempos (ver observação do AB03).",
+      "fonteId": "bcb-catalogo-spi-5.13.2"
+    },
+    {
+      "item": "Cenário exato do AB11 (TimeoutDebtorAgent)",
+      "situacao": "O catálogo só traz \"Timeout do participante emissor da ordem de pagamento\"; o momento exato do disparo não está descrito.",
+      "fonteId": "bcb-catalogo-spi-5.13.2"
+    },
+    {
+      "item": "Repasse do RJCT do recebedor ao PSP do pagador",
+      "situacao": "Os fluxos oficiais (Manual de Fluxos v2.1) só detalham o caminho de sucesso. A propagação do RJCT com o mesmo código ao pagador é inferência, coerente com o catálogo (\"Ordem de pagamento/devolução rejeitada pelo SPI ou pelo participante do usuário recebedor\").",
+      "fonteId": "bcb-manual-fluxos-2.1"
+    },
+    {
+      "item": "Códigos de erro de outras mensagens (pain.014, camt.029, pain.012, camt.025...)",
+      "situacao": "Não catalogados aqui: a pesquisa cobriu pacs.002, pacs.004 e admi.002. As tabelas estão no mesmo zip (xlsx/PAIN014.xlsx, CAMT029.xlsx etc.).",
+      "fonteId": "bcb-catalogo-spi-5.13.2"
+    },
+    {
+      "item": "Manual Operacional do DICT e Regulamento do SPI (Res. BCB 195/2022)",
+      "situacao": "Não baixados. Os tempos citados vêm do Manual de Tempos, que remete à Res. BCB 195/2022.",
+      "fonteId": null
+    },
+    {
+      "item": "Versões futuras",
+      "situacao": "Manual de Fluxos v2.2 (vigência 01/02/2027) e Requisitos Mínimos UX v7.4 (vigência 01/03/2027) existem, mas não foram analisados.",
+      "fonteId": null
+    }
+  ],
+  "resumo": {
+    "codigosPacs002": 46,
+    "motivosPacs004": 4,
+    "tiposErroDictDetalhados": 25,
+    "tiposErroDictOutros": 37,
+    "statusPacs002": 4
+  }
+}
