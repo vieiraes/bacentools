@@ -59,12 +59,22 @@ jobs:
       pull-requests: write
       checks: write
     steps:
+      - name: Segredo do Firebase configurado?
+        id: segredo
+        run: |
+          if [ -n "${{ secrets.FIREBASE_SERVICE_ACCOUNT_BACENTOOLS }}" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"
+          else echo "ok=false" >> "$GITHUB_OUTPUT"; echo "⚠️ Deploy pulado: falta o segredo FIREBASE_SERVICE_ACCOUNT_BACENTOOLS (firebase init hosting:github)." >> "$GITHUB_STEP_SUMMARY"; fi
       - uses: actions/checkout@v4
+        if: steps.segredo.outputs.ok == 'true'
       - uses: actions/setup-node@v4
+        if: steps.segredo.outputs.ok == 'true'
         with: { node-version: 22, cache: npm }
       - run: npm ci
+        if: steps.segredo.outputs.ok == 'true'
       - run: npm run build
+        if: steps.segredo.outputs.ok == 'true'
       - name: Deploy (produção na main, link de pré-visualização no PR)
+        if: steps.segredo.outputs.ok == 'true'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
