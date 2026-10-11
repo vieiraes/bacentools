@@ -1,7 +1,6 @@
 {
-  "name": "bacentools-front",
+  "name": "bacentools",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -45,5 +44,14 @@
   "overrides": {
     "playwright-core": "1.63.0",
     "@mui/x-internals": "9.14.0"
-  }
+  },
+  "license": "Apache-2.0",
+  "author": "Bruno Vieira (https://github.com/vieiraes)",
+  "description": "Ferramentas gratuitas do Pix e do Banco Central para POs, QAs e devs",
+  "homepage": "https://bacentools.web.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vieiraes/bacentools.git"
+  },
+  "private": true
 }

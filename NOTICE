@@ -1,0 +1,16 @@
+BacenTools
+Copyright 2025-2026 Bruno Vieira (https://github.com/vieiraes)
+
+Projeto criado e idealizado por Bruno Vieira.
+Repositório original: https://github.com/vieiraes/bacentools
+Site: https://bacentools.web.app
+
+Este produto é licenciado sob a Apache License, Version 2.0 (arquivo LICENSE).
+Conforme a seção 4(d) da licença, toda redistribuição ou obra derivada deve manter
+este arquivo NOTICE, com o crédito ao criador do projeto e o link do repositório original.
+
+Dados de terceiros:
+- Banco Central do Brasil (dados públicos: informes do SPI e do STR, especificações do Pix e do DICT).
+- BrasilAPI (https://brasilapi.com.br), que redistribui dados públicos do BCB sobre bancos e participantes do Pix.
+- Logos das instituições: pacote logos-bancos-br, carregado da CDN jsDelivr.
+Este projeto não é um serviço oficial do Banco Central do Brasil.

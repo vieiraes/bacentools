@@ -1,0 +1,14 @@
+name: 💡 Ideia de ferramenta ou melhoria
+description: Sugira algo útil para quem trabalha com Pix e com o Banco Central
+labels: [ideia]
+body:
+  - type: textarea
+    id: problema
+    attributes: { label: Qual problema do dia a dia isso resolve?, description: "Ex.: preciso conferir rapidamente o ISPB de um banco durante um teste." }
+    validations: { required: true }
+  - type: textarea
+    id: proposta
+    attributes: { label: Como você imagina a ferramenta? }
+  - type: input
+    id: fonte
+    attributes: { label: Fonte oficial (se houver), description: "Documento do BCB, com versão e seção. Regras do Pix só entram com fonte." }
