@@ -6,7 +6,7 @@ test.describe('navegação e SEO', () => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('BacenTools');
     const cards = page.getByRole('navigation', { name: 'Ferramentas' }).last().getByRole('link');
-    await expect(cards).toHaveCount(4);
+    await expect(cards).toHaveCount(5);
     for (const [name, path, h1] of [
       [/^Bancos/, '/bancos/', 'Bancos'],
       [/^Participantes do Pix/, '/participantes-pix/', 'Participantes do Pix'],
