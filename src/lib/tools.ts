@@ -4,7 +4,7 @@ export interface Tool {
   title: string;
   short: string;
   description: string;
-  icon: 'bank' | 'pix' | 'docs' | 'bucket';
+  icon: 'bank' | 'pix' | 'docs' | 'bucket' | 'flow';
   source: string;
 }
 
@@ -32,6 +32,14 @@ export const TOOLS: Tool[] = [
     description: 'Os informes operacionais do SPI (Pix) e do STR publicados pelo Banco Central, com o PDF.',
     icon: 'docs',
     source: 'Banco Central do Brasil',
+  },
+  {
+    path: '/cenarios-pix/',
+    title: 'Cenários e erros do Pix',
+    short: 'Erros do Pix',
+    description: 'Veja o Pix passar pelo SPI e o que acontece em cada erro: quem rejeita, com qual código e o que mostrar ao usuário, com a fonte oficial do BCB.',
+    icon: 'flow',
+    source: 'Catálogo de Mensagens do SPI e manuais do Pix (BCB)',
   },
   {
     path: '/simulador-dict/',

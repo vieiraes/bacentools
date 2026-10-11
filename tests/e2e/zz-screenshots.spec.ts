@@ -14,6 +14,11 @@ test('imagens do README', async ({ page }, info) => {
   await page.waitForLoadState('networkidle');
   await page.waitForTimeout(800);
   await page.screenshot({ path: 'docs/img/bancos.png' });
+  await page.goto('/cenarios-pix/#pacs002-AC06');
+  await page.getByTestId('ficha').waitFor();
+  for (let i = 0; i < 4; i++) await page.getByTestId('next').click();
+  await page.waitForTimeout(1300);
+  await page.screenshot({ path: 'docs/img/cenarios.png' });
   await page.clock.install({ time: new Date('2026-10-11T12:00:00-03:00') });
   const sim = new SimulatorPage(page);
   await sim.open();
