@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualidade:
+    name: Lint, tipos e testes unitários
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Testes unitários, de contrato e de propriedade (com cobertura mínima)
+        run: npm run coverage
+      - name: Resumo da cobertura
+        if: always()
+        run: |
+          node -e "const c=require('./coverage/coverage-summary.json').total;console.log('### Cobertura\n| Métrica | % |\n|---|---|\n'+['lines','branches','functions','statements'].map(k=>'| '+k+' | '+c[k].pct+' |').join('\n'))" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: cobertura, path: coverage/, retention-days: 14 }
+
+  e2e:
+    name: E2E (Playwright, desktop e celular)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: relatorio-playwright, path: playwright-report/, retention-days: 14 }
+
+  publicar:
+    name: Publicar no Firebase
+    needs: [qualidade, e2e]
+    runs-on: ubuntu-latest
+    # Fork não tem o segredo; nesse caso o passo é pulado sem falhar.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy (produção na main, link de pré-visualização no PR)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BACENTOOLS }}
+          projectId: bacentools
+          channelId: ${{ github.ref == 'refs/heads/main' && 'live' || '' }}
+          expires: 7d
