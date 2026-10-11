@@ -50,7 +50,7 @@ function Ficha({ cenario }: { cenario: CenarioPix }) {
   const e = cenario.erro;
   const fontes = cenario.fonteIds.map(fonteDe).filter(Boolean);
   return (
-    <Card data-testid="ficha">
+    <Card data-testid="ficha" sx={{ containerType: 'inline-size', minWidth: 0 }}>
       <CardContent>
         <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', alignItems: 'center', mb: 1 }} useFlexGap>
           <Typography variant="h2" component="h2">{cenario.title}</Typography>
@@ -59,7 +59,17 @@ function Ficha({ cenario }: { cenario: CenarioPix }) {
         </Stack>
         <Typography sx={{ mb: 1.5 }}>{cenario.summary}</Typography>
         {e && (
-          <Box component="dl" sx={{ m: 0, display: 'grid', gridTemplateColumns: { sm: '200px 1fr' }, rowGap: 1, columnGap: 2, '& dt': { fontWeight: 700 }, '& dd': { m: 0 } }}>
+          <Box
+            component="dl"
+            sx={{
+              // rótulo em cima do texto quando o cartão é estreito; lado a lado só quando há espaço (largura do cartão, não da tela)
+              m: 0, display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', rowGap: 0.5,
+              '@container (min-width: 520px)': { gridTemplateColumns: '170px minmax(0, 1fr)', columnGap: 2, rowGap: 1 },
+              '& dt': { fontWeight: 700, mt: 1, '@container (min-width: 520px)': { mt: 0 } },
+              '& dd': { m: 0, minWidth: 0, overflowWrap: 'anywhere' },
+              '& code': { whiteSpace: 'normal', overflowWrap: 'anywhere' },
+            }}
+          >
             <dt>Definição do BCB</dt><dd>{e.descricao}</dd>
             {e.nomeIso && <><dt>Nome ISO 20022</dt><dd><code>{e.nomeIso}</code>{e.descricaoIso ? `: ${e.descricaoIso}` : ''}</dd></>}
             <dt>Onde aparece</dt><dd><code>{e.mensagem}</code></dd>
@@ -89,7 +99,11 @@ const colunas: GridColDef<ErroPix>[] = [
   { field: 'codigo', headerName: 'Código', width: 150, renderCell: ({ value }) => <code style={{ fontWeight: 700 }}>{value}</code> },
   { field: 'mensagemCurta', headerName: 'Mensagem', width: 130 },
   { field: 'origem', headerName: 'Quem gera', width: 170, valueFormatter: (v: Origem) => ORIGEM_LABEL[v] },
-  { field: 'descricao', headerName: 'Definição do BCB', flex: 1, minWidth: 320, valueFormatter: (v: string) => v.split('. Participante')[0] },
+  {
+    field: 'descricao', headerName: 'Definição do BCB', flex: 1, minWidth: 320, valueFormatter: (v: string) => v.split('. Participante')[0],
+    // a definição aparece inteira, em quantas linhas precisar (nada de "…")
+    renderCell: ({ formattedValue }) => <Box sx={{ whiteSpace: 'normal', lineHeight: 1.4, py: 0.75 }}>{formattedValue}</Box>,
+  },
 ];
 
 export function CenariosView() {
@@ -135,7 +149,7 @@ export function CenariosView() {
 
       <Grid container spacing={2} sx={{ mb: 4 }}>
         <Grid size={{ xs: 12, lg: 7 }}><FlowAnimation scenario={cenario} /></Grid>
-        <Grid size={{ xs: 12, lg: 5 }}><Ficha cenario={cenario} /></Grid>
+        <Grid size={{ xs: 12, lg: 5 }} sx={{ minWidth: 0 }}><Ficha cenario={cenario} /></Grid>
       </Grid>
 
       <Paper sx={{ p: 2, mb: 4 }} component="section" aria-labelledby="prazos">
@@ -169,7 +183,8 @@ export function CenariosView() {
         <Paper>
           <LazyDataTable rows={linhas} columns={colunas} getRowId={(r) => r.id}
             onRowClick={(p) => { escolher(p.row.id); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            sx={{ '& .MuiDataGrid-row': { cursor: 'pointer' } }} aria-label="Catálogo de códigos de erro do Pix" />
+            getRowHeight={() => 'auto'}
+            sx={{ '& .MuiDataGrid-row': { cursor: 'pointer' }, '& .MuiDataGrid-cell': { display: 'flex', alignItems: 'center' } }} aria-label="Catálogo de códigos de erro do Pix" />
         </Paper>
       </Box>
     </>
