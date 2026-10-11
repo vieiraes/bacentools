@@ -96,3 +96,25 @@ describe('cenários gerados a partir dos códigos', () => {
     expect(cenarioPorId('nao-existe')).toBeUndefined();
   });
 });
+
+import { erroPorId } from '@/lib/pix-erros/catalogo';
+import { CENARIO_ADMI002, fonteDe } from '@/lib/pix-erros/cenarios';
+
+describe('auxiliares do catálogo', () => {
+  it('busca por id e devolve undefined para id desconhecido', () => {
+    expect(erroPorId('pacs002-AC06')?.nomeIso).toBe('BlockedAccount');
+    expect(erroPorId('pacs002-XXXX')).toBeUndefined();
+  });
+
+  it('fonteDe resolve as fontes citadas pelos cenários', () => {
+    for (const id of CENARIO_ADMI002.fonteIds) expect(fonteDe(id)?.url).toMatch(/bcb\.gov\.br/);
+    expect(fonteDe('nao-existe')).toBeUndefined();
+  });
+
+  it('admi.002: o SPI recusa a mensagem antes do fluxo, sem chegar ao recebedor', () => {
+    const c = cenarioPorId('admi002')!;
+    expect(c.steps.map((s) => s.message)).toEqual(['pacs.008', 'admi.002']);
+    expect(finalOutcome(c)).toMatchObject({ outcome: 'erro', by: 'SPI' });
+    expect(c.failLabel).toMatch(/SPI/);
+  });
+});
