@@ -6,11 +6,13 @@ test.describe('navegação e SEO', () => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('BacenTools');
     const cards = page.getByRole('navigation', { name: 'Ferramentas' }).last().getByRole('link');
-    await expect(cards).toHaveCount(7);
+    await expect(cards).toHaveCount(9);
     for (const [name, path, h1] of [
       [/^Bancos/, '/bancos/', 'Bancos'],
       [/^Participantes do Pix/, '/participantes-pix/', 'Participantes do Pix'],
       [/^Informes SPI e STR/, '/informes/', 'Informes SPI e STR'],
+      [/^Gerador de QR Code/, '/gerador-pix/', 'Gerador de QR Code Pix'],
+      [/^Links oficiais/, '/links-pix/', 'Links oficiais do Pix'],
       [/^Decodificador de QR Code/, '/decodificador-pix/', 'Decodificador de QR Code Pix'],
       [/^Decodificador de EndToEndId/, '/identificadores-pix/', 'Decodificador de EndToEndId e UUID'],
       [/^Simulador de fichas/, '/simulador-dict/', 'Simulador de fichas do DICT'],
@@ -25,7 +27,12 @@ test.describe('navegação e SEO', () => {
   test('menu "Ferramentas" da barra do topo leva aos decodificadores (gaveta no celular)', async ({ page, isMobile }) => {
     await mockSources(page);
     await page.goto('/');
-    for (const [item, path] of [['Decodificador Pix (QR Code)', '/decodificador-pix/'], ['Decodificador UUID v7 e EndToEndId', '/identificadores-pix/']] as const) {
+    for (const [item, path] of [
+      ['Gerador de QR Code Pix', '/gerador-pix/'],
+      ['Decodificador Pix (QR Code)', '/decodificador-pix/'],
+      ['Decodificador UUID v7 e EndToEndId', '/identificadores-pix/'],
+      ['Links oficiais do Pix', '/links-pix/'],
+    ] as const) {
       if (isMobile) {
         await page.getByRole('button', { name: 'Abrir menu' }).click();
         await page.getByRole('link', { name: item }).click();

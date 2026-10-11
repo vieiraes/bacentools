@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -45,6 +45,11 @@ function Linhas({ elementos, nivel = 0 }: { elementos: Elemento[]; nivel?: numbe
 
 export function DecodificadorView() {
   const [texto, setTexto] = useState('');
+  // vindo do gerador: /decodificador-pix/?codigo=...
+  useEffect(() => {
+    const c = new URLSearchParams(window.location.search).get('codigo');
+    if (c) setTexto(c);
+  }, []);
   const r = useMemo(() => (texto.trim() ? decodificarBrCode(texto) : null), [texto]);
   const corrigido = r && !r.crc.ok && r.crc.calculado ? comCrcCorrigido(texto) : null;
 

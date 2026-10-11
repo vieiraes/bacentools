@@ -4,7 +4,7 @@ export interface Tool {
   title: string;
   short: string;
   description: string;
-  icon: 'bank' | 'pix' | 'docs' | 'bucket' | 'flow' | 'qr' | 'id';
+  icon: 'bank' | 'pix' | 'docs' | 'bucket' | 'flow' | 'qr' | 'qrAdd' | 'id' | 'link';
   source: string;
   /** Ferramentas avulsas ficam no menu "Ferramentas" da barra do topo, com este nome curto */
   menu?: string;
@@ -44,6 +44,15 @@ export const TOOLS: Tool[] = [
     source: 'Catálogo de Mensagens do SPI e manuais do Pix (BCB)',
   },
   {
+    path: '/gerador-pix/',
+    title: 'Gerador de QR Code Pix',
+    short: 'Gerar QR Pix',
+    description: 'Monte um QR Code Pix estático com chave, valor e txid: gera o Pix Copia e Cola e a imagem, conferidos pelas regras do Manual de Padrões do BCB.',
+    icon: 'qrAdd',
+    menu: 'Gerador de QR Code Pix',
+    source: 'Manual de Padrões para Iniciação do Pix 2.10.0 (BCB)',
+  },
+  {
     path: '/decodificador-pix/',
     title: 'Decodificador de QR Code Pix',
     short: 'QR Code Pix',
@@ -60,6 +69,15 @@ export const TOOLS: Tool[] = [
     icon: 'id',
     menu: 'Decodificador UUID v7 e EndToEndId',
     source: 'Catálogo de Mensagens do SPI 5.13.2 (BCB) e RFC 9562',
+  },
+  {
+    path: '/links-pix/',
+    title: 'Links oficiais do Pix',
+    short: 'Links oficiais',
+    description: 'Regulamento, manuais, instruções normativas, API Pix, especificação do DICT e estatísticas: os documentos oficiais do BCB num lugar só, com a versão vigente.',
+    icon: 'link',
+    menu: 'Links oficiais do Pix',
+    source: 'Página "Normas sobre o Pix" do Banco Central',
   },
   {
     path: '/simulador-dict/',

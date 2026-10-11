@@ -11,7 +11,7 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 [![CI](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml)
 [![Dados](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml)
 [![Licença](https://img.shields.io/badge/licença-Apache%202.0-0b4f9c)](LICENSE)
-![Testes](https://img.shields.io/badge/testes-159%20unit%20%2B%2096%20E2E-2e7d32)
+![Testes](https://img.shields.io/badge/testes-190%20unit%20%2B%20106%20E2E-2e7d32)
 ![Acessibilidade](https://img.shields.io/badge/axe-WCAG%202.2%20AA-0b4f9c)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs)
 
@@ -27,8 +27,10 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 | 💠 | **[Participantes do Pix](https://bacentools.web.app/participantes-pix/)** | As 880 instituições do Pix, com modalidade, participação direta ou indireta e início da operação | BrasilAPI (dados do BCB) |
 | 📄 | **[Informes SPI e STR](https://bacentools.web.app/informes/)** | Os informes operacionais publicados pelo Banco Central, por ano, com o PDF | Banco Central |
 | 🔀 | **[Cenários e erros do Pix](https://bacentools.web.app/cenarios-pix/)** | Animação do caminho do Pix (pagador → SPI → recebedor) em cada erro: quem rejeita, com qual código e o que mostrar ao usuário. São 75 códigos, cada um com a fonte oficial | Catálogo de Mensagens do SPI 5.13.2 e manuais do Pix |
+| 🧩 | **[Gerador de QR Code Pix](https://bacentools.web.app/gerador-pix/)** | Monta um QR Code estático (chave, valor, txid, informação adicional) e gera o Copia e Cola e a imagem em PNG. Normaliza CPF, CNPJ (inclusive alfanumérico) e celular, confere os dígitos verificadores e passa o resultado pelo próprio decodificador antes de mostrar | Manual de Padrões para Iniciação do Pix 2.10.0 e EMV® QRCPS-MPM |
 | 🔳 | **[Decodificador de QR Code Pix](https://bacentools.web.app/decodificador-pix/)** | Cole um Pix Copia e Cola: tipo (estático, dinâmico, composto), chave, valor, txid, URL e CRC, com cada campo conferido e a seção do manual. Mostra o CRC certo quando o informado está errado | Manual de Padrões para Iniciação do Pix 2.10.0 |
 | 🆔 | **[Decodificador de EndToEndId e UUID](https://bacentools.web.app/identificadores-pix/)** | Quem gerou um EndToEndId ou RtrId (nome da instituição pelo ISPB), quando (UTC e Brasília) e o que está fora do formato. Também lê UUID, inclusive a data do v7 | Catálogo do SPI 5.13.2 e RFC 9562 |
+| 🔗 | **[Links oficiais do Pix](https://bacentools.web.app/links-pix/)** | Regulamento, manuais (com a versão vigente), instruções normativas, catálogos, API Pix e API do DICT, agrupados por uso | Página "Normas sobre o Pix" do BCB |
 | 💧 | **[Simulador de fichas do DICT](https://bacentools.web.app/simulador-dict/)** | O *token bucket* das consultas de chave Pix: 200, 404, 429, reposição e devolução por pagamento | Especificação da API do DICT |
 
 <details>

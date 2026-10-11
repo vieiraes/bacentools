@@ -22,6 +22,7 @@ Tudo é do Google e gratuito: **Google Analytics 4** (propriedade ligada ao proj
 | `scenario_play` | Rodou a animação de um cenário do Pix | `item_id`, `mode` |
 | `simulator_action` | Consulta 200/404 ou Pix enviado no simulador do DICT | `action`, `key_type` |
 | `copy_ispb` | Copiou um ISPB | `item_id` |
+| `generate_brcode` | Copiou ou baixou um QR Code do gerador (a chave não é enviada) | `action` (copiar, baixar_png), `key_type`, `item_id` (com_valor, sem_valor) |
 | `decode` | Colou algo no decodificador de QR Code Pix ou de EndToEndId/UUID (só quando para de digitar; o código colado não é enviado) | `area` (brcode, identificador), `item_id` (tipo), `result` |
 | `file_download` | Abriu o PDF de um informe do BCB | `file_name`, `link_url`, `area` |
 | `source_fallback` | A BrasilAPI caiu e o site usou a cópia diária | `source` |
