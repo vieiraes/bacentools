@@ -17,9 +17,11 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { LazyDataTable } from '@/components/LazyDataTable';
 import { FlowAnimation } from '@/features/fluxo-pix/FlowAnimation';
-import { BASE, ERROS, ORIGEM_LABEL, TIPO_LABEL, type ErroPix, type Origem } from '@/lib/pix-erros/catalogo';
+import { BASE, ERROS, ORIGEM_LABEL, TIPO_LABEL, slugDe, type ErroPix, type Origem } from '@/lib/pix-erros/catalogo';
+import NextLink from 'next/link';
 import { DESTAQUES, cenarioPorId, fonteDe, type CenarioPix } from '@/lib/pix-erros/cenarios';
 import { matches } from '@/lib/domain/text';
+import { debounced, track } from '@/lib/analytics';
 
 const ATALHO: Record<string, string> = {
   sucesso: '✅ Pix concluído',
@@ -34,6 +36,8 @@ const ATALHO: Record<string, string> = {
   'dict-RateLimited': 'DICT 429 · limite de consultas',
 };
 const ORIGEM_COR: Record<Origem, 'primary' | 'secondary' | 'warning' | 'default'> = { SPI: 'primary', PSP_RECEBEDOR: 'warning', PSP_PAGADOR: 'secondary', DICT: 'default' };
+
+const trackBusca = debounced((t: string) => t.trim().length >= 2 && track('search', { search_term: t.trim().slice(0, 60), area: 'catalogo-erros' }));
 
 type Opcao = { id: string; label: string; grupo: string };
 const OPCOES: Opcao[] = [
@@ -75,6 +79,7 @@ function Ficha({ cenario }: { cenario: CenarioPix }) {
           ))}
           {e && <>. Local: {e.localNaFonte}.</>}
         </Typography>
+        {e && <Link component={NextLink} href={`/erros-pix/${slugDe(e)}/`} sx={{ display: 'inline-block', mt: 1 }}>Página do {e.codigo} (para compartilhar)</Link>}
       </CardContent>
     </Card>
   );
@@ -100,6 +105,7 @@ export function CenariosView() {
   }, []);
   const escolher = (novo: string) => {
     setId(novo);
+    track('select_content', { content_type: 'erro_pix', item_id: novo });
     history.replaceState(null, '', `#${novo}`);
   };
 
@@ -146,11 +152,11 @@ export function CenariosView() {
       <Box component="section" aria-labelledby="catalogo">
         <Typography id="catalogo" variant="h2" sx={{ mb: 1 }}>Catálogo completo ({ERROS.length} códigos)</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Toque num código para ver o cenário animado. Base levantada em {new Date(BASE.geradoEm).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })} nos documentos oficiais do BCB.
+          Toque num código para ver o cenário animado, ou veja a <Link component={NextLink} href="/erros-pix/">lista de códigos de erro do Pix</Link>. Base levantada em {new Date(BASE.geradoEm).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })} nos documentos oficiais do BCB.
         </Typography>
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 12, md: 8 }}>
-            <TextField fullWidth label="Filtrar catálogo" value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Código, palavra da definição ou nome ISO" slotProps={{ htmlInput: { 'data-testid': 'filtro-catalogo' } }} />
+            <TextField fullWidth label="Filtrar catálogo" value={busca} onChange={(e) => { setBusca(e.target.value); trackBusca(e.target.value); }} placeholder="Código, palavra da definição ou nome ISO" slotProps={{ htmlInput: { 'data-testid': 'filtro-catalogo' } }} />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
             <TextField select fullWidth label="Quem gera" value={origem} onChange={(e) => setOrigem(e.target.value as '' | Origem)}>

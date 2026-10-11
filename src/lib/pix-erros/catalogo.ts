@@ -90,3 +90,17 @@ export const TIPO_LABEL: Record<Tipo, string> = {
 };
 
 export const erroPorId = (id: string) => ERROS.find((e) => e.id === id);
+
+const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+/** Endereço da página do código: /erros-pix/<slug>/ (ex.: ac06, devolucao-md06, dict-429-rate-limited). */
+export function slugDe(e: ErroPix): string {
+  if (e.tipo === 'devolucao') return `devolucao-${e.codigo.toLowerCase()}`;
+  if (e.tipo === 'dict') return `dict-${e.httpStatus ?? 'erro'}-${kebab(e.codigo)}`;
+  return e.codigo.toLowerCase();
+}
+
+/** Definição curta (sem o "Participante que gera o Erro: ..." do catálogo). */
+export const resumo = (e: ErroPix) => e.descricao.split(/\.?\s*Participante que gera o [Ee]rro/)[0].replace(/\.$/, '');
+
+export const erroPorSlug = (slug: string) => ERROS.find((e) => slugDe(e) === slug);

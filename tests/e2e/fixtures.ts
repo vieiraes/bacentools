@@ -21,7 +21,11 @@ export async function mockSources(page: Page, opts: { brasilapi?: 'ok' | 'down';
 
 /** Toda página: espera a hidratação do React depois de cada navegação e falha se aparecer erro no console. */
 export const test = base.extend<{ consoleErrors: string[] }>({
-  page: async ({ page }, use) => {
+  page: async ({ page }, use, info) => {
+    // Google Analytics nunca sai para a rede nos testes; os eventos ficam no window.dataLayer para conferir
+    await page.route('https://www.googletagmanager.com/**', (r) => r.fulfill({ status: 200, contentType: 'text/javascript', body: '' }));
+    // o banner de cookies já vem respondido, exceto no teste do próprio banner (tag @consentimento)
+    if (!info.title.includes('@consentimento')) await page.addInitScript(() => localStorage.setItem('bt_consent_v1', 'denied'));
     const goto = page.goto.bind(page);
     page.goto = async (url, opts) => {
       const res = await goto(url, opts);
@@ -48,4 +52,14 @@ export { expect };
 export async function choose(page: Page, label: string | RegExp, option: string | RegExp) {
   await page.getByRole('combobox', { name: label }).click();
   await page.getByRole('option', { name: option }).click();
+}
+
+/** Eventos que a página mandou para o GA4 (via gtag → dataLayer). */
+export async function gaEvents(page: Page): Promise<{ name: string; params: Record<string, unknown> }[]> {
+  return page.evaluate(() =>
+    ((window as unknown as { dataLayer?: IArguments[] }).dataLayer ?? [])
+      .map((a) => Array.from(a))
+      .filter((a) => a[0] === 'event')
+      .map((a) => ({ name: a[1] as string, params: (a[2] ?? {}) as Record<string, unknown> })),
+  );
 }

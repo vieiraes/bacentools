@@ -25,6 +25,7 @@ import {
   type Bucket, type KeyType, type ParticipantCategory,
 } from '@/lib/domain/dict';
 import { USERS, useSimulation, type LogEntry } from './store';
+import { track } from '@/lib/analytics';
 
 const KEY_TYPES: KeyType[] = ['CPF', 'CNPJ', 'EVP', 'EMAIL', 'PHONE'];
 const CATEGORIES = Object.keys(PARTICIPANT_BUCKETS) as ParticipantCategory[];
@@ -95,9 +96,9 @@ export function SimulatorView() {
           </Grid>
         </Grid>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
-          <Button variant="contained" data-testid="consult-found" onClick={() => sim.consult(userId, keyType, true)}>Consultar chave que existe (200)</Button>
-          <Button variant="contained" color="warning" data-testid="consult-not-found" onClick={() => sim.consult(userId, keyType, false)}>Consultar chave que não existe (404)</Button>
-          <Button variant="contained" color="success" data-testid="pay" disabled={!sim.lastConsultation} onClick={sim.pay}>Enviar Pix da última consulta</Button>
+          <Button variant="contained" data-testid="consult-found" onClick={() => { sim.consult(userId, keyType, true); track('simulator_action', { action: 'consulta_200', key_type: keyType }); }}>Consultar chave que existe (200)</Button>
+          <Button variant="contained" color="warning" data-testid="consult-not-found" onClick={() => { sim.consult(userId, keyType, false); track('simulator_action', { action: 'consulta_404', key_type: keyType }); }}>Consultar chave que não existe (404)</Button>
+          <Button variant="contained" color="success" data-testid="pay" disabled={!sim.lastConsultation} onClick={() => { sim.pay(); track('simulator_action', { action: 'pix_enviado' }); }}>Enviar Pix da última consulta</Button>
           <Button variant="outlined" data-testid="reset" onClick={sim.reset}>Recomeçar</Button>
         </Box>
       </Paper>

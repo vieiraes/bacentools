@@ -118,3 +118,31 @@ describe('auxiliares do catálogo', () => {
     expect(c.failLabel).toMatch(/SPI/);
   });
 });
+
+import { erroPorSlug, resumo, slugDe } from '@/lib/pix-erros/catalogo';
+
+describe('endereços das páginas de SEO', () => {
+  it('cada código tem endereço único, curto e legível', () => {
+    const slugs = ERROS.map(slugDe);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    for (const s of slugs) expect(s).toMatch(/^[a-z0-9-]+$/);
+    expect(slugDe(erroPorId('pacs002-AC06')!)).toBe('ac06');
+    expect(slugDe(erroPorId('pacs004-SL02')!)).toBe('devolucao-sl02');
+    expect(slugDe(erroPorId('dict-RateLimited')!)).toBe('dict-429-rate-limited');
+  });
+
+  it('erroPorSlug é o inverso de slugDe', () => {
+    for (const e of ERROS) expect(erroPorSlug(slugDe(e))?.id).toBe(e.id);
+    expect(erroPorSlug('nao-existe')).toBeUndefined();
+  });
+
+  it('resumo tira o "Participante que gera o Erro" e o ponto final', () => {
+    expect(resumo(erroPorId('pacs002-AC06')!)).toBe('Conta transacional do usuário recebedor encontra-se bloqueada');
+    for (const e of ERROS) expect(resumo(e)).not.toMatch(/Participante que gera/);
+  });
+
+  it('erro do DICT sem status HTTP ainda gera endereço', () => {
+    const base = erroPorId('dict-RateLimited')!;
+    expect(slugDe({ ...base, httpStatus: undefined })).toBe('dict-erro-rate-limited');
+  });
+});

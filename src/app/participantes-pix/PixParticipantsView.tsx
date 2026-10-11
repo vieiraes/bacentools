@@ -17,6 +17,7 @@ import { CopyButton } from '@/components/CopyButton';
 import { fetchPixParticipants } from '@/lib/sources/fetchers';
 import type { PixParticipant } from '@/lib/sources/schemas';
 import { matches, plural } from '@/lib/domain/text';
+import { track } from '@/lib/analytics';
 
 const fmtDate = (iso: string | null) => (iso ? new Date(iso).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) : '—');
 
@@ -49,16 +50,16 @@ export function PixParticipantsView() {
       <SourceStatus result={q.data} error={q.error} onRetry={() => q.refetch()} source="a BrasilAPI" />
       <Grid container spacing={2} sx={{ mb: 2 }}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <SearchField value={search} onChange={setSearch} label="Buscar participante" placeholder="Nome ou ISPB" />
+          <SearchField area="participantes-pix" value={search} onChange={setSearch} label="Buscar participante" placeholder="Nome ou ISPB" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <TextField select fullWidth label="Modalidade" value={modality} onChange={(e) => setModality(e.target.value)} slotProps={{ htmlInput: { 'data-testid': 'modality' } }}>
+          <TextField select fullWidth label="Modalidade" value={modality} onChange={(e) => { setModality(e.target.value); track('select_content', { content_type: 'filtro_modalidade', item_id: e.target.value || 'todas' }); }} slotProps={{ htmlInput: { 'data-testid': 'modality' } }}>
             <MenuItem value="">Todas</MenuItem>
             {modalities.map((m) => <MenuItem key={m} value={m}>{m}</MenuItem>)}
           </TextField>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <TextField select fullWidth label="Participação" value={participation} onChange={(e) => setParticipation(e.target.value)}>
+          <TextField select fullWidth label="Participação" value={participation} onChange={(e) => { setParticipation(e.target.value); track('select_content', { content_type: 'filtro_participacao', item_id: e.target.value || 'todas' }); }}>
             <MenuItem value="">Direta e indireta</MenuItem>
             <MenuItem value="Direta">Direta</MenuItem>
             <MenuItem value="Indireta">Indireta</MenuItem>

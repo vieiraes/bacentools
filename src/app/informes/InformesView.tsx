@@ -20,6 +20,7 @@ import { SearchField } from '@/components/SearchField';
 import { fetchInformes } from '@/lib/sources/fetchers';
 import type { InformeTipo } from '@/lib/sources/schemas';
 import { formatBytes, matches, plural } from '@/lib/domain/text';
+import { track } from '@/lib/analytics';
 
 const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = Array.from({ length: 6 }, (_, i) => CURRENT_YEAR - i);
@@ -37,18 +38,18 @@ export function InformesView() {
     <>
       <Grid container spacing={2} sx={{ mb: 2, alignItems: "center" }}>
         <Grid size={{ xs: 12, sm: 'auto' }}>
-          <ToggleButtonGroup exclusive color="primary" value={tipo} onChange={(_e, v) => v && setTipo(v)} aria-label="Sistema">
+          <ToggleButtonGroup exclusive color="primary" value={tipo} onChange={(_e, v) => { if (v) { setTipo(v); track('select_content', { content_type: 'informe_tipo', item_id: v }); } }} aria-label="Sistema">
             <ToggleButton value="SPI">SPI (Pix)</ToggleButton>
             <ToggleButton value="STR">STR</ToggleButton>
           </ToggleButtonGroup>
         </Grid>
         <Grid size={{ xs: 12, sm: 3, md: 2 }}>
-          <TextField select fullWidth label="Ano" value={ano} onChange={(e) => setAno(Number(e.target.value))} slotProps={{ htmlInput: { 'data-testid': 'year' } }}>
+          <TextField select fullWidth label="Ano" value={ano} onChange={(e) => { setAno(Number(e.target.value)); track('select_content', { content_type: 'informe_ano', item_id: String(e.target.value) }); }} slotProps={{ htmlInput: { 'data-testid': 'year' } }}>
             {YEARS.map((y) => <MenuItem key={y} value={y}>{y}</MenuItem>)}
           </TextField>
         </Grid>
         <Grid size={{ xs: 12, md: 'grow' }}>
-          <SearchField value={search} onChange={setSearch} label="Filtrar informes" placeholder="Número ou título (ex.: 018)" />
+          <SearchField area="informes" value={search} onChange={setSearch} label="Filtrar informes" placeholder="Número ou título (ex.: 018)" />
         </Grid>
       </Grid>
 
@@ -66,7 +67,7 @@ export function InformesView() {
           {!q.isPending && rows.length === 0 && !q.error && <ListItem><ListItemText primary="Nenhum informe encontrado." /></ListItem>}
           {rows.map((i) => (
             <ListItem key={i.id} divider secondaryAction={
-              <Button href={i.pdfUrl} target="_blank" rel="noopener" startIcon={<PictureAsPdfIcon aria-hidden />} aria-label={`Abrir PDF do ${i.title}`}>
+              <Button href={i.pdfUrl} target="_blank" rel="noopener" startIcon={<PictureAsPdfIcon aria-hidden />} aria-label={`Abrir PDF do ${i.title}`} onClick={() => track('file_download', { file_name: i.fileName, link_url: i.pdfUrl, area: 'informes' })}>
                 PDF{i.sizeBytes ? ` · ${formatBytes(i.sizeBytes)}` : ''}
               </Button>
             } sx={{ pr: { xs: 16, sm: 20 } }}>

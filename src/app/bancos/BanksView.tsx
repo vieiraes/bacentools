@@ -43,7 +43,7 @@ export function BanksView() {
     <>
       <SourceStatus result={q.data} error={q.error} onRetry={() => q.refetch()} source="a BrasilAPI" />
       <Box sx={{ mb: 2 }}>
-        <SearchField value={search} onChange={setSearch} label="Buscar banco" placeholder="Nome, COMPE (ex.: 260) ou ISPB (ex.: 18236120)" />
+        <SearchField area="bancos" value={search} onChange={setSearch} label="Buscar banco" placeholder="Nome, COMPE (ex.: 260) ou ISPB (ex.: 18236120)" />
       </Box>
       <Typography role="status" variant="body2" color="text.secondary" sx={{ mb: 1 }} data-testid="result-count">
         {q.isPending ? 'Carregando…' : plural(rows.length, 'instituição', 'instituições')}

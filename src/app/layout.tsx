@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { Providers } from './providers';
 import { AppShell } from '@/components/layout/AppShell';
+import { Analytics } from '@/components/Analytics';
+import { CONSENT_INIT } from '@/lib/analytics';
 import { SITE } from '@/lib/tools';
 import './globals.css';
 
@@ -21,9 +23,14 @@ export const viewport: Viewport = { themeColor: '#0b4f9c' };
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR" className={inter.variable}>
+      <head>
+        {/* LGPD: consentimento negado por padrão antes do Google Analytics carregar */}
+        <script id="ga-consent" dangerouslySetInnerHTML={{ __html: CONSENT_INIT }} />
+      </head>
       <body>
         <Providers>
           <AppShell>{children}</AppShell>
+          <Analytics />
         </Providers>
       </body>
     </html>

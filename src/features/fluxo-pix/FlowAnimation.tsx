@@ -18,6 +18,7 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { ACTOR_LABEL, actorsOf, nodeStates, type Actor, type Outcome, type Scenario } from './model';
+import { track } from '@/lib/analytics';
 
 const ICON: Record<Actor, typeof HubIcon> = { PAGADOR: AccountBalanceIcon, RECEBEDOR: AccountBalanceIcon, SPI: HubIcon, DICT: MenuBookIcon };
 const COLOR: Record<Outcome, 'success' | 'error' | 'warning'> = { ok: 'success', erro: 'error', espera: 'warning' };
@@ -129,7 +130,7 @@ export function FlowAnimation({ scenario, amount = 'R$ 150,00' }: { scenario: Sc
 
       <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center', mt: 1 }}>
         {!done ? (
-          <Button variant="contained" startIcon={<PlayArrowIcon />} onClick={() => setPlaying(true)} disabled={playing} data-testid="play">
+          <Button variant="contained" startIcon={<PlayArrowIcon />} onClick={() => { setPlaying(true); if (step < 0) track('scenario_play', { item_id: scenario.id, mode: 'auto' }); }} disabled={playing} data-testid="play">
             {step < 0 ? 'Enviar o Pix' : 'Continuar'}
           </Button>
         ) : (

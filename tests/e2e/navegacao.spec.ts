@@ -40,3 +40,24 @@ test.describe('navegação e SEO', () => {
     for (const p of ['/bancos/', '/participantes-pix/', '/informes/', '/simulador-dict/']) expect(xml).toContain(`https://bacentools.web.app${p}`);
   });
 });
+
+test.describe('SEO: páginas por código de erro', () => {
+  test('a página do AC06 tem título, resposta, fonte oficial, FAQ estruturado e leva à animação', async ({ page }) => {
+    await page.goto('/erros-pix/ac06/');
+    await expect(page).toHaveTitle(/AC06 no Pix: conta transacional do usuário recebedor encontra-se bloqueada/);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('AC06 no Pix');
+    await expect(page.getByRole('link', { name: /Catálogo de Mensagens do SPI/ })).toHaveAttribute('href', /bcb\.gov\.br/);
+    const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
+    expect(ld.some((t) => t.includes('"FAQPage"'))).toBe(true);
+    await page.getByRole('link', { name: 'Ver a animação deste erro' }).click();
+    await expect(page).toHaveURL(/\/cenarios-pix\/#pacs002-AC06$/);
+  });
+
+  test('índice lista os 75 códigos com links e o sitemap inclui as páginas', async ({ page, request }) => {
+    await page.goto('/erros-pix/');
+    await expect(page.locator('a[href^="/erros-pix/"]')).toHaveCount(75);
+    const xml = await (await request.get('/sitemap.xml')).text();
+    expect(xml).toContain('https://bacentools.web.app/erros-pix/devolucao-md06/');
+    expect(xml).toContain('https://bacentools.web.app/erros-pix/dict-429-rate-limited/');
+  });
+});
