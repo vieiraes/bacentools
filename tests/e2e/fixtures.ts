@@ -26,8 +26,12 @@ export const test = base.extend<{ consoleErrors: string[] }>({
     await page.route('https://www.googletagmanager.com/**', (r) => r.fulfill({ status: 200, contentType: 'text/javascript', body: '' }));
     // Firestore também nunca é tocado: um envio de formulário nos testes não grava lead de verdade
     await page.route('https://firestore.googleapis.com/**', (r) => r.fulfill({ json: { commitTime: '2026-10-11T12:00:00Z', writeResults: [{ updateTime: '2026-10-11T12:00:00Z' }] } }));
-    // reCAPTCHA e App Check também ficam fora da rede nos testes
-    await page.route(/https:\/\/(www\.google\.com\/recaptcha|www\.gstatic\.com\/recaptcha|content-firebaseappcheck\.googleapis\.com)\/.*/, (r) => r.fulfill({ status: 200, body: '' }));
+    // reCAPTCHA e App Check também ficam fora da rede nos testes: um reCAPTCHA de mentira que sempre devolve token
+    await page.route(/https:\/\/www\.(google|gstatic)\.com\/recaptcha\/.*/, (r) => r.fulfill({
+      contentType: 'text/javascript',
+      body: 'window.grecaptcha={ready:function(c){c()},render:function(_,o){window.__rc=o;return 1},execute:function(){window.__rc.callback();return Promise.resolve("token-teste")}};',
+    }));
+    await page.route('https://content-firebaseappcheck.googleapis.com/**', (r) => r.fulfill({ json: { token: 'appcheck-teste', ttl: '3600s' } }));
     // status da verificação semanal de links (vem do GitHub)
     await page.route('https://raw.githubusercontent.com/**', (r) => r.fulfill({ json: { revisadoEm: '2026-10-11', verificadoEm: '2026-10-12T10:03:00Z', total: 29, quebrados: [] } }));
     // o banner de cookies já vem respondido, exceto no teste do próprio banner (tag @consentimento)
@@ -72,9 +76,9 @@ export async function gaEvents(page: Page): Promise<{ name: string; params: Reco
 
 /** Gravações enviadas ao Firestore (corpo do commit), para conferir o que o formulário mandou. */
 export async function capturarFirestore(page: Page, status = 200) {
-  const commits: Record<string, unknown>[] = [];
+  const commits: (Record<string, unknown> & { _appCheck?: string })[] = [];
   await page.route('https://firestore.googleapis.com/**', async (r) => {
-    commits.push(r.request().postDataJSON() ?? {});
+    commits.push({ ...(r.request().postDataJSON() ?? {}), _appCheck: r.request().headers()['x-firebase-appcheck'] });
     if (status !== 200) return r.fulfill({ status, json: { error: { code: status, message: 'falhou', status: 'UNAVAILABLE' } } });
     return r.fulfill({ json: { commitTime: '2026-10-11T12:00:00Z', writeResults: [{ updateTime: '2026-10-11T12:00:00Z' }] } });
   });

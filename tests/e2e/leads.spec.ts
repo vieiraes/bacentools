@@ -19,6 +19,7 @@ test.describe('captação de leads', () => {
     await expect(page.getByTestId('lead-ok-newsletter')).toBeVisible();
 
     expect(commits).toHaveLength(1);
+    expect(commits[0]._appCheck, 'o lead vai com o token do App Check (reCAPTCHA v3)').toBe('appcheck-teste');
     const campos = JSON.stringify(commits[0]);
     expect(campos).toContain('"ana@exemplo.com"');
     expect(campos).toContain('"qa"');
