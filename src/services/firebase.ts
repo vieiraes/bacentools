@@ -2,6 +2,7 @@
 // A configuração web do Firebase é pública por natureza: quem protege os dados são as regras do Firestore (firestore.rules).
 import type { FirebaseApp } from 'firebase/app';
 import type { LeadDoc, LeadRow } from '@/lib/leads';
+import { RECAPTCHA_SITE_KEY } from '@/lib/protecao';
 
 const CONFIG = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? 'AIzaSyBsG66cHRvzPvYrbKhgQrLiXF4odV9DOtE',
@@ -10,10 +11,28 @@ const CONFIG = {
   appId: '1:793003569:web:e0032e8aafcaef163cb710',
 };
 
+// App Check com reCAPTCHA v3 (invisível): prova ao Firestore que o pedido vem do site, não de um robô.
+// O Firestore só passa a exigir o token quando a proteção for ativada no console do Firebase.
+
 let app: Promise<FirebaseApp> | undefined;
 function getApp() {
-  app ??= import('firebase/app').then(({ initializeApp, getApps }) => getApps()[0] ?? initializeApp(CONFIG));
+  app ??= import('firebase/app').then(async ({ initializeApp, getApps }) => {
+    const existente = getApps()[0];
+    if (existente) return existente;
+    const a = initializeApp(CONFIG);
+    if (RECAPTCHA_SITE_KEY) {
+      const { initializeAppCheck, ReCaptchaV3Provider } = await import('firebase/app-check');
+      // sem renovação automática: cada token consome a cota grátis do reCAPTCHA, e só quem envia formulário precisa de um
+      initializeAppCheck(a, { provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY), isTokenAutoRefreshEnabled: false });
+    }
+    return a;
+  });
   return app;
+}
+
+/** Chamado quando a pessoa começa a preencher um formulário: o reCAPTCHA carrega antes do envio. */
+export async function prepararProtecao() {
+  await getApp();
 }
 
 async function db() {

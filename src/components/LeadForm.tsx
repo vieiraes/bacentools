@@ -13,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { PERFIS, validarLead, type TipoLead } from '@/lib/leads';
 import { track } from '@/lib/analytics';
+import { RECAPTCHA_SITE_KEY } from '@/lib/protecao';
 
 type Estado = 'editando' | 'enviando' | 'enviado' | 'falhou';
 
@@ -57,7 +58,7 @@ export function LeadForm({ tipo, origem }: { tipo: TipoLead; origem: string }) {
 
   const id = (c: string) => `${tipo}-${c}`;
   return (
-    <Box component="form" noValidate onSubmit={enviar} aria-label={tipo === 'newsletter' ? 'Inscrição na newsletter' : 'Formulário de contato'} data-testid={`lead-form-${tipo}`}>
+    <Box component="form" noValidate onSubmit={enviar} onFocus={() => { void import('@/services/firebase').then((f) => f.prepararProtecao()); }} aria-label={tipo === 'newsletter' ? 'Inscrição na newsletter' : 'Formulário de contato'} data-testid={`lead-form-${tipo}`}>
       <Stack spacing={2}>
         {tipo === 'contato' && (
           <TextField id={id('nome')} name="nome" label="Nome" autoComplete="name" required error={!!erros.nome} helperText={erros.nome} slotProps={{ htmlInput: { maxLength: 120 } }} />
@@ -91,6 +92,10 @@ export function LeadForm({ tipo, origem }: { tipo: TipoLead; origem: string }) {
           />
           {erros.consentimento && <FormHelperText error>{erros.consentimento}</FormHelperText>}
         </Box>
+        {RECAPTCHA_SITE_KEY && <FormHelperText>
+          Protegido pelo reCAPTCHA do Google: valem a <a href="https://policies.google.com/privacy?hl=pt-BR">Política de Privacidade</a> e os{' '}
+          <a href="https://policies.google.com/terms?hl=pt-BR">Termos de Serviço</a> do Google.
+        </FormHelperText>}
         {estado === 'falhou' && <Alert severity="error">Não consegui enviar agora. Confira sua conexão e tente de novo.</Alert>}
         <Box>
           <Button type="submit" variant="contained" disabled={estado === 'enviando'}>

@@ -26,6 +26,8 @@ export const test = base.extend<{ consoleErrors: string[] }>({
     await page.route('https://www.googletagmanager.com/**', (r) => r.fulfill({ status: 200, contentType: 'text/javascript', body: '' }));
     // Firestore também nunca é tocado: um envio de formulário nos testes não grava lead de verdade
     await page.route('https://firestore.googleapis.com/**', (r) => r.fulfill({ json: { commitTime: '2026-10-11T12:00:00Z', writeResults: [{ updateTime: '2026-10-11T12:00:00Z' }] } }));
+    // reCAPTCHA e App Check também ficam fora da rede nos testes
+    await page.route(/https:\/\/(www\.google\.com\/recaptcha|www\.gstatic\.com\/recaptcha|content-firebaseappcheck\.googleapis\.com)\/.*/, (r) => r.fulfill({ status: 200, body: '' }));
     // status da verificação semanal de links (vem do GitHub)
     await page.route('https://raw.githubusercontent.com/**', (r) => r.fulfill({ json: { revisadoEm: '2026-10-11', verificadoEm: '2026-10-12T10:03:00Z', total: 29, quebrados: [] } }));
     // o banner de cookies já vem respondido, exceto no teste do próprio banner (tag @consentimento)

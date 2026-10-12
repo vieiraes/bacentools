@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { RECAPTCHA_SITE_KEY } from '@/lib/protecao';
 
 export const metadata: Metadata = { title: 'Privacidade e cookies', description: 'Quais dados o BacenTools coleta, para quê e como recusar.' };
 
@@ -26,6 +27,16 @@ export default function Page() {
         compartilhados com ninguém. Você pode pedir a exclusão a qualquer momento pelo formulário da página{' '}
         <Link href="/sobre/#contato">Sobre</Link>, e ela é feita em até 15 dias.
       </Typography>
+      {RECAPTCHA_SITE_KEY && <>
+      <Typography component="h2" variant="h2" sx={{ mt: 3, mb: 1 }}>Proteção contra robôs</Typography>
+      <Typography sx={{ mb: 2 }}>
+        Os formulários usam o <strong>reCAPTCHA v3</strong> do Google, que funciona sem pedir que você resolva desafios. Ele só é carregado
+        quando você começa a preencher um formulário e serve para impedir envios automáticos. O uso do reCAPTCHA segue a{' '}
+        <Link href="https://policies.google.com/privacy?hl=pt-BR">Política de Privacidade</Link> e os{' '}
+        <Link href="https://policies.google.com/terms?hl=pt-BR">Termos de Serviço</Link> do Google. As ferramentas do site (consultas,
+        decodificadores, gerador, simulador) rodam no seu navegador e não usam reCAPTCHA.
+      </Typography>
+      </>}
       <Typography component="h2" variant="h2" sx={{ mt: 3, mb: 1 }}>Mudar sua escolha</Typography>
       <Typography sx={{ mb: 2 }}>
         Para rever o aviso de cookies, apague os dados deste site no navegador; o aviso aparece de novo na próxima visita.
