@@ -11,7 +11,7 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 [![CI](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml)
 [![Dados](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml)
 [![Licença](https://img.shields.io/badge/licença-Apache%202.0-0b4f9c)](LICENSE)
-![Testes](https://img.shields.io/badge/testes-190%20unit%20%2B%20106%20E2E-2e7d32)
+![Testes](https://img.shields.io/badge/testes-196%20unit%20%2B%20108%20E2E-2e7d32)
 ![Acessibilidade](https://img.shields.io/badge/axe-WCAG%202.2%20AA-0b4f9c)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs)
 
@@ -99,6 +99,7 @@ tests/unit · tests/e2e      Vitest · Playwright
 
 **Decisões:**
 - **Sem servidor:** as fontes aceitam chamadas do navegador. O site sai de graça, simples e com menos pontos de falha.
+- **Links oficiais conferidos toda semana:** a Action "Verificar links" abre cada link (pela API do site do BCB, porque ele responde 200 até para página que não existe), grava a data em `public/data/links-status.json` e abre uma issue se algum quebrar. A página `/links-pix/` lê esse arquivo direto do GitHub e mostra a última verificação.
 - **Cópia diária como reserva:** se a BrasilAPI cair, o site continua de pé e mostra a data da cópia.
 - **Regras isoladas em `lib/`:** dá para testar sem navegador.
 - **Leads no Firestore sem servidor:** o formulário grava direto do navegador; as `firestore.rules` só aceitam a criação de um lead válido e só o administrador lê. A mesma validação existe em `src/lib/leads.ts` (testada) e nas regras.

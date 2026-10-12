@@ -40,9 +40,20 @@ test('links oficiais: agrupados, abrem fora do site e só apontam para o BCB', a
   await mockSources(page);
   await page.goto('/links-pix/');
   await expect(page.getByRole('heading', { level: 2, name: 'Regulamento e manuais' })).toBeVisible();
+  await expect(page.getByTestId('links-status')).toContainText('Última verificação automática: 12/10/2026, 07:03');
+  await expect(page.getByTestId('links-status')).toContainText('Todos os 29 links funcionando. Lista revisada em 11/10/2026.');
   const links = page.locator('main section a[target="_blank"]');
   expect(await links.count()).toBeGreaterThan(20);
   for (const href of await links.evaluateAll((as) => as.map((a) => a.getAttribute('href')))) {
     expect(href).toMatch(/^https:\/\/(www\.bcb\.gov\.br|github\.com\/bacen)\//);
   }
+});
+
+test('links oficiais: link que caiu na última verificação aparece marcado', async ({ page }) => {
+  await mockSources(page);
+  const url = 'https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Regulamento_Pix/IX_ManualdeTemposdoPix.pdf';
+  await page.route('https://raw.githubusercontent.com/**', (r) => r.fulfill({ json: { revisadoEm: '2026-10-11', verificadoEm: '2026-10-19T10:00:00Z', total: 29, quebrados: [{ titulo: 'Manual de Tempos do Pix', url, motivo: 'HTTP 404' }] } }));
+  await page.goto('/links-pix/');
+  await expect(page.getByTestId('links-status')).toContainText('1 de 29 links com problema');
+  await expect(page.getByText('Fora do ar na última verificação: HTTP 404')).toBeVisible();
 });

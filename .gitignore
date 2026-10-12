@@ -50,3 +50,4 @@ blob-report/
 
 # cache de deploy do Firebase
 .firebase/
+links-check-report.md

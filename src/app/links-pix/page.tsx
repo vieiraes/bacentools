@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import { PageHeader } from '@/components/PageHeader';
 import { GRUPOS, LINKS_CONFERIDOS_EM } from '@/lib/links';
 import { TOOLS } from '@/lib/tools';
+import { MarcaQuebrado, ResumoStatus } from './StatusLinks';
 
 const tool = TOOLS.find((t) => t.path === '/links-pix/')!;
 export const metadata: Metadata = {
@@ -19,15 +20,14 @@ export const metadata: Metadata = {
 };
 
 const ROTULO = { pdf: 'PDF', zip: 'ZIP', pagina: 'Página', norma: 'Norma', codigo: 'GitHub' } as const;
-const dataBr = (iso: string) => iso.split('-').reverse().join('/');
 
 export default function Page() {
   return (
     <>
       <PageHeader tool={tool}>
+        <ResumoStatus revisadoEm={LINKS_CONFERIDOS_EM} />
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          Todos os links foram abertos e conferidos em {dataBr(LINKS_CONFERIDOS_EM)}. Achou um quebrado?{' '}
-          <Link href="https://github.com/vieiraes/bacentools/issues/new/choose">Avise no GitHub</Link>.
+          Achou um link quebrado ou uma versão nova? <Link href="https://github.com/vieiraes/bacentools/issues/new/choose">Avise no GitHub</Link>.
         </Typography>
       </PageHeader>
       <Stack spacing={3}>
@@ -43,6 +43,7 @@ export default function Page() {
                       <Link href={l.url} target="_blank" rel="noopener" sx={{ fontWeight: 600, overflowWrap: 'anywhere' }}>{l.titulo}</Link>
                       <Chip size="small" variant="outlined" label={ROTULO[l.tipo]} />
                       {l.versao && <Chip size="small" color="primary" variant="outlined" label={`versão ${l.versao}`} />}
+                      <MarcaQuebrado url={l.url} />
                     </Stack>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25 }}>{l.descricao}</Typography>
                   </ListItem>

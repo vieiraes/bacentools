@@ -1,0 +1,47 @@
+name: Verificar links
+
+# Toda segunda-feira abre os links oficiais da página /links-pix/ e as fontes do catálogo de erros.
+# Grava o resultado em public/data/links-status.json (a página mostra a data da última verificação)
+# e, se algum link quebrou, abre (ou atualiza) uma issue: o GitHub avisa por e-mail.
+on:
+  schedule:
+    - cron: '0 10 * * 1' # segunda, 07:00 em Brasília
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Abrir cada link
+        id: check
+        continue-on-error: true
+        run: node --experimental-strip-types scripts/check-links.mjs
+      - name: Gravar a data da verificação
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/links-status.json
+          git commit -m "chore(links): verificação semanal dos links oficiais" || exit 0
+          git pull --rebase && git push
+      - name: Abrir ou atualizar a issue de links quebrados
+        if: steps.check.outcome == 'failure'
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          titulo="Links oficiais quebrados"
+          n=$(gh issue list --state open --search "in:title \"$titulo\"" --json number -q '.[0].number')
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file links-check-report.md
+          else gh issue create --title "$titulo" --body-file links-check-report.md; fi
+          exit 1
+      - name: Fechar a issue quando tudo voltar a funcionar
+        if: steps.check.outcome == 'success'
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          n=$(gh issue list --state open --search 'in:title "Links oficiais quebrados"' --json number -q '.[0].number')
+          if [ -n "$n" ]; then gh issue close "$n" --comment "Todos os links voltaram a funcionar."; fi
