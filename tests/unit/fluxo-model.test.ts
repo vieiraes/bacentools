@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { actorsOf, finalOutcome, type Scenario } from '@/features/fluxo-pix/model';
+import { actorsOf, finalOutcome, type Scenario } from '@/features/fluxo/model';
 
 const base = (steps: Scenario['steps']): Scenario => ({ id: 't', title: 't', summary: 't', steps });
 
@@ -25,7 +25,7 @@ describe('modelo de cenário do Pix', () => {
   });
 });
 
-import { nodeStates } from '@/features/fluxo-pix/model';
+import { nodeStates } from '@/features/fluxo/model';
 import { cenarioPorId } from '@/lib/pix-erros/cenarios';
 
 describe('cores dos participantes na animação', () => {

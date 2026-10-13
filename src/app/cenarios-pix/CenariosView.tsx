@@ -16,7 +16,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { LazyDataTable } from '@/components/LazyDataTable';
-import { FlowAnimation } from '@/features/fluxo-pix/FlowAnimation';
+import { FlowAnimation } from '@/features/fluxo/FlowAnimation';
 import { BASE, ERROS, ORIGEM_LABEL, TIPO_LABEL, slugDe, type ErroPix, type Origem } from '@/lib/pix-erros/catalogo';
 import NextLink from 'next/link';
 import { DESTAQUES, cenarioPorId, fonteDe, type CenarioPix } from '@/lib/pix-erros/cenarios';

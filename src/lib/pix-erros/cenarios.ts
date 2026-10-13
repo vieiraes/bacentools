@@ -1,4 +1,4 @@
-import type { Scenario } from '@/features/fluxo-pix/model';
+import type { Scenario } from '@/features/fluxo/model';
 import { BASE, ERROS, FONTES, type ErroPix } from './catalogo';
 
 // Transforma cada código da base num cenário animado (sequência de mensagens entre os participantes).

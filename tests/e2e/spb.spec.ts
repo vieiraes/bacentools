@@ -64,3 +64,39 @@ test.describe('mensagens, domínios e erros do SPB', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('EGEN0001: XML Mal Formado');
   });
 });
+
+test.describe('TED animada', () => {
+  test('efetivada: R1 e R2 juntas, passos em texto e resultado', async ({ page }) => {
+    await mockSources(page);
+    await page.goto('/spb/ted/');
+    await expect(page.getByTestId('play')).toHaveText('Enviar a TED');
+    await page.getByTestId('next').click();
+    await page.getByTestId('next').click();
+    const passos = page.getByTestId('steps').getByRole('listitem');
+    await expect(passos).toHaveCount(2);
+    await expect(passos.nth(1)).toContainText('STR → IF debitada e IF creditada');
+    await expect(passos.nth(1)).toContainText('STR0008R1 + STR0008R2');
+    await expect(page.getByTestId('result')).toHaveText('TED efetivada');
+  });
+
+  test('recusa por RSTR0034: STR0008E com ESTR0146, dedução marcada e link para o código', async ({ page }) => {
+    await mockSources(page);
+    await page.goto('/spb/ted/#ted-finalidade-outros');
+    await expect(page.getByTestId('ficha-ted')).toContainText('Dedução');
+    await page.getByTestId('next').click();
+    await page.getByTestId('next').click();
+    await expect(page.getByTestId('result')).toHaveText('TED recusada · ESTR0146');
+    await page.getByTestId('ficha-ted').getByRole('link', { name: 'ESTR0146' }).click();
+    await expect(page).toHaveURL('/spb/erros/estr0146/');
+  });
+
+  test('devolução troca os nomes dos bancos', async ({ page }) => {
+    await mockSources(page);
+    await page.goto('/spb/ted/');
+    await page.getByTestId('cenario-devolucao').click();
+    await expect(page).toHaveURL(/#devolucao$/);
+    await expect(page.getByTestId('play')).toHaveText('Devolver a TED');
+    await page.getByTestId('next').click();
+    await expect(page.getByTestId('steps')).toContainText('Banco B → STR');
+  });
+});

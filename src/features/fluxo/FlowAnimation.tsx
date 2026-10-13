@@ -17,10 +17,13 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { ACTOR_LABEL, actorsOf, nodeStates, type Actor, type Outcome, type Scenario } from './model';
+import { actorsOf, destinos, nodeStates, rotulo, type Actor, type Outcome, type Scenario } from './model';
 import { track } from '@/lib/analytics';
 
-const ICON: Record<Actor, typeof HubIcon> = { PAGADOR: AccountBalanceIcon, RECEBEDOR: AccountBalanceIcon, SPI: HubIcon, DICT: MenuBookIcon };
+const ICON: Record<Actor, typeof HubIcon> = {
+  PAGADOR: AccountBalanceIcon, RECEBEDOR: AccountBalanceIcon, SPI: HubIcon, DICT: MenuBookIcon,
+  IF_DEBITADA: AccountBalanceIcon, IF_CREDITADA: AccountBalanceIcon, STR: HubIcon, SITRAF: HubIcon,
+};
 const COLOR: Record<Outcome, 'success' | 'error' | 'warning'> = { ok: 'success', erro: 'error', espera: 'warning' };
 const STEP_MS = 1500;
 
@@ -68,7 +71,7 @@ export function FlowAnimation({ scenario, amount = 'R$ 150,00' }: { scenario: Sc
           const raw = states[a];
           const warned = raw === 'avisado';
           const st = warned ? undefined : raw;
-          const active = cur && (cur.to === a || cur.from === a);
+          const active = cur && (destinos(cur).includes(a) || cur.from === a);
           return (
             <motion.div
               key={a}
@@ -84,18 +87,18 @@ export function FlowAnimation({ scenario, amount = 'R$ 150,00' }: { scenario: Sc
               }}>
                 <Icon sx={{ fontSize: small ? 26 : 40 }} />
               </Box>
-              <Typography variant="body2" sx={{ fontWeight: 700, mt: 0.5, lineHeight: 1.1, fontSize: small ? 12 : undefined }}>{ACTOR_LABEL[a].title}</Typography>
-              {!small && <Typography variant="caption" color="text.secondary">{ACTOR_LABEL[a].subtitle}</Typography>}
+              <Typography variant="body2" sx={{ fontWeight: 700, mt: 0.5, lineHeight: 1.1, fontSize: small ? 12 : undefined }}>{rotulo(scenario, a).title}</Typography>
+              {!small && <Typography variant="caption" color="text.secondary">{rotulo(scenario, a).subtitle}</Typography>}
             </motion.div>
           );
         })}
 
         <AnimatePresence>
-          {cur && (
+          {cur && destinos(cur).map((para, i) => (
             <motion.div
-              key={`dot-${step}`}
+              key={`dot-${step}-${i}`}
               initial={{ left: `${xOf(cur.from)}%`, opacity: 0, scale: 0.4 }}
-              animate={{ left: `${xOf(cur.to)}%`, opacity: 1, scale: 1 }}
+              animate={{ left: `${xOf(para)}%`, opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.4, transition: { duration: 0.1 } }}
               transition={reduce ? { duration: 0 } : { duration: 1, ease: 'easeInOut' }}
               style={{ position: 'absolute', top: RAIL - 17, translateX: '-50%', zIndex: 3 }}
@@ -106,12 +109,12 @@ export function FlowAnimation({ scenario, amount = 'R$ 150,00' }: { scenario: Sc
                 {cur.money ? '💸' : cur.outcome === 'erro' ? '✕' : cur.outcome === 'espera' ? '⏳' : '✉️'}
               </Box>
             </motion.div>
-          )}
+          ))}
           {cur && (
             <motion.div
               key={`label-${step}`}
               initial={{ left: `${Math.min(80, Math.max(20, xOf(cur.from)))}%`, opacity: 0 }}
-              animate={{ left: `${Math.min(80, Math.max(20, (xOf(cur.from) + xOf(cur.to)) / 2))}%`, opacity: 1 }}
+              animate={{ left: `${Math.min(80, Math.max(20, destinos(cur).length > 1 ? xOf(cur.from) : (xOf(cur.from) + xOf(destinos(cur)[0])) / 2))}%`, opacity: 1 }}
               exit={{ opacity: 0, transition: { duration: 0.1 } }}
               transition={reduce ? { duration: 0 } : { duration: 0.8, ease: 'easeOut', delay: 0.12 }}
               style={{ position: 'absolute', top: LANE, translateX: '-50%', zIndex: 2 }}
@@ -131,7 +134,7 @@ export function FlowAnimation({ scenario, amount = 'R$ 150,00' }: { scenario: Sc
       <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center', mt: 1 }}>
         {!done ? (
           <Button variant="contained" startIcon={<PlayArrowIcon />} onClick={() => { setPlaying(true); if (step < 0) track('scenario_play', { item_id: scenario.id, mode: 'auto' }); }} disabled={playing} data-testid="play">
-            {step < 0 ? 'Enviar o Pix' : 'Continuar'}
+            {step < 0 ? scenario.playLabel ?? 'Enviar o Pix' : 'Continuar'}
           </Button>
         ) : (
           <Button variant="contained" startIcon={<ReplayIcon />} onClick={() => { setStep(-1); setPlaying(true); }} data-testid="replay">De novo</Button>
@@ -152,7 +155,7 @@ export function FlowAnimation({ scenario, amount = 'R$ 150,00' }: { scenario: Sc
       <Box component="ol" aria-live="polite" aria-label="Passos do cenário" data-testid="steps" sx={{ mt: 2, mb: 0, pl: 3 }}>
         {steps.slice(0, step + 1).map((s, i) => (
           <Typography component="li" key={i} variant="body2" sx={{ mb: 0.5 }} data-outcome={s.outcome ?? 'ok'}>
-            <strong>{ACTOR_LABEL[s.from].title} → {ACTOR_LABEL[s.to].title}</strong> · <code>{s.message}</code>{s.code && <> · <strong>{s.code}</strong></>}: {s.label}
+            <strong>{rotulo(scenario, s.from).title} → {destinos(s).map((d) => rotulo(scenario, d).title).join(' e ')}</strong> · <code>{s.message}</code>{s.code && <> · <strong>{s.code}</strong></>}: {s.label}
           </Typography>
         ))}
       </Box>

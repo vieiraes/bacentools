@@ -104,6 +104,16 @@ TOOLS.push(
     source: 'Banco Central (página do SPB e Grade de horários do SPB)',
   },
   {
+    path: '/spb/ted/',
+    title: 'Como funciona a TED',
+    short: 'TED animada',
+    description: 'Veja a TED passar pelo STR e pelo SITRAF: STR0008, respostas R1 e R2, fila por falta de saldo, agendamento, recusa com código de erro e devolução (STR0010).',
+    icon: 'flow',
+    menu: 'Como funciona a TED (animação)',
+    secao: 'spb',
+    source: 'Catálogo de Serviços do SFN 5.13 e Grade de horários do SPB',
+  },
+  {
     path: '/spb/mensagens/',
     title: 'Mensagens da TED',
     short: 'Mensagens',

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { BASE, ERROS, FONTES } from '@/lib/pix-erros/catalogo';
 import { CENARIO_SUCESSO, DESTAQUES, cenarioDoErro, cenarioPorId } from '@/lib/pix-erros/cenarios';
-import { finalOutcome } from '@/features/fluxo-pix/model';
+import { finalOutcome } from '@/features/fluxo/model';
 
 describe('base de erros do Pix: rastreabilidade', () => {
   it('todo código exibido vem de fonte oficial do BCB, com local na fonte', () => {

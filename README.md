@@ -88,7 +88,7 @@ src/
 ├── app/                    páginas (Next.js App Router, exportação estática)
 ├── components/             moldura, busca, tabela (MUI X DataGrid, carregada só no navegador)
 ├── features/
-│   ├── fluxo-pix/          animação do caminho do Pix (Motion), dirigida por dados
+│   ├── fluxo/              animação das mensagens (Pix e TED, Motion), dirigida por dados
 │   └── simulador/          tela e store do simulador do DICT (useSyncExternalStore)
 ├── data/erros-pix.json     base de códigos levantada nos documentos oficiais do BCB
 └── lib/
