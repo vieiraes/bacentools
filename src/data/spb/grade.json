@@ -1,0 +1,90 @@
+[
+ {
+  "grade": "AGE01",
+  "mensagens": [
+   "STR0008",
+   "STR0010"
+  ],
+  "natal": {
+   "abre": "04:00",
+   "fecha": "23:59"
+  },
+  "ultimoDia": {
+   "abre": "04:00",
+   "fecha": "23:59"
+  },
+  "util": {
+   "abre": "04:00",
+   "fecha": "23:59"
+  },
+  "sabadoFeriado": {
+   "abre": "04:00",
+   "fecha": "23:59"
+  },
+  "domingo": {
+   "abre": "12:00",
+   "fecha": "23:59"
+  }
+ },
+ {
+  "grade": "AGE02",
+  "mensagens": [
+   "STR0008",
+   "STR0010"
+  ],
+  "natal": {
+   "abre": "12:00",
+   "fecha": "12:01"
+  },
+  "ultimoDia": {
+   "abre": "12:00",
+   "fecha": "12:01"
+  },
+  "util": {
+   "abre": "12:00",
+   "fecha": "12:01"
+  },
+  "sabadoFeriado": null,
+  "domingo": null
+ },
+ {
+  "grade": "STR01",
+  "mensagens": [
+   "STR0010"
+  ],
+  "natal": {
+   "abre": "06:30",
+   "fecha": "13:00"
+  },
+  "ultimoDia": {
+   "abre": "06:30",
+   "fecha": "13:00"
+  },
+  "util": {
+   "abre": "06:30",
+   "fecha": "18:30"
+  },
+  "sabadoFeriado": null,
+  "domingo": null
+ },
+ {
+  "grade": "STR02",
+  "mensagens": [
+   "STR0008"
+  ],
+  "natal": {
+   "abre": "06:30",
+   "fecha": "12:30"
+  },
+  "ultimoDia": {
+   "abre": "06:30",
+   "fecha": "12:00"
+  },
+  "util": {
+   "abre": "06:30",
+   "fecha": "17:30"
+  },
+  "sabadoFeriado": null,
+  "domingo": null
+ }
+]

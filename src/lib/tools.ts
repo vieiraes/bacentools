@@ -4,10 +4,12 @@ export interface Tool {
   title: string;
   short: string;
   description: string;
-  icon: 'bank' | 'pix' | 'docs' | 'bucket' | 'flow' | 'qr' | 'qrAdd' | 'id' | 'link';
+  icon: 'bank' | 'pix' | 'docs' | 'bucket' | 'flow' | 'qr' | 'qrAdd' | 'id' | 'link' | 'ted';
   source: string;
-  /** Ferramentas avulsas ficam no menu "Ferramentas" da barra do topo, com este nome curto */
+  /** Ferramentas avulsas ficam num menu da barra do topo, com este nome curto */
   menu?: string;
+  /** Área do site: Pix (padrão) ou SPB/TED, que tem menu e seção próprios */
+  secao?: 'pix' | 'spb';
 }
 
 export const TOOLS: Tool[] = [
@@ -88,6 +90,32 @@ export const TOOLS: Tool[] = [
     source: 'Especificação da API do DICT',
   },
 ];
+
+// Área SPB e TED: menu próprio na barra do topo e seção própria na página inicial.
+TOOLS.push(
+  {
+    path: '/spb/',
+    title: 'SPB e TED: visão geral',
+    short: 'Visão geral',
+    description: 'O que é o SPB, o STR e a TED, o horário da TED agora (grade oficial do BCB) e as ferramentas de mensagens, XML e erros do STR.',
+    icon: 'ted',
+    menu: 'Visão geral e horário da TED',
+    secao: 'spb',
+    source: 'Banco Central (página do SPB e Grade de horários do SPB)',
+  },
+  {
+    path: '/spb/links/',
+    title: 'Links oficiais do SPB',
+    short: 'Links do SPB',
+    description: 'Catálogo de Serviços do SFN (volumes e XSD), Dicionário de Domínios, Relação de Erros, grade de horários, STR e Tesouro: os documentos oficiais do SPB num lugar só.',
+    icon: 'link',
+    menu: 'Links oficiais do SPB',
+    secao: 'spb',
+    source: 'Banco Central e Tesouro Nacional',
+  },
+);
+
+export const secaoDe = (t: Tool) => t.secao ?? 'pix';
 
 export const SITE = {
   name: 'BacenTools',

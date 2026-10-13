@@ -4,11 +4,12 @@
 // Uso: node --experimental-strip-types scripts/check-links.mjs
 import { readFile, writeFile, appendFile } from 'node:fs/promises';
 import { GRUPOS, LINKS_CONFERIDOS_EM } from '../src/lib/links.ts';
+import { GRUPOS_SPB } from '../src/lib/links-spb.ts';
 import { verificarLink } from '../src/lib/verificar-links.ts';
 
 const erros = JSON.parse(await readFile(new URL('../src/data/erros-pix.json', import.meta.url), 'utf8'));
 const alvos = new Map();
-for (const g of GRUPOS) for (const l of g.links) alvos.set(l.url, l.titulo);
+for (const g of [...GRUPOS, ...GRUPOS_SPB]) for (const l of g.links) alvos.set(l.url, l.titulo);
 for (const f of erros.fontes) if (!alvos.has(f.url)) alvos.set(f.url, `${f.titulo} (fonte do catálogo de erros)`);
 
 const resultados = [];

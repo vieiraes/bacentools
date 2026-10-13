@@ -9,7 +9,33 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { LeadForm } from '@/components/LeadForm';
 import { ToolIcon } from '@/components/ToolIcon';
-import { SITE, TOOLS } from '@/lib/tools';
+import { SITE, TOOLS, secaoDe, type Tool } from '@/lib/tools';
+
+const PIX = TOOLS.filter((t) => secaoDe(t) === 'pix');
+const SPB = TOOLS.filter((t) => secaoDe(t) === 'spb');
+
+function Cartoes({ tools, label }: { tools: Tool[]; label: string }) {
+  return (
+    <Grid container spacing={2} component="nav" aria-label={label}>
+      {tools.map((t) => (
+        <Grid key={t.path} size={{ xs: 12, sm: 6 }}>
+          <Card sx={{ height: '100%' }}>
+            <CardActionArea component={Link} href={t.path} sx={{ height: '100%', alignItems: 'flex-start' }}>
+              <CardContent>
+                <Typography variant="h3" component="p" sx={{ display: 'flex', alignItems: 'center', gap: 1, fontSize: '1.25rem', fontWeight: 700 }}>
+                  <ToolIcon icon={t.icon} color="primary" />
+                  {t.title}
+                </Typography>
+                <Typography color="text.secondary" sx={{ mt: 1 }}>{t.description}</Typography>
+                <Chip size="small" label={`Fonte: ${t.source}`} sx={{ mt: 2 }} />
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  );
+}
 
 export default function Home() {
   return (
@@ -23,24 +49,19 @@ export default function Home() {
         </Typography>
       </Box>
 
-      <Grid container spacing={2} component="nav" aria-label="Ferramentas">
-        {TOOLS.map((t) => (
-          <Grid key={t.path} size={{ xs: 12, sm: 6 }}>
-            <Card sx={{ height: '100%' }}>
-              <CardActionArea component={Link} href={t.path} sx={{ height: '100%', alignItems: 'flex-start' }}>
-                <CardContent>
-                  <Typography variant="h2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <ToolIcon icon={t.icon} color="primary" />
-                    {t.title}
-                  </Typography>
-                  <Typography color="text.secondary" sx={{ mt: 1 }}>{t.description}</Typography>
-                  <Chip size="small" label={`Fonte: ${t.source}`} sx={{ mt: 2 }} />
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Box component="section" aria-labelledby="secao-pix">
+        <Typography id="secao-pix" variant="h2" sx={{ mb: 1.5 }}>Pix</Typography>
+        <Cartoes tools={PIX} label="Ferramentas do Pix" />
+      </Box>
+
+      <Box component="section" aria-labelledby="secao-spb" sx={{ mt: 5 }}>
+        <Typography id="secao-spb" variant="h2">SPB e TED</Typography>
+        <Typography color="text.secondary" sx={{ mt: 0.5, mb: 1.5, maxWidth: '70ch' }}>
+          O Sistema de Pagamentos Brasileiro por trás da TED: mensagens do STR, horários, contratos XML e códigos de erro, direto do
+          Catálogo de Serviços do SFN.
+        </Typography>
+        <Cartoes tools={SPB} label="Ferramentas do SPB" />
+      </Box>
 
       <Paper component="section" aria-labelledby="newsletter" sx={{ mt: 4, p: { xs: 2, md: 3 } }}>
         <Typography id="newsletter" variant="h2">Mudou no Pix</Typography>

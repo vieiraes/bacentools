@@ -1,7 +1,7 @@
 // Links oficiais do Pix. Fonte principal: página "Normas sobre o Pix" do BCB (bcb.gov.br/estabilidadefinanceira/pix-normas),
 // lida em 11/10/2026. Cada link foi aberto e conferido (PDF existe, página existe na API do site do BCB).
 
-export const LINKS_CONFERIDOS_EM = '2026-10-11';
+export const LINKS_CONFERIDOS_EM = '2026-10-13';
 
 export interface LinkOficial {
   titulo: string;
@@ -9,7 +9,7 @@ export interface LinkOficial {
   url: string;
   /** versão vigente quando conferimos, se o documento informa */
   versao?: string;
-  tipo: 'pdf' | 'zip' | 'pagina' | 'norma' | 'codigo';
+  tipo: 'pdf' | 'zip' | 'xls' | 'pagina' | 'norma' | 'codigo';
 }
 
 export interface GrupoLinks { id: string; titulo: string; descricao: string; links: LinkOficial[] }

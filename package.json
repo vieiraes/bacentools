@@ -41,8 +41,10 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.26",
     "fast-check": "4.10.2",
+    "fast-xml-parser": "5.11.2",
     "typescript": "^5",
-    "vitest": "5.0.1"
+    "vitest": "5.0.1",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "overrides": {
     "playwright-core": "1.63.0",

@@ -5,8 +5,9 @@ test.describe('navegação e SEO', () => {
     await mockSources(page);
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('BacenTools');
-    const cards = page.getByRole('navigation', { name: 'Ferramentas' }).last().getByRole('link');
+    const cards = page.getByRole('navigation', { name: 'Ferramentas do Pix' }).getByRole('link');
     await expect(cards).toHaveCount(9);
+    await expect(page.getByRole('navigation', { name: 'Ferramentas do SPB' }).getByRole('link').first()).toHaveAttribute('href', '/spb/');
     for (const [name, path, h1] of [
       [/^Bancos/, '/bancos/', 'Bancos'],
       [/^Participantes do Pix/, '/participantes-pix/', 'Participantes do Pix'],
@@ -41,6 +42,22 @@ test.describe('navegação e SEO', () => {
         await page.getByRole('menuitem', { name: item }).click();
       }
       await expect(page).toHaveURL(path);
+    }
+  });
+
+  test('menu "SPB e TED" leva à área do SPB (gaveta no celular)', async ({ page, isMobile }) => {
+    await mockSources(page);
+    await page.goto('/');
+    for (const [item, path, h1] of [['Visão geral e horário da TED', '/spb/', 'SPB e TED: visão geral'], ['Links oficiais do SPB', '/spb/links/', 'Links oficiais do SPB']] as const) {
+      if (isMobile) {
+        await page.getByRole('button', { name: 'Abrir menu' }).click();
+        await page.getByRole('link', { name: item }).click();
+      } else {
+        await page.getByRole('banner').getByRole('button', { name: 'SPB e TED' }).click();
+        await page.getByRole('menuitem', { name: item }).click();
+      }
+      await expect(page).toHaveURL(path);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(h1);
     }
   });
 

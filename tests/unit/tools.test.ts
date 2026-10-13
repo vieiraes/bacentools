@@ -7,7 +7,7 @@ describe('registro de ferramentas (menu, início e sitemap)', () => {
     const paths = TOOLS.map((t) => t.path);
     expect(new Set(paths).size).toBe(paths.length);
     for (const t of TOOLS) {
-      expect(t.path, t.title).toMatch(/^\/[a-z-]+\/$/);
+      expect(t.path, t.title).toMatch(/^(\/[a-z-]+)+\/$/);
       expect(existsSync(`src/app${t.path}page.tsx`), t.path).toBe(true);
       expect(t.description.length, t.path).toBeGreaterThan(40);
     }

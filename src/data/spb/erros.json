@@ -1,0 +1,1627 @@
+[
+ {
+  "codigo": "EGEN0001",
+  "descricao": "XML Mal Formado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0002",
+  "descricao": "BCMSG Ausente",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0003",
+  "descricao": "SISMSG Ausente",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0004",
+  "descricao": "ISPB Emissor Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0005",
+  "descricao": "ISPB Emissor Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0006",
+  "descricao": "ISPB Emissor Não Autorizado ao CODMSG Solicitado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0007",
+  "descricao": "ISPB Emissor Não Autorizado para a Fila Requerida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0008",
+  "descricao": "ISPB Destinatário Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0009",
+  "descricao": "ISPB Destinatário Não Confere com Destino",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0010",
+  "descricao": "NuOP Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0011",
+  "descricao": "NuOP já Registrado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0012",
+  "descricao": "NuOP Não Confere com ISPB",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0013",
+  "descricao": "NuOP Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0014",
+  "descricao": "CODMSG Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0015",
+  "descricao": "CODMSG Inexistente",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0016",
+  "descricao": "Erro na Conversão do Código",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0017",
+  "descricao": "XML Inválido. Campo Obrigatório Ausente",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0018",
+  "descricao": "XML Inválido. Campo Não Faz Parte da Mensagem",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0019",
+  "descricao": "Tipo ID Emissor Ausente/Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0020",
+  "descricao": "Tipo ID Destinatário Ausente/Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0021",
+  "descricao": "ISPB Emissora em Contingência",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0022",
+  "descricao": "Campo Obrigatório Não Informado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "EGEN0023",
+  "descricao": "Conteúdo Inválido",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "EGEN0024",
+  "descricao": "Informe NumCtrlSTR ou NUOp",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "EGEN0025",
+  "descricao": "NUOp Referente ao NumCtrlSTR Incompatível com o NUOp Informado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "EGEN0026",
+  "descricao": "NUOp Não Encontrado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "EGEN0027",
+  "descricao": "Mensagem Não Encontrada",
+  "desde": "2002-11-27"
+ },
+ {
+  "codigo": "EGEN0028",
+  "descricao": "Tipo de Retorno Inválido",
+  "desde": "2003-02-26"
+ },
+ {
+  "codigo": "EGEN0029",
+  "descricao": "Nome do Arquivo Não Tratado pelo Destinatário",
+  "desde": "2003-02-26"
+ },
+ {
+  "codigo": "EGEN0030",
+  "descricao": "Nome do Arquivo Inválido",
+  "desde": "2003-02-26"
+ },
+ {
+  "codigo": "EGEN0031",
+  "descricao": "Identificador do Arquivo Inválido",
+  "desde": "2003-06-26"
+ },
+ {
+  "codigo": "EGEN0032",
+  "descricao": "Recepção de Arquivo Fora do Horário",
+  "desde": "2003-07-15"
+ },
+ {
+  "codigo": "EGEN0033",
+  "descricao": "Tipo de Transmissão Inválido",
+  "desde": "2003-08-19"
+ },
+ {
+  "codigo": "EGEN0034",
+  "descricao": "XML Inválido. Formato deve ser Unicode UTF-16 BE",
+  "desde": "2004-05-17"
+ },
+ {
+  "codigo": "EGEN0035",
+  "descricao": "\"Namespace\" Inválido.",
+  "desde": "2005-06-09"
+ },
+ {
+  "codigo": "EGEN0036",
+  "descricao": "Domínio de Sistema Inválido.",
+  "desde": "2005-06-09"
+ },
+ {
+  "codigo": "EGEN0037",
+  "descricao": "Formato inválido de arquivo ZIP",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EGEN0038",
+  "descricao": "Erro na continuação da mensagem. Última mensagem na seqüência não é a final",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EGEN0039",
+  "descricao": "Erro na continuação da mensagem. Não houve recebimento de mensagem final",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EGEN0040",
+  "descricao": "Erro na continuação da mensagem. Parte fixa da mensagem de continuação difere da primeira mensagem",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EGEN0041",
+  "descricao": "Participante Não Está em Contingência Integral",
+  "desde": "2006-04-17"
+ },
+ {
+  "codigo": "EGEN0042",
+  "descricao": "Existe Outro Arquivo Pendente de Confirmação/Cancelamento na Data-Movimento",
+  "desde": "2006-04-17"
+ },
+ {
+  "codigo": "EGEN0043",
+  "descricao": "XML Inválido - Não Está de Acordo com a Definição do XSD",
+  "desde": "2006-04-17"
+ },
+ {
+  "codigo": "EGEN0044",
+  "descricao": "Mensagem Não Admite Segmentação",
+  "desde": "2006-07-17"
+ },
+ {
+  "codigo": "EGEN0045",
+  "descricao": "Número de Seqüência da Mensagem Inválido",
+  "desde": "2006-07-17"
+ },
+ {
+  "codigo": "EGEN0046",
+  "descricao": "Existe Outro Arquivo em Validação na Data-Movimento",
+  "desde": "2006-07-05"
+ },
+ {
+  "codigo": "EGEN0047",
+  "descricao": "Indicador Continuidade Inválido",
+  "desde": "2007-08-01"
+ },
+ {
+  "codigo": "EGEN0048",
+  "descricao": "Erro na continuação da mensagem. Existe segmento rejeitado da mensagem.",
+  "desde": "2007-10-04"
+ },
+ {
+  "codigo": "EGEN0049",
+  "descricao": "Quantidade de Repetição Inválida",
+  "desde": "2008-06-30"
+ },
+ {
+  "codigo": "EGEN0050",
+  "descricao": "Erro de Processamento",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0051",
+  "descricao": "ISPB Emissor Não Autorizado à Requisição do Arquivo",
+  "desde": "2008-03-03"
+ },
+ {
+  "codigo": "EGEN0052",
+  "descricao": "ISPB Emissor Não Autorizado ao Envio do Arquivo",
+  "desde": "2008-03-03"
+ },
+ {
+  "codigo": "EGEN0053",
+  "descricao": "CPF duplicado",
+  "desde": "2009-08-03"
+ },
+ {
+  "codigo": "EGEN0054",
+  "descricao": "Tipo de Responsável inválido",
+  "desde": "2009-08-03"
+ },
+ {
+  "codigo": "EGEN0055",
+  "descricao": "Quantidades de Tipos de Responsáveis inválidas",
+  "desde": "2009-08-03"
+ },
+ {
+  "codigo": "EGEN0056",
+  "descricao": "Tipo de Responsável duplicado",
+  "desde": "2009-08-17"
+ },
+ {
+  "codigo": "EGEN0057",
+  "descricao": "CPF inválido",
+  "desde": "2009-08-17"
+ },
+ {
+  "codigo": "EGEN0058",
+  "descricao": "Número de telefone inválido",
+  "desde": "2009-08-17"
+ },
+ {
+  "codigo": "EGEN0059",
+  "descricao": "Endereço eletrônico inválido",
+  "desde": "2009-08-17"
+ },
+ {
+  "codigo": "EGEN0060",
+  "descricao": "Mensagem original não foi emitida pelo Bacen ou foi emitida há mais de 7 dias",
+  "desde": "2015-08-25"
+ },
+ {
+  "codigo": "EGEN0061",
+  "descricao": "Caractere Unicode inválido",
+  "desde": "2016-11-18"
+ },
+ {
+  "codigo": "EGEN0062",
+  "descricao": "XML Inválido. Formato deve ser Unicode UTF-8",
+  "desde": "2018-11-26"
+ },
+ {
+  "codigo": "EGEN0063",
+  "descricao": "XML da mensagem reunida inválido - não está de acordo com a definição do XSD",
+  "desde": "2025-03-28"
+ },
+ {
+  "codigo": "EGEN0079",
+  "descricao": "Formato do Dado Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0080",
+  "descricao": "Tamanho do Dado Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0081",
+  "descricao": "Tamanho do Bloco BCMSG+SISMSG Inválido",
+  "desde": "2002-09-04"
+ },
+ {
+  "codigo": "EGEN0082",
+  "descricao": "Tamanho do USERMSG Inválido",
+  "desde": "2002-09-04"
+ },
+ {
+  "codigo": "EGEN0083",
+  "descricao": "USERMSG Ausente",
+  "desde": "2003-06-26"
+ },
+ {
+  "codigo": "EGEN0084",
+  "descricao": "BCMSG Inválido",
+  "desde": "2004-01-19"
+ },
+ {
+  "codigo": "EGEN0085",
+  "descricao": "Tamanho de mensagem inválido",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EGEN0086",
+  "descricao": "Tamanho do SISMSG inválido",
+  "desde": "2011-02-21"
+ },
+ {
+  "codigo": "EGEN0087",
+  "descricao": "Erro na continuação da mensagem. Última mensagem na sequência é superior ao limite acordado",
+  "desde": "2024-11-18"
+ },
+ {
+  "codigo": "EGEN0151",
+  "descricao": "Participante com acesso ao STR somente pela Internet",
+  "desde": "2026-01-30"
+ },
+ {
+  "codigo": "EGEN0152",
+  "descricao": "Participante em Contingência",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0153",
+  "descricao": "ISPB Emissor Incompativel com ISPB Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0154",
+  "descricao": "Mensagem Indisponível",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0155",
+  "descricao": "Mensagem Não Processável pelo Recebedor",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0300",
+  "descricao": "Mensagem Fora do Horário",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN0301",
+  "descricao": "Quantidade limite excedida para envio da mensagem",
+  "desde": "2025-03-28"
+ },
+ {
+  "codigo": "EGEN1001",
+  "descricao": "ISPB Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1002",
+  "descricao": "ISPB Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1004",
+  "descricao": "Código do Certificado a Ativar Igual a Zeros",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1005",
+  "descricao": "Código do Certificado a Ativar Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1009",
+  "descricao": "Data Movimento Inválida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1010",
+  "descricao": "Data Movimento Diferente da Data de Processamento",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1011",
+  "descricao": "Certificado/Cartório Não Ativo",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1016",
+  "descricao": "Data de Validade do Certif. a Ativar Menor que a Data Corrente",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1017",
+  "descricao": "Certificado inválido",
+  "desde": "2007-10-04"
+ },
+ {
+  "codigo": "EGEN1018",
+  "descricao": "Não é permitido ativar o certificado antes da data estabelecida",
+  "desde": "2011-07-22"
+ },
+ {
+  "codigo": "EGEN1055",
+  "descricao": "Campos da Repetição Fora da Sequência ou Não Existe Tag de Grupo",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1101",
+  "descricao": "Valor Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1102",
+  "descricao": "Valor Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1103",
+  "descricao": "Chave de Segurança Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1104",
+  "descricao": "Chave de Segurança Inválida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1105",
+  "descricao": "Tabelas de Contingência Indisponíveis",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1106",
+  "descricao": "Números Randômicos Esgotados",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN1107",
+  "descricao": "Data Movimento Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9901",
+  "descricao": "Tamanho do Cabeçalho de Segurança Zerado ou Incompatível c/os Possíveis",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9902",
+  "descricao": "Versão Inválida ou Incompatível com o Tamanho e/ou Conexão",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9903",
+  "descricao": "Algoritmo da Chave do Destinatário Inválido ou Divergente do Certificado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9904",
+  "descricao": "Algoritmo Simétrico Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9905",
+  "descricao": "Algoritmo da Chave de Assinatura Inválido ou Divergente do Certificado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9906",
+  "descricao": "Algoritmo de \"Hash\" Não Corresponde aos Indicados",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9907",
+  "descricao": "Código da AC do Certificado do Destinatário Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9908",
+  "descricao": "Número de Série do Certificado Destino Inválido (Não Foi Emitido pela AC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9909",
+  "descricao": "Código da AC do Certificado de Assinatura Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9910",
+  "descricao": "Número Série do Certificado de Assinatura Inválido (Não Foi Emitido p/AC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9911",
+  "descricao": "Assinatura da Mensagem Inválida ou com Erro",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9912",
+  "descricao": "Certificado Não é do Emissor da Mensagem (Titular da Fila no MQ)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9913",
+  "descricao": "Erro na Extração da Chave Simétrica",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9914",
+  "descricao": "Erro Gerado pelo Algoritmo Simétrico",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9915",
+  "descricao": "Tamanho da Mensagem Não Múltiplo de 8 Bytes",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9916",
+  "descricao": "Certificado Usado Não Está Ativado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9917",
+  "descricao": "Certificado Usado Está Revogado, Vencido ou Excluído pela Instituição",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9918",
+  "descricao": "Erro Genérico da Camada de Segurança",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9919",
+  "descricao": "Indicação de Uso Específico Inválida ou Incompatível",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EGEN9920",
+  "descricao": "Certificado Inválido (usar certificado \"a ativar\" na GEN0006)",
+  "desde": "2003-12-10"
+ },
+ {
+  "codigo": "EPAG0003",
+  "descricao": "Conteúdo/Domínio Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0011",
+  "descricao": "Mensagem Já Cancelada/Compensada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0012",
+  "descricao": "Membro Não Cadastrado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0013",
+  "descricao": "Mensagem Inexistente",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0014",
+  "descricao": "Divergência de Emissor do BCMSG e do SISMSG",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0015",
+  "descricao": "Membro Suspenso como Destinatário",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0016",
+  "descricao": "Membro Suspenso como Emissor",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0017",
+  "descricao": "Membro Suspenso",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0018",
+  "descricao": "Mensagem Fora do Horário",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0019",
+  "descricao": "Membro Emissor Idêntico ao Receptor",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0020",
+  "descricao": "Emissor Não é um Banco",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0021",
+  "descricao": "Receptor Não é um Banco",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0022",
+  "descricao": "Data Inválida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0023",
+  "descricao": "Registro Não Encontrado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0024",
+  "descricao": "Registro Não Está Mais Disponível no Banco de Dados",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "EPAG0025",
+  "descricao": "Data de Agendamento Deve Ser Maior ou Igual à Data de Movimento",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0026",
+  "descricao": "Data de Agendamento Maior que a Data Limite de Agendamento",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0027",
+  "descricao": "Data para Consulta Deve Ser Menor ou Igual à Data de Movimento",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0028",
+  "descricao": "Destinatário no BCMSG ou no SISMSG não é a CIP ou há divergência entre ambos",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0029",
+  "descricao": "Mensagem Rejeitada por Alteração na Situação do Participante",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0030",
+  "descricao": "Mensagem já Rejeitada Anteriormente",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0031",
+  "descricao": "Data de Agendamento Inválida",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0032",
+  "descricao": "Emissor Não Está Ativo",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0033",
+  "descricao": "Cancelamento de Mensagem não é Permitido para o Participante",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0034",
+  "descricao": "Consulta Não Permitida para o Participante",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0035",
+  "descricao": "Consulta Inválida",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0036",
+  "descricao": "Data de Movimento Inválida",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0037",
+  "descricao": "Transação Agendada Inexistente",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0038",
+  "descricao": "Emissor do BCMSG Não é o Esperado",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0039",
+  "descricao": "Situação de Lançamento Inexistente",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0040",
+  "descricao": "Valor Inválido",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0041",
+  "descricao": "Devolução - Mensagem Inválida para a Mensagem Original",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0042",
+  "descricao": "Devolução - Valor Maior que o Original",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0043",
+  "descricao": "Devolução - Emissor é Diferente do Original",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0044",
+  "descricao": "Devolução - Receptor é Diferente do Original",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0045",
+  "descricao": "Devolução - Mensagem Original Inexistente",
+  "desde": "2004-07-19"
+ },
+ {
+  "codigo": "EPAG0047",
+  "descricao": "Inconsistência entre os campos TpDev e VlrLimDev",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EPAG0048",
+  "descricao": "Transação não permitida para a instituição",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EPAG0049",
+  "descricao": "Transação não permitida para esta data de movimento",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EPAG0050",
+  "descricao": "Finalidade não tratada pela CIP",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EPAG0051",
+  "descricao": "Transação fora da faixa de valor permitida pela CIP",
+  "desde": "2005-12-19"
+ },
+ {
+  "codigo": "EPAG0052",
+  "descricao": "A Quantidade de Ocorrências do Grupo dentro da Repetição foi Excedida",
+  "desde": "2006-12-01"
+ },
+ {
+  "codigo": "EPAG0053",
+  "descricao": "Alteração de situação não permitida",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0054",
+  "descricao": "Data de alteração de situação menor ou igual à data corrente",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0055",
+  "descricao": "Data de alteração de situação maior que a permitida",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0056",
+  "descricao": "Participante já se encontra inoperante",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0057",
+  "descricao": "Participante já se encontra operante",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0058",
+  "descricao": "Horário ultrapassou período de envio de mensagens",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0059",
+  "descricao": "Data de alteração de situação deve ser dia útil",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0060",
+  "descricao": "Cancelamento não efetivado - solicitação não encontrada",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0061",
+  "descricao": "Cancelamento não permitido para a data",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0062",
+  "descricao": "Solicitação já enviada anteriormente",
+  "desde": "2013-09-30"
+ },
+ {
+  "codigo": "EPAG0063",
+  "descricao": "A descrição da finalidade deve ser preenchida no campo Histórico",
+  "desde": "2014-08-18"
+ },
+ {
+  "codigo": "EPAG0064",
+  "descricao": "Agência Creditada não informada",
+  "desde": "2017-06-12"
+ },
+ {
+  "codigo": "EPAG0065",
+  "descricao": "Agência Debitada não informada",
+  "desde": "2017-06-12"
+ },
+ {
+  "codigo": "EPAG0066",
+  "descricao": "Tipo da conta inválido",
+  "desde": "2017-06-12"
+ },
+ {
+  "codigo": "EPAG0067",
+  "descricao": "Agência não pode ser informada para o tipo da conta",
+  "desde": "2017-06-12"
+ },
+ {
+  "codigo": "EPAG0068",
+  "descricao": "Soma dos tributos informados resulta em valor superior ao valor da transação (Valor Lançamento).",
+  "desde": "2026-06-15"
+ },
+ {
+  "codigo": "EPAG0069",
+  "descricao": "Grupo Split só pode ser enviado quando TpPessoaRemet ou TpPessoaDebtd e TpPessoaDestinatario ou TpPessoaCredtd forem Pessoa Jurídica.",
+  "desde": "2026-06-15"
+ },
+ {
+  "codigo": "EPAG9999",
+  "descricao": "Erro Genérico",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0001",
+  "descricao": "Data do Movimento no Formato Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0002",
+  "descricao": "Data do Movimento Maior que a Data Corrente ou Anterior ao Início Sist.",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0003",
+  "descricao": "ISPB Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0004",
+  "descricao": "ISPB Débito Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0005",
+  "descricao": "ISPB Débito sem Reserva Bancária",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0006",
+  "descricao": "ISPB Crédito Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0007",
+  "descricao": "ISPB Crédito sem Reserva Bancária",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0008",
+  "descricao": "Preferência Inválida para o Código da Mensagem",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0010",
+  "descricao": "Número STR Original Inexistente",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0011",
+  "descricao": "Lançamento já Efetivado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0012",
+  "descricao": "Código da Mensagem Não Corresponde a Código de Mensagem a Ser Cancelada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0013",
+  "descricao": "Não Foi Encontrado Registro de Saldo na Data Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0014",
+  "descricao": "ISPB de Débito Diferente do ISPB de Crédito da Mensagem Original",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0015",
+  "descricao": "ISPB de Crédito Diferente do ISPB de Débito da Mensagem Original",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0016",
+  "descricao": "Valor do Lançamento Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0017",
+  "descricao": "ISPB de Crédito Não é do Tipo Câmara",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0018",
+  "descricao": "ISPB de Crédito Não Pode Ser do Tipo Câmara",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0019",
+  "descricao": "ISPB sem Reserva Bancária",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0020",
+  "descricao": "Data de Referência Inválida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0021",
+  "descricao": "Tipo de Horário Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0022",
+  "descricao": "Tipo Débito/Crédito Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0023",
+  "descricao": "Situaçao do Lançamento Inválida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0024",
+  "descricao": "Hora Inválida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0026",
+  "descricao": "Número de Controle do Redesconto Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0027",
+  "descricao": "Número de Controle do Redesconto Informado Inexistente no Redesconto",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0028",
+  "descricao": "Data da Mensagem Não Confere com a Data do Pedido de Redesconto",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0029",
+  "descricao": "Número de Controle do Redesconto Não Deve Ser Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0030",
+  "descricao": "NuOP Informado Não Pertence ao SELIC",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0031",
+  "descricao": "Número de Controle da IF Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0032",
+  "descricao": "Agência de Débito Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0033",
+  "descricao": "Agência de Crédito Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0034",
+  "descricao": "Finalidade Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0035",
+  "descricao": "Histórico Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0036",
+  "descricao": "Nome Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0037",
+  "descricao": "Tipo de Conta Debitada Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0038",
+  "descricao": "Conta Debitada Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0039",
+  "descricao": "Tipo de Pessoa Debitada Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0040",
+  "descricao": "CNPJ ou CPF Cliente Debitado Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0041",
+  "descricao": "Tipo de Conta Creditada Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0042",
+  "descricao": "Conta Creditada Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0043",
+  "descricao": "Tipo de Pessoa Creditada Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0044",
+  "descricao": "CNPJ ou CPF Cliente Creditado Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0045",
+  "descricao": "Código SEFAZ Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0046",
+  "descricao": "Tipo de Receita Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0047",
+  "descricao": "Tipo de Recolhimento Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0048",
+  "descricao": "Data da Arrecadação Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0049",
+  "descricao": "Tipo do Valor Informativo Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0050",
+  "descricao": "Erro de Processamento",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0051",
+  "descricao": "Valor Informativo Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0052",
+  "descricao": "CNPJ Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0053",
+  "descricao": "Data de Vencimento Inválida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0054",
+  "descricao": "Valor Principal Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0056",
+  "descricao": "Data Fim Período Inválida",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0057",
+  "descricao": "Código Devolução Transferência Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0058",
+  "descricao": "Identificacao do Depósito Não Informada",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0060",
+  "descricao": "ISPB de Débito Tem de Ser do Tipo Câmara LDL",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0061",
+  "descricao": "ISPB de Crédito Não é do Tipo Câmara - LTR",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0062",
+  "descricao": "ISPB de Débito Tem de Ser do Tipo Câmara LTR",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0063",
+  "descricao": "Código de Barras Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0064",
+  "descricao": "Instituição Não Autorizada para Consulta",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0065",
+  "descricao": "ISPB de Crédito Diferente do ISPB do Redesconto",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0066",
+  "descricao": "Código da Operação SELIC Não Informado (SELIC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0067",
+  "descricao": "Número da Operação SELIC Não Informado (SELIC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0068",
+  "descricao": "Valor Financeiro Não Informado (SELIC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0069",
+  "descricao": "Nível de Preferência Não Informado (SELIC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0070",
+  "descricao": "Sistema de Evento Contábil Não Informado (SELIC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0071",
+  "descricao": "Primeiro Titular Contábil Não Informado (SELIC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0072",
+  "descricao": "Segundo Titular Contábil Não Informado (SELIC)",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0073",
+  "descricao": "Data do Movimento Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0074",
+  "descricao": "Titular Contábil no Formato Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0075",
+  "descricao": "Titular Contábil Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0076",
+  "descricao": "ISPB Informado Não é de Reserva",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0077",
+  "descricao": "ISPB Informado Não é de Câmara",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0078",
+  "descricao": "Valor Resultado Financeiro Líquido Diferente do Valor Financeiro",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0079",
+  "descricao": "Valor Financeiro Incompatível com o Tipo Débito/Crédito",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0080",
+  "descricao": "Valor Resultado Financeiro Líquido para Débito Não Permitido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0081",
+  "descricao": "ISPB IF Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0082",
+  "descricao": "ISPB de Débito Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0083",
+  "descricao": "ISPB de Crédito Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0084",
+  "descricao": "Tipo de Retorno Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0085",
+  "descricao": "Tipo de Retorno Não Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0086",
+  "descricao": "Transferência a Ser Devolvida Não Corresponde a STR",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0087",
+  "descricao": "Número do Controle STR Inexistente",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0088",
+  "descricao": "Número Único de Operação Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0089",
+  "descricao": "Débito a Ser Cancelado Não Pertence ao ISPB",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0090",
+  "descricao": "ISPB Informado Mais de uma Vez na Repetição",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0091",
+  "descricao": "Situação do Lançamento Inválida para Consulta",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0092",
+  "descricao": "Não Existem Lançamentos de Débito para o ISPB Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0093",
+  "descricao": "Não Existem Lançamentos de Crédito para o ISPB Informado",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0094",
+  "descricao": "Sistema Evento Contábil Inválido",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0095",
+  "descricao": "ISPB de Débito Sob Intervenção do BACEN",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0096",
+  "descricao": "ISPB de Crédito Diferente do ISPB da Câmara do Redesconto Original",
+  "desde": "2002-06-17"
+ },
+ {
+  "codigo": "ESTR0097",
+  "descricao": "Erro no Processamento da Contabilidade",
+  "desde": "2003-01-21"
+ },
+ {
+  "codigo": "ESTR0098",
+  "descricao": "Data Inválida",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0099",
+  "descricao": "Conteúdo do Campo Não Pertence ao Dicionário de Domínios",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0100",
+  "descricao": "Campos Obrigatórios da Repetição Não Informados",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0101",
+  "descricao": "Número do Processo Não Informado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0102",
+  "descricao": "Código da Receita Não Informado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0103",
+  "descricao": "Código Depósito INSS Não Informado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0104",
+  "descricao": "Ano Mês Competência Não Informado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0105",
+  "descricao": "Valor Não Informado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0106",
+  "descricao": "Agência Não Informada",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0107",
+  "descricao": "CNPJ ou CPF Não Informado",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0108",
+  "descricao": "Transferência a Ser Devolvida Não Corresponde a Código de Barras",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0109",
+  "descricao": "Transferência a Ser Devolvida Não Permitida para Código de Barras",
+  "desde": "2002-07-26"
+ },
+ {
+  "codigo": "ESTR0110",
+  "descricao": "Código Identificador Não Informado",
+  "desde": "2003-07-29"
+ },
+ {
+  "codigo": "ESTR0112",
+  "descricao": "Número Seqüencial de Barras Não Informado",
+  "desde": "2004-01-19"
+ },
+ {
+  "codigo": "ESTR0113",
+  "descricao": "Canal de Pagamento Não Informado",
+  "desde": "2004-01-19"
+ },
+ {
+  "codigo": "ESTR0114",
+  "descricao": "Ano Mês Inválido",
+  "desde": "2005-02-14"
+ },
+ {
+  "codigo": "ESTR0115",
+  "descricao": "Grupo de Serviço Inválido",
+  "desde": "2006-02-13"
+ },
+ {
+  "codigo": "ESTR0116",
+  "descricao": "Hora Inicial Não Pode Ser Maior que Hora Final",
+  "desde": "2006-02-13"
+ },
+ {
+  "codigo": "ESTR0117",
+  "descricao": "Código de Grupo de Serviço Inválido para a Consulta Requisitada",
+  "desde": "2006-02-13"
+ },
+ {
+  "codigo": "ESTR0118",
+  "descricao": "Número Seqüencial da Conta-Salário Não Informado",
+  "desde": "2006-12-01"
+ },
+ {
+  "codigo": "ESTR0119",
+  "descricao": "Número Contrato Operação de Crédito Não Informado",
+  "desde": "2006-12-01"
+ },
+ {
+  "codigo": "ESTR0120",
+  "descricao": "Número de Repetições Ultrapassou o Limite da Mensagem",
+  "desde": "2006-12-01"
+ },
+ {
+  "codigo": "ESTR0121",
+  "descricao": "Devolução Inválida para o Lançamento do Número STR Original Informado",
+  "desde": "2006-12-26"
+ },
+ {
+  "codigo": "ESTR0122",
+  "descricao": "Valor não informado",
+  "desde": "2009-08-03"
+ },
+ {
+  "codigo": "ESTR0123",
+  "descricao": "Agendamento não pode ser cancelado",
+  "desde": "2010-02-26"
+ },
+ {
+  "codigo": "ESTR0124",
+  "descricao": "Número do benefício do cliente creditado no INSS não informado",
+  "desde": "2011-02-21"
+ },
+ {
+  "codigo": "ESTR0125",
+  "descricao": "Tipo do benefício no INSS não informado",
+  "desde": "2011-02-21"
+ },
+ {
+  "codigo": "ESTR0126",
+  "descricao": "Número de contrato de operação de crédito não informado",
+  "desde": "2011-02-21"
+ },
+ {
+  "codigo": "ESTR0127",
+  "descricao": "Número do protocolo de averbação no INSS não informado",
+  "desde": "2011-02-21"
+ },
+ {
+  "codigo": "ESTR0128",
+  "descricao": "Data Hora Não Informada",
+  "desde": "2012-08-07"
+ },
+ {
+  "codigo": "ESTR0129",
+  "descricao": "Data não é Dia Útil",
+  "desde": "2012-08-07"
+ },
+ {
+  "codigo": "ESTR0130",
+  "descricao": "Tipo de Pessoa inválido",
+  "desde": "2012-08-07"
+ },
+ {
+  "codigo": "ESTR0131",
+  "descricao": "Agendamento já existente para a IF e Data informada",
+  "desde": "2012-08-17"
+ },
+ {
+  "codigo": "ESTR0132",
+  "descricao": "Data deve ser maior que a Data Atual",
+  "desde": "2012-08-17"
+ },
+ {
+  "codigo": "ESTR0133",
+  "descricao": "Hora de Agendamento fora do horário da Grade STR01",
+  "desde": "2012-08-17"
+ },
+ {
+  "codigo": "ESTR0134",
+  "descricao": "Código do município inválido",
+  "desde": "2013-02-25"
+ },
+ {
+  "codigo": "ESTR0135",
+  "descricao": "Categoria Inválida",
+  "desde": "2013-02-25"
+ },
+ {
+  "codigo": "ESTR0136",
+  "descricao": "Quantidade de Cédulas Deve Ser Múltiplo de 100",
+  "desde": "2013-02-25"
+ },
+ {
+  "codigo": "ESTR0137",
+  "descricao": "Quantidade de Denominação para Valores Inexistentes",
+  "desde": "2013-02-25"
+ },
+ {
+  "codigo": "ESTR0138",
+  "descricao": "Valor de Denominação já Informado",
+  "desde": "2013-02-25"
+ },
+ {
+  "codigo": "ESTR0139",
+  "descricao": "Modalidade Operação Crédito Portada Inválida",
+  "desde": "2013-10-25"
+ },
+ {
+  "codigo": "ESTR0140",
+  "descricao": "Modalidade não informada",
+  "desde": "2014-05-05"
+ },
+ {
+  "codigo": "ESTR0141",
+  "descricao": "Número Portabilidade não informado",
+  "desde": "2014-05-05"
+ },
+ {
+  "codigo": "ESTR0142",
+  "descricao": "Valor da Devolução diferente do Valor do Lançamento Original",
+  "desde": "2014-05-05"
+ },
+ {
+  "codigo": "ESTR0143",
+  "descricao": "Número Controle STR Original já devolvido",
+  "desde": "2014-05-05"
+ },
+ {
+  "codigo": "ESTR0144",
+  "descricao": "Existe devolução pendente",
+  "desde": "2014-05-05"
+ },
+ {
+  "codigo": "ESTR0145",
+  "descricao": "Existe devolução agendada",
+  "desde": "2014-05-05"
+ },
+ {
+  "codigo": "ESTR0146",
+  "descricao": "A descrição da finalidade deve ser preenchida no campo Histórico",
+  "desde": "2014-08-18"
+ },
+ {
+  "codigo": "ESTR0147",
+  "descricao": "Tipo da conta inválido",
+  "desde": "2017-06-12"
+ },
+ {
+  "codigo": "ESTR0148",
+  "descricao": "Agência não pode ser informada para o tipo da conta",
+  "desde": "2017-06-12"
+ },
+ {
+  "codigo": "ESTR0149",
+  "descricao": "Data Hora Início Não Pode Ser Maior que Data Hora Fim",
+  "desde": "2018-11-26"
+ },
+ {
+  "codigo": "ESTR0150",
+  "descricao": "Data Hora Inválida",
+  "desde": "2018-11-26"
+ },
+ {
+  "codigo": "ESTR0151",
+  "descricao": "Soma dos tributos informados resulta em valor superior ao valor da transação (Valor Lançamento).",
+  "desde": "2026-06-15"
+ },
+ {
+  "codigo": "ESTR0152",
+  "descricao": "Grupo Split só pode ser enviado quando TpPessoaRemet ou TpPessoaDebtd e TpPessoaDestinatario ou TpPessoaCredtd forem Pessoa Jurídica.",
+  "desde": "2026-06-15"
+ },
+ {
+  "codigo": "ESTR0300",
+  "descricao": "Mensagem Fora do Horário",
+  "desde": "2002-06-17"
+ }
+]

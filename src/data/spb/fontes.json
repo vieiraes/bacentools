@@ -1,0 +1,47 @@
+{
+ "geradoEm": "2026-10-13",
+ "versao": "5.13",
+ "producao": "2026-10-24",
+ "versaoAnterior": "5.12",
+ "tedIgualNaVersaoAnterior": true,
+ "split": {
+  "versao": "5.12",
+  "producao": "2026-06-27",
+  "fonte": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Alteracoes512v511.xls"
+ },
+ "paginaCatalogos": "https://www.bcb.gov.br/estabilidadefinanceira/comunicacaodados",
+ "catalogo": {
+  "5.13": {
+   "titulo": "Catálogo de Serviços do SFN, versão 5.13",
+   "xsd": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/XSDDOCV513.zip",
+   "volumes": {
+    "I": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Catalogo_de_Servicos_do_SFN_Volume_I_Versao_513.pdf",
+    "II": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Catalogo_de_Servicos_do_SFN_Volume_II_Versao_513.pdf",
+    "IV": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Catalogo_de_Servicos_do_SFN_Volume_IV_Versao_513.pdf"
+   }
+  },
+  "5.12": {
+   "titulo": "Catálogo de Serviços do SFN, versão 5.12",
+   "xsd": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/XSDDOCV512.zip",
+   "volumes": {
+    "I": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Catalogo_de_Servicos_do_SFN_Volume_I_Versao_512.pdf",
+    "II": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Catalogo_de_Servicos_do_SFN_Volume_II_Versao_512.pdf",
+    "IV": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Catalogo_de_Servicos_do_SFN_Volume_IV_Versao_512.pdf"
+   }
+  }
+ },
+ "dominios": {
+  "titulo": "Dicionário de Domínios do Catálogo de Serviços do SFN",
+  "arquivo": "Dom20261009.xls",
+  "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Documentos_auxiliares/Dicionario_dominios/Dom20261009.xls"
+ },
+ "erros": {
+  "titulo": "Relação de Códigos de Erros do Catálogo de Serviços do SFN",
+  "arquivo": "Erros20260904.xls",
+  "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Catalogos/Documentos_auxiliares/Relacao_erros/Erros20260904.xls"
+ },
+ "grade": {
+  "titulo": "Grades de horários do SPB",
+  "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/STR/Grade_horarios_SPB.XLS"
+ }
+}

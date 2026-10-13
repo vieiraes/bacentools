@@ -1,0 +1,943 @@
+{
+ "CodDevTransf": [
+  {
+   "codigo": "1",
+   "descricao": "Conta Destinatária do Crédito Encerrada",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "2",
+   "descricao": "Agência ou Conta Destinatária do Crédito Inválida",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "3",
+   "descricao": "Ausência ou Divergência na Indicação do CPF/CNPJ",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "4",
+   "descricao": "Mensagem Inválida para o Tipo de Transação ou Finalidade.",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "5",
+   "descricao": "Divergência na Titularidade",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "6",
+   "descricao": "Transferência Insuficiente para Finalidade Indicada",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "7",
+   "descricao": "Diferença a Maior",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "8",
+   "descricao": "Código Identificador de Transferência Inválido",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "9",
+   "descricao": "Devolução por Fraude",
+   "desde": "2004-02-16"
+  },
+  {
+   "codigo": "15",
+   "descricao": "Identificação Depósito Judicial Inválida",
+   "desde": "2004-08-02"
+  },
+  {
+   "codigo": "16",
+   "descricao": "Mensagem STR0020/PAG0116 fora do horário definido para o negócio",
+   "desde": "2007-01-08"
+  },
+  {
+   "codigo": "17",
+   "descricao": "Número de contrato inválido",
+   "desde": "2007-07-30"
+  },
+  {
+   "codigo": "18",
+   "descricao": "Valor em duplicidade",
+   "desde": "2008-03-10"
+  },
+  {
+   "codigo": "19",
+   "descricao": "Movimentações financeiras ligadas ao terrorismo e ao seu financiamento",
+   "desde": "2009-03-16"
+  },
+  {
+   "codigo": "20",
+   "descricao": "Documento de FGTS não apresentado para autenticação",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "21",
+   "descricao": "Devolução de Pagamentos efetuados pelo Tesouro",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "22",
+   "descricao": "Devolução de Ordem Bancária pelo Agente Financeiro",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "23",
+   "descricao": "Erro no preenchimento da devolução",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "24",
+   "descricao": "Erro no Preenchimento do Documento de Recolhimento",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "25",
+   "descricao": "Erro no Preenchimento do Depósito Direto",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "26",
+   "descricao": "Devolução de pagamento de tributos por solicitação da IF",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "27",
+   "descricao": "Devolução de Recolhimento a Maior autorizada pela RFB",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "28",
+   "descricao": "Crédito não sacado - decurso de prazo estipulado",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "29",
+   "descricao": "Devolução de repasse de receitas de tributos para IF centralizadora",
+   "desde": "2026-10-24"
+  },
+  {
+   "codigo": "31",
+   "descricao": "CPF/CNPJ inapto junto à Receita Federal do Brasil",
+   "desde": "2019-04-01"
+  },
+  {
+   "codigo": "40",
+   "descricao": "Código de Moeda Inválido - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "51",
+   "descricao": "Boleto de Pagamento liquidado por valor a maior ou menor - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "52",
+   "descricao": "Boleto de Pagamento recebido após o vencimento sem juros e demais encargos - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "53",
+   "descricao": "Apresentação indevida - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "61",
+   "descricao": "Transferência supera limite para o tipo de conta destino",
+   "desde": "2017-03-02"
+  },
+  {
+   "codigo": "63",
+   "descricao": "Código de barras em desacordo com as especificações - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "68",
+   "descricao": "Boleto de Pagamento já liquidado",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "69",
+   "descricao": "Boletos de Pagamento liquidados em duplicidade no mesmo dia - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "70",
+   "descricao": "Por solicitação de cliente da Instituição Participante Recebedora",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "71",
+   "descricao": "Boleto de pagamento recebido com desconto ou abatimento não previsto - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "72",
+   "descricao": "Não conformidade no pagamento",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "73",
+   "descricao": "Beneficiário não identificado - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "74",
+   "descricao": "CPF/CNPJ do Beneficiário inválido ou não confere com registro de boleto na base da IF Destinatária - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "75",
+   "descricao": "CPF/CNPJ do Pagador inválido ou não confere com registro do boleto na base da IF Destinatária - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "76",
+   "descricao": "Cópia não encaminhada pela IF recebedora no prazo previsto - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "77",
+   "descricao": "Boleto em cartório ou protestado - Documentos com código de barras",
+   "desde": "2013-07-26"
+  },
+  {
+   "codigo": "80",
+   "descricao": "Portabilidade não registrada na central de transferência de crédito",
+   "desde": "2014-05-05"
+  },
+  {
+   "codigo": "82",
+   "descricao": "Boleto de Pagamento divergente da Base Centralizada de Boletos de Pagamento",
+   "desde": "2017-07-01"
+  },
+  {
+   "codigo": "83",
+   "descricao": "Boleto inexistente na Base Centralizada de Boletos de Pagamento",
+   "desde": "2017-07-01"
+  },
+  {
+   "codigo": "84",
+   "descricao": "Conta destinatária do crédito inválida para o tipo de transação ou finalidade",
+   "desde": "2020-01-31"
+  },
+  {
+   "codigo": "85",
+   "descricao": "Portabilidade não efetivada no âmbito do Open Finance",
+   "desde": "2025-10-06"
+  },
+  {
+   "codigo": "86",
+   "descricao": "Devolução por pagamento indevido de CBS",
+   "desde": "2026-06-27"
+  },
+  {
+   "codigo": "87",
+   "descricao": "Devolução relativa a ingresso de novos recursos em conta transacional destinados a exploração de loteria de apostas de quota fixa ilegais",
+   "desde": "2026-10-24"
+  }
+ ],
+ "FinlddCli": [
+  {
+   "codigo": "1",
+   "descricao": "Pagamento de Impostos, Tributos e Taxas",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "2",
+   "descricao": "Pagamento à Concessionárias de Serviço Público",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "3",
+   "descricao": "Pagamentos de Dividendos",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "4",
+   "descricao": "Pagamento de Salários",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "5",
+   "descricao": "Pagamento de Fornecedores",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "6",
+   "descricao": "Pagamento de Honorários",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "7",
+   "descricao": "Pagamento de Aluguéis e Taxas de Condomínio",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "8",
+   "descricao": "Pagamento de Duplicatas e Títulos",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "9",
+   "descricao": "Pagamento de Mensalidade Escolar",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "10",
+   "descricao": "Crédito em Conta",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "11",
+   "descricao": "Pagamento a Corretoras",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "12",
+   "descricao": "Pagamento de Boleto Bancário em Cartório",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "13",
+   "descricao": "Pagamento de Tarifas pela Prestação de Serviços de Arrecadação de Convênios",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "14",
+   "descricao": "Repasse de Valores Referentes a Títulos Liquidados em Cartórios de Protesto",
+   "desde": "2004-02-16"
+  },
+  {
+   "codigo": "15",
+   "descricao": "Liquidação Financeira de Operadora de Cartão",
+   "desde": "2004-08-02"
+  },
+  {
+   "codigo": "18",
+   "descricao": "Operações Seguro Habitacional - SFH",
+   "desde": "2004-09-13"
+  },
+  {
+   "codigo": "19",
+   "descricao": "Operações do FDS - Caixa",
+   "desde": "2004-09-13"
+  },
+  {
+   "codigo": "23",
+   "descricao": "Taxa de Administração",
+   "desde": "2004-11-03"
+  },
+  {
+   "codigo": "27",
+   "descricao": "Pagamento de Acordo / Execução Judicial",
+   "desde": "2005-01-10"
+  },
+  {
+   "codigo": "28",
+   "descricao": "Liquidação de Empréstimos Consignados",
+   "desde": "2005-06-13"
+  },
+  {
+   "codigo": "29",
+   "descricao": "Pagamento de bolsa auxílio",
+   "desde": "2005-12-26"
+  },
+  {
+   "codigo": "30",
+   "descricao": "Remuneração a cooperado",
+   "desde": "2005-12-26"
+  },
+  {
+   "codigo": "31",
+   "descricao": "Pagamento de prebenda (Remuneração a padres e sacerdotes)",
+   "desde": "2005-12-26"
+  },
+  {
+   "codigo": "33",
+   "descricao": "Pagamento de juros sobre capital próprio",
+   "desde": "2005-12-26"
+  },
+  {
+   "codigo": "34",
+   "descricao": "Pagamento de rendimentos ou amortização s/ cotas e/ou debêntures",
+   "desde": "2005-12-26"
+  },
+  {
+   "codigo": "35",
+   "descricao": "Taxa de Serviço",
+   "desde": "2006-07-31"
+  },
+  {
+   "codigo": "36",
+   "descricao": "Pagamento de cheque para não correntista",
+   "desde": "2016-10-24"
+  },
+  {
+   "codigo": "37",
+   "descricao": "Pagamento de juros e/ou amortização de títulos depositados em garantia nas Câmaras",
+   "desde": "2006-07-31"
+  },
+  {
+   "codigo": "38",
+   "descricao": "Estorno ou Restituição - Diversos",
+   "desde": "2006-07-31"
+  },
+  {
+   "codigo": "39",
+   "descricao": "Pagamento de Vale Transporte",
+   "desde": "2007-01-08"
+  },
+  {
+   "codigo": "40",
+   "descricao": "Simples Nacional",
+   "desde": "2007-07-30"
+  },
+  {
+   "codigo": "41",
+   "descricao": "Repasse de valores para o FUNDEB",
+   "desde": "2007-07-30"
+  },
+  {
+   "codigo": "42",
+   "descricao": "Repasse de Valores de Convênio Centralizado",
+   "desde": "2009-03-16"
+  },
+  {
+   "codigo": "43",
+   "descricao": "Patrocínio com Incentivo Fiscal",
+   "desde": "2009-08-17"
+  },
+  {
+   "codigo": "44",
+   "descricao": "Doação com Incentivo Fiscal",
+   "desde": "2009-08-17"
+  },
+  {
+   "codigo": "45",
+   "descricao": "Transferência de conta corrente de instituição não bancária para sua Conta de Liquidação",
+   "desde": "2010-08-14"
+  },
+  {
+   "codigo": "47",
+   "descricao": "Pagamento de Rescisão de Contrato de Trabalho",
+   "desde": "2011-03-21"
+  },
+  {
+   "codigo": "50",
+   "descricao": "Reembolso de despesas com estruturação de operações de renda fixa e variável",
+   "desde": "2009-03-16"
+  },
+  {
+   "codigo": "97",
+   "descricao": "Compra de Moeda Estrangeira pelo FSB - Fundo Soberano do Brasil",
+   "desde": "2012-05-21"
+  },
+  {
+   "codigo": "100",
+   "descricao": "Depósito Judicial",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "101",
+   "descricao": "Pensão Alimentícia",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "103",
+   "descricao": "Cessão de créditos - Liquid.principal por aquis.créditos ou direitos creditórios ou fluxo de caixa garant.por créditos, por ordem cliente PJ financ.",
+   "desde": "2011-03-09"
+  },
+  {
+   "codigo": "104",
+   "descricao": "Cessão de créditos - Liquidação principal por aquisição de créditos ou direitos creditórios, por ordem de FIDC ou cia securitizadora",
+   "desde": "2011-03-09"
+  },
+  {
+   "codigo": "107",
+   "descricao": "Cessão de créditos - Repasse contratual de fluxo de caixa ou de recebíveis pagos, por ordem de cliente PJ financeira",
+   "desde": "2011-03-09"
+  },
+  {
+   "codigo": "108",
+   "descricao": "Cessão de créditos - Repasse contratual de fluxo de caixa ou de recebíveis pagos antecipadamente, por ordem de cliente PJ financeira",
+   "desde": "2011-03-09"
+  },
+  {
+   "codigo": "109",
+   "descricao": "Cessão de créditos - Ajustes diversos",
+   "desde": "2011-03-09"
+  },
+  {
+   "codigo": "110",
+   "descricao": "Transferência entre contas de mesma titularidade",
+   "desde": "2011-07-11"
+  },
+  {
+   "codigo": "111",
+   "descricao": "Crédito para investidor em cliente da IF Creditada",
+   "desde": "2011-10-31"
+  },
+  {
+   "codigo": "112",
+   "descricao": "Débito de investidor em cliente da IF Debitada",
+   "desde": "2011-10-31"
+  },
+  {
+   "codigo": "113",
+   "descricao": "Pagamento de Operações de Crédito por Cliente",
+   "desde": "2012-01-02"
+  },
+  {
+   "codigo": "114",
+   "descricao": "Resgate de aplicação financeira de cliente para conta de sua titularidade",
+   "desde": "2012-01-30"
+  },
+  {
+   "codigo": "117",
+   "descricao": "Aplicação financeira em nome do cliente remetente",
+   "desde": "2012-10-29"
+  },
+  {
+   "codigo": "121",
+   "descricao": "Pagamento da TIR - Pix Saque e/ou Pix Troco",
+   "desde": "2021-11-29"
+  },
+  {
+   "codigo": "123",
+   "descricao": "Cessão de créditos - Liquid.princ.por recompra de créditos ou direitos creditórios ou fluxo de caixa garant.por créditos, por ordem cliente PJ financ.",
+   "desde": "2012-03-12"
+  },
+  {
+   "codigo": "124",
+   "descricao": "Cessão de créditos - Liquidação principal por recompra de créditos ou direitos creditórios, por ordem de FIDC ou cia securitizadora",
+   "desde": "2012-03-12"
+  },
+  {
+   "codigo": "131",
+   "descricao": "FGCoop - Recolhimento Fundo Garantidor do Cooperativismo de Crédito",
+   "desde": "2014-02-28"
+  },
+  {
+   "codigo": "132",
+   "descricao": "FGCoop - devolução de recolhimento a maior",
+   "desde": "2014-02-28"
+  },
+  {
+   "codigo": "136",
+   "descricao": "FGTS - Saque Emergencial",
+   "desde": "2020-08-07"
+  },
+  {
+   "codigo": "139",
+   "descricao": "Crédito ao consumidor decorrente de programa de incentivo fiscal",
+   "desde": "2015-05-18"
+  },
+  {
+   "codigo": "149",
+   "descricao": "Auxílio Emergencial Lei 13.982",
+   "desde": "2020-04-10"
+  },
+  {
+   "codigo": "150",
+   "descricao": "Benefício Emergencial de Preservação do Emprego e da Renda - BEm",
+   "desde": "2020-04-24"
+  },
+  {
+   "codigo": "157",
+   "descricao": "Tributos Municipais ISS - LCP 157",
+   "desde": "2018-09-21"
+  },
+  {
+   "codigo": "175",
+   "descricao": "Tributos Municipais ISS TERCEIROS - LCP 157",
+   "desde": "2021-09-03"
+  },
+  {
+   "codigo": "177",
+   "descricao": "Cancelamento da operação ao qual o recurso é retornado pela entidade operadora ao Agente Financeiro - Programa Desenrola",
+   "desde": "2023-08-07"
+  },
+  {
+   "codigo": "178",
+   "descricao": "Fee do Agente Financeiro a ser enviado pela entidade operadora - Programa Desenrola",
+   "desde": "2023-08-07"
+  },
+  {
+   "codigo": "179",
+   "descricao": "Quitação/liquidação pela entidade operadora ao credor Instituição Financeira - Programa Desenrola",
+   "desde": "2023-08-07"
+  },
+  {
+   "codigo": "180",
+   "descricao": "Repasse Arrecadação SPVAT",
+   "desde": "2024-07-22"
+  },
+  {
+   "codigo": "200",
+   "descricao": "Transferência Internacional em Reais",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "201",
+   "descricao": "Ajuste Posição Mercado Futuro",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "202",
+   "descricao": "Repasse de Valores do BNDES",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "203",
+   "descricao": "Liquidação de Compromissos Junto ao BNDES",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "204",
+   "descricao": "Operações de Compra e Venda de Ações - Bolsas de Valores e Mercado de Balcão",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "205",
+   "descricao": "Contratos Referenciados em Ações ou Índices de Ações - Bolsas de Valores, de Mercadorias e de futuros",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "206",
+   "descricao": "Operação de Câmbio - Não Interbancária",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "207",
+   "descricao": "Operações no Mercado de Renda Fixa e de Renda Variável com Utilização de Intermediário",
+   "desde": "2005-01-10"
+  },
+  {
+   "codigo": "208",
+   "descricao": "Operação de Câmbio - Mercado Interbancário - Instituições sem conta Reservas Bancárias",
+   "desde": "2005-04-25"
+  },
+  {
+   "codigo": "209",
+   "descricao": "Pagamento de Operações com identificação de destinatário final",
+   "desde": "2005-12-26"
+  },
+  {
+   "codigo": "300",
+   "descricao": "Restituição de Imposto de Renda",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "301",
+   "descricao": "Ordem Bancária do Tesouro - OBT",
+   "desde": "2006-03-13"
+  },
+  {
+   "codigo": "302",
+   "descricao": "Pagamento de multas ao BACEN por atrasos de importação",
+   "desde": "2010-08-14"
+  },
+  {
+   "codigo": "303",
+   "descricao": "Restituição de tributos - RFB",
+   "desde": "2010-08-14"
+  },
+  {
+   "codigo": "500",
+   "descricao": "Restituição de Prêmios de Seguros",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "501",
+   "descricao": "Pagamento de Indenização de Sinistro de Seguro",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "502",
+   "descricao": "Pagamento de Prêmio de Co-Seguro",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "504",
+   "descricao": "Pagamento de Indenização de Sinistro de Co-Seguro",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "505",
+   "descricao": "Pagamento de Prêmio de Resseguro",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "507",
+   "descricao": "Pagamento de Indenização de Sinistro de Resseguro",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "508",
+   "descricao": "Restituição de Indenização de Sinistro de Resseguro",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "509",
+   "descricao": "Pagamento de Despesas com Sinistros",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "510",
+   "descricao": "Pagamento de Inspeções/Vistorias Prévias",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "511",
+   "descricao": "Pagamento de Resgate de Título da Capitalização",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "512",
+   "descricao": "Pagamento de Sorteio de Título de Capitalização",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "513",
+   "descricao": "Pagamento de Devolução de Mensalidade de Título de Capitalização",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "514",
+   "descricao": "Restituição de Contribuição de Plano Previdenciário",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "515",
+   "descricao": "Pagamento de Benefício Previdenciário de Pecúlio",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "516",
+   "descricao": "Pagamento de Benefício Previdenciário de Pensão",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "517",
+   "descricao": "Pagamento de Benefício Previdenciário de Aposentadoria",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "518",
+   "descricao": "Pagamento de Resgate Previdenciário",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "519",
+   "descricao": "Pagamento de Comissão de Corretagem",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "520",
+   "descricao": "Pagamento de Transferências/Portabilidade de Reserva de Seguro/Previdência",
+   "desde": "2003-08-04"
+  },
+  {
+   "codigo": "99999",
+   "descricao": "Outros",
+   "desde": "2002-06-17"
+  }
+ ],
+ "Pref": [
+  {
+   "codigo": "A",
+   "descricao": "Máxima",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "B",
+   "descricao": "Maior",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "C",
+   "descricao": "Média",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "D",
+   "descricao": "Menor",
+   "desde": "2002-06-17"
+  }
+ ],
+ "PrefPAG": [
+  {
+   "codigo": "A",
+   "descricao": "Preferência Reservada",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "B",
+   "descricao": "Maior",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "C",
+   "descricao": "Média",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "D",
+   "descricao": "Menor",
+   "desde": "2002-06-17"
+  }
+ ],
+ "SitLancPAG": [
+  {
+   "codigo": "AGE",
+   "descricao": "Agendado",
+   "desde": "2002-08-12"
+  },
+  {
+   "codigo": "CAN",
+   "descricao": "Cancelado",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "COM",
+   "descricao": "Aprovado",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "ENF",
+   "descricao": "Pendente à Espera de Execução do Algoritmo Multilateral",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "REJ",
+   "descricao": "Rejeitado",
+   "desde": "2002-06-17"
+  }
+ ],
+ "SitLancSTR": [
+  {
+   "codigo": "1",
+   "descricao": "Efetivado",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "2",
+   "descricao": "Efetivado - Contingência/STR Web",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "3",
+   "descricao": "Efetivado - Otimização",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "4",
+   "descricao": "Efetivado - Agendamento",
+   "desde": "2021-06-26"
+  },
+  {
+   "codigo": "5",
+   "descricao": "Rejeitado sem Saldo",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "9",
+   "descricao": "Rejeitado por insuficiência de saldo - Contingência/STR Web",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "14",
+   "descricao": "Cancelado",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "15",
+   "descricao": "Cancelado - Contingência/STR Web",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "17",
+   "descricao": "Pendente por insuficiência de saldo",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "18",
+   "descricao": "Pendente por agendamento",
+   "desde": "2010-03-22"
+  },
+  {
+   "codigo": "19",
+   "descricao": "Pendente por insuficiência de saldo - Contingência/STR Web",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "20",
+   "descricao": "Pendente por agendamento - Contingência/STR Web",
+   "desde": "2010-03-22"
+  },
+  {
+   "codigo": "22",
+   "descricao": "Pendência Rejeitada por Exclusão, Suspensão ou Regime Especial de IF",
+   "desde": "2003-03-31"
+  },
+  {
+   "codigo": "23",
+   "descricao": "Pendência rejeitada por Exclusão, Suspensão ou Regime Especial de IF - Contingência/STR Web",
+   "desde": "2003-03-31"
+  },
+  {
+   "codigo": "24",
+   "descricao": "Pendência por insuficiência de saldo rejeitada após o horário",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "25",
+   "descricao": "Pendência por insuficiência de saldo rejeitada após o horário - Contingência/STR Web",
+   "desde": "2002-06-17"
+  }
+ ],
+ "TpCt": [
+  {
+   "codigo": "CC",
+   "descricao": "Conta Corrente",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "CD",
+   "descricao": "Conta de Depósito",
+   "desde": "2010-04-12"
+  },
+  {
+   "codigo": "CG",
+   "descricao": "Conta garantida",
+   "desde": "2017-07-01"
+  },
+  {
+   "codigo": "PG",
+   "descricao": "Conta de Pagamento",
+   "desde": "2014-05-05"
+  },
+  {
+   "codigo": "PP",
+   "descricao": "Poupança",
+   "desde": "2002-06-17"
+  }
+ ],
+ "TpPessoa": [
+  {
+   "codigo": "F",
+   "descricao": "Pessoa Física",
+   "desde": "2002-06-17"
+  },
+  {
+   "codigo": "J",
+   "descricao": "Pessoa Jurídica",
+   "desde": "2002-06-17"
+  }
+ ]
+}

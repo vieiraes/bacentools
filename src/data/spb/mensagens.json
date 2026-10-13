@@ -1,0 +1,3022 @@
+{
+ "versao": "5.13",
+ "eventos": [
+  {
+   "codigo": "STR0008",
+   "grupo": "STR",
+   "volume": "I",
+   "papel": "ted",
+   "titulo": "IF requisita Transferência entre contas de clientes",
+   "descricao": "Destinado à IF requisitar transferência de recursos entre contas de clientes.",
+   "fluxo": "Fluxo2",
+   "regras": [
+    {
+     "codigo": "RSTR0027",
+     "texto": "O campo Código Identificador Transferência é opcional, devendo sua existência e seu conteúdo serem ajustados entre as partes, emissor e destinatário."
+    },
+    {
+     "codigo": "RSTR0034",
+     "texto": "Se o campo Finalidade for preenchido com o domínio \"99999\" (\"Outros\"), a descrição da finalidade da transferência deverá ser especificada no campo Histórico da mensagem."
+    },
+    {
+     "codigo": "RSTR0035",
+     "texto": "Se o tipo da conta informado for diferente de conta de pagamento, a agência deverá ser informada."
+    },
+    {
+     "codigo": "RSTR0036",
+     "texto": "Se o tipo de conta indicar conta de pagamento, a conta de pagamento deverá ser preenchida e o uso do campo Agência é opcional."
+    },
+    {
+     "codigo": "RSTR0039",
+     "texto": "O Valor CBS somado ao Valor IBS não pode ser maior que o Valor Lançamento."
+    },
+    {
+     "codigo": "RSTR0040",
+     "texto": "O preenchimento do grupo de informações do split somente é permitido quando o Tipo de Pessoa Remetente ou Tipo Pessoa Debitada e o Tipo de Pessoa Destinatária ou Tipo Pessoa Creditada forem ambos Pessoa Jurídica."
+    }
+   ],
+   "xsd": "STR/STR0008.XSD",
+   "mensagens": [
+    {
+     "codigo": "STR0008",
+     "emissor": "IF-DEBITADA",
+     "destinatario": "STR",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "STR0008",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlIF",
+       "nome": "Número Controle IF",
+       "descricao": "Número de controleda IF",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "AgDebtd",
+       "nome": "Agência Debitada",
+       "descricao": "Número da agência da Instituição Financeira a ser debitada.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Agencia",
+        "base": "integer",
+        "descricao": "Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.",
+        "totalDigits": 4
+       }
+      },
+      {
+       "tag": "TpCtDebtd",
+       "nome": "Tipo Conta Debitada",
+       "descricao": "Identifica o tipo da conta bancária do cliente a ser debitada.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpCt",
+        "base": "string",
+        "descricao": "Indica o tipo da conta do cliente.",
+        "minLength": 2,
+        "maxLength": 2
+       }
+      },
+      {
+       "tag": "CtDebtd",
+       "nome": "Conta Debitada",
+       "descricao": "Número da conta bancária de débito.",
+       "obrigatorio": true,
+       "ou": 1,
+       "tipo": {
+        "nome": "CtBancaria",
+        "base": "integer",
+        "descricao": "Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por \"0\" (zero).",
+        "totalDigits": 13
+       }
+      },
+      {
+       "tag": "CtPgtoDebtd",
+       "nome": "Conta Pagamento Debitada",
+       "descricao": "Número da conta pagamento debitada.",
+       "obrigatorio": true,
+       "ou": 1,
+       "tipo": {
+        "nome": "CtPgto",
+        "base": "integer",
+        "descricao": "Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.",
+        "totalDigits": 20
+       }
+      },
+      {
+       "tag": "TpPessoaDebtd",
+       "nome": "Tipo Pessoa Debitada",
+       "descricao": "Identifica o tipo pessoa titular do débito.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpPessoa",
+        "base": "string",
+        "descricao": "Tipo Pessoa Destinatário.",
+        "minLength": 1,
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "CNPJ_CPFCliDebtd",
+       "nome": "CNPJ ou CPF Cliente Debitado",
+       "descricao": "CNPJ ou CPF do Cliente Debitado",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CNPJ_CPF",
+        "base": "string",
+        "descricao": "Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.",
+        "minLength": 11,
+        "maxLength": 14,
+        "pattern": "[0-9]{11}|[0-9A-Z]{12}[0-9]{2}"
+       }
+      },
+      {
+       "tag": "NomCliDebtd",
+       "nome": "Nome Cliente Debitado",
+       "descricao": "Nome do Cliente debitado.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Nome",
+        "base": "string",
+        "descricao": "Nome",
+        "minLength": 1,
+        "maxLength": 80
+       }
+      },
+      {
+       "tag": "ISPBIFCredtd",
+       "nome": "ISPB IF Creditada",
+       "descricao": "Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "AgCredtd",
+       "nome": "Agência Creditada",
+       "descricao": "Número da agência da Instituição Financeira a ser creditada.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Agencia",
+        "base": "integer",
+        "descricao": "Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.",
+        "totalDigits": 4
+       }
+      },
+      {
+       "tag": "TpCtCredtd",
+       "nome": "Tipo Conta Creditada",
+       "descricao": "Identifica o tipo de conta bancária do cliente a ser creditada.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpCt",
+        "base": "string",
+        "descricao": "Indica o tipo da conta do cliente.",
+        "minLength": 2,
+        "maxLength": 2
+       }
+      },
+      {
+       "tag": "CtCredtd",
+       "nome": "Conta Creditada",
+       "descricao": "Número da conta bancária de crédito.",
+       "obrigatorio": true,
+       "ou": 2,
+       "tipo": {
+        "nome": "CtBancaria",
+        "base": "integer",
+        "descricao": "Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por \"0\" (zero).",
+        "totalDigits": 13
+       }
+      },
+      {
+       "tag": "CtPgtoCredtd",
+       "nome": "Conta Pagamento Creditada",
+       "descricao": "Número da conta pagamento creditada.",
+       "obrigatorio": true,
+       "ou": 2,
+       "tipo": {
+        "nome": "CtPgto",
+        "base": "integer",
+        "descricao": "Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.",
+        "totalDigits": 20
+       }
+      },
+      {
+       "tag": "TpPessoaCredtd",
+       "nome": "Tipo Pessoa Creditada",
+       "descricao": "Identifica o tipo pessoa titular do crédito.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpPessoa",
+        "base": "string",
+        "descricao": "Tipo Pessoa Destinatário.",
+        "minLength": 1,
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "CNPJ_CPFCliCredtd",
+       "nome": "CNPJ ou CPF Cliente Creditado",
+       "descricao": "CNPJ ou CPF do Cliente Creditado",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CNPJ_CPF",
+        "base": "string",
+        "descricao": "Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.",
+        "minLength": 11,
+        "maxLength": 14,
+        "pattern": "[0-9]{11}|[0-9A-Z]{12}[0-9]{2}"
+       }
+      },
+      {
+       "tag": "NomCliCredtd",
+       "nome": "Nome Cliente Creditado",
+       "descricao": "Nome do Cliente creditado.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Nome",
+        "base": "string",
+        "descricao": "Nome",
+        "minLength": 1,
+        "maxLength": 80
+       }
+      },
+      {
+       "tag": "VlrLanc",
+       "nome": "Valor Lançamento",
+       "descricao": "Valor de um Lançamento no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Valor",
+        "base": "decimal",
+        "descricao": "Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal \"-\". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11",
+        "totalDigits": 19,
+        "fractionDigits": 2
+       }
+      },
+      {
+       "tag": "Grupo_STR0008_Split",
+       "nome": "Grupo Split",
+       "descricao": "",
+       "obrigatorio": false,
+       "campos": [
+        {
+         "tag": "VlrCBS",
+         "nome": "Valor CBS",
+         "descricao": "Valor do CBS.",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "VlrNNegtv",
+          "base": "decimal",
+          "descricao": "Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.",
+          "totalDigits": 19,
+          "fractionDigits": 2,
+          "minInclusive": 0
+         }
+        },
+        {
+         "tag": "VlrIBS",
+         "nome": "Valor IBS",
+         "descricao": "Valor do IBS.",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "VlrNNegtv",
+          "base": "decimal",
+          "descricao": "Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.",
+          "totalDigits": 19,
+          "fractionDigits": 2,
+          "minInclusive": 0
+         }
+        },
+        {
+         "tag": "CodDocFis",
+         "nome": "Código Documento Fiscal",
+         "descricao": "Código do Documento Fiscal (Nota fiscal ou agregador).",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "CodDocFis",
+          "base": "string",
+          "descricao": "Código do Documento Fiscal (NF-e, NFS-e, Agregador).",
+          "minLength": 1,
+          "maxLength": 50
+         }
+        }
+       ]
+      },
+      {
+       "tag": "FinlddCli",
+       "nome": "Finalidade Cliente",
+       "descricao": "Código da finalidade para cliente.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "FinlddCli",
+        "base": "integer",
+        "descricao": "Código da finalidade do lançamento.",
+        "totalDigits": 5
+       }
+      },
+      {
+       "tag": "CodIdentdTransf",
+       "nome": "Código Identificador Transferência",
+       "descricao": "Campo livre para identificação de transferência.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "CodIdentdTransf",
+        "base": "string",
+        "descricao": "Campo livre para identificação da transferência.",
+        "minLength": 1,
+        "maxLength": 25
+       }
+      },
+      {
+       "tag": "Hist",
+       "nome": "Histórico",
+       "descricao": "Campo descritivo",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Historico",
+        "base": "string",
+        "descricao": "Campo descritivo",
+        "maxLength": 200
+       }
+      },
+      {
+       "tag": "DtAgendt",
+       "nome": "Data Agendamento",
+       "descricao": "Data futura para a qual a mensagem será processada",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      },
+      {
+       "tag": "HrAgendt",
+       "nome": "Hora Agendamento",
+       "descricao": "Hora para agendamento.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "xs:time",
+        "base": "time"
+       }
+      },
+      {
+       "tag": "NivelPref",
+       "nome": "Nível Preferência",
+       "descricao": "Nível de preferência atribuido pela IF para processamento de um evento.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Pref",
+        "base": "string",
+        "descricao": "Nível de Preferência.",
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Requisição de Transferência entre contas de clientes"
+    },
+    {
+     "codigo": "STR0008R1",
+     "emissor": "STR",
+     "destinatario": "IF-DEBITADA",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "STR0008R1",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlIF",
+       "nome": "Número Controle IF",
+       "descricao": "Número de controleda IF",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "NumCtrlSTR",
+       "nome": "Número Controle STR",
+       "descricao": "Número de controle STR",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Controle",
+        "base": "string",
+        "descricao": "Formato = XXXAAAAMMDDnnnnnnnnn;XXX - Sigla Sistema;AAAA - ano;MM - mês, 01 a 12;DD - dia, 01  a 31;nnnnnnnnn - Sequencial.",
+        "minLength": 20,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "SitLancSTR",
+       "nome": "Situação Lançamento STR",
+       "descricao": "Situação de um lançamento que foi comandado no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "SitLancSTR",
+        "base": "integer",
+        "descricao": "Situação de um lançamento que foi comandado no STR.",
+        "totalDigits": 3
+       }
+      },
+      {
+       "tag": "DtHrSit",
+       "nome": "Data Hora Situação",
+       "descricao": "Data e hora da situação.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:dateTime",
+        "base": "dateTime"
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Resposta ao Requisitante de Transferência entre contas de clientes"
+    },
+    {
+     "codigo": "STR0008R2",
+     "emissor": "STR",
+     "destinatario": "IF-CREDITADA",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "STR0008R2",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlSTR",
+       "nome": "Número Controle STR",
+       "descricao": "Número de controle STR",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Controle",
+        "base": "string",
+        "descricao": "Formato = XXXAAAAMMDDnnnnnnnnn;XXX - Sigla Sistema;AAAA - ano;MM - mês, 01 a 12;DD - dia, 01  a 31;nnnnnnnnn - Sequencial.",
+        "minLength": 20,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "DtHrBC",
+       "nome": "Data Hora Bacen",
+       "descricao": "Data e hora do processamento no Banco Central",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:dateTime",
+        "base": "dateTime"
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "AgDebtd",
+       "nome": "Agência Debitada",
+       "descricao": "Número da agência da Instituição Financeira a ser debitada.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Agencia",
+        "base": "integer",
+        "descricao": "Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.",
+        "totalDigits": 4
+       }
+      },
+      {
+       "tag": "TpCtDebtd",
+       "nome": "Tipo Conta Debitada",
+       "descricao": "Identifica o tipo da conta bancária do cliente a ser debitada.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpCt",
+        "base": "string",
+        "descricao": "Indica o tipo da conta do cliente.",
+        "minLength": 2,
+        "maxLength": 2
+       }
+      },
+      {
+       "tag": "CtDebtd",
+       "nome": "Conta Debitada",
+       "descricao": "Número da conta bancária de débito.",
+       "obrigatorio": true,
+       "ou": 1,
+       "tipo": {
+        "nome": "CtBancaria",
+        "base": "integer",
+        "descricao": "Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por \"0\" (zero).",
+        "totalDigits": 13
+       }
+      },
+      {
+       "tag": "CtPgtoDebtd",
+       "nome": "Conta Pagamento Debitada",
+       "descricao": "Número da conta pagamento debitada.",
+       "obrigatorio": true,
+       "ou": 1,
+       "tipo": {
+        "nome": "CtPgto",
+        "base": "integer",
+        "descricao": "Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.",
+        "totalDigits": 20
+       }
+      },
+      {
+       "tag": "TpPessoaDebtd",
+       "nome": "Tipo Pessoa Debitada",
+       "descricao": "Identifica o tipo pessoa titular do débito.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpPessoa",
+        "base": "string",
+        "descricao": "Tipo Pessoa Destinatário.",
+        "minLength": 1,
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "CNPJ_CPFCliDebtd",
+       "nome": "CNPJ ou CPF Cliente Debitado",
+       "descricao": "CNPJ ou CPF do Cliente Debitado",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CNPJ_CPF",
+        "base": "string",
+        "descricao": "Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.",
+        "minLength": 11,
+        "maxLength": 14,
+        "pattern": "[0-9]{11}|[0-9A-Z]{12}[0-9]{2}"
+       }
+      },
+      {
+       "tag": "NomCliDebtd",
+       "nome": "Nome Cliente Debitado",
+       "descricao": "Nome do Cliente debitado.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Nome",
+        "base": "string",
+        "descricao": "Nome",
+        "minLength": 1,
+        "maxLength": 80
+       }
+      },
+      {
+       "tag": "ISPBIFCredtd",
+       "nome": "ISPB IF Creditada",
+       "descricao": "Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "AgCredtd",
+       "nome": "Agência Creditada",
+       "descricao": "Número da agência da Instituição Financeira a ser creditada.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Agencia",
+        "base": "integer",
+        "descricao": "Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.",
+        "totalDigits": 4
+       }
+      },
+      {
+       "tag": "TpCtCredtd",
+       "nome": "Tipo Conta Creditada",
+       "descricao": "Identifica o tipo de conta bancária do cliente a ser creditada.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpCt",
+        "base": "string",
+        "descricao": "Indica o tipo da conta do cliente.",
+        "minLength": 2,
+        "maxLength": 2
+       }
+      },
+      {
+       "tag": "CtCredtd",
+       "nome": "Conta Creditada",
+       "descricao": "Número da conta bancária de crédito.",
+       "obrigatorio": true,
+       "ou": 2,
+       "tipo": {
+        "nome": "CtBancaria",
+        "base": "integer",
+        "descricao": "Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por \"0\" (zero).",
+        "totalDigits": 13
+       }
+      },
+      {
+       "tag": "CtPgtoCredtd",
+       "nome": "Conta Pagamento Creditada",
+       "descricao": "Número da conta pagamento creditada.",
+       "obrigatorio": true,
+       "ou": 2,
+       "tipo": {
+        "nome": "CtPgto",
+        "base": "integer",
+        "descricao": "Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.",
+        "totalDigits": 20
+       }
+      },
+      {
+       "tag": "TpPessoaCredtd",
+       "nome": "Tipo Pessoa Creditada",
+       "descricao": "Identifica o tipo pessoa titular do crédito.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpPessoa",
+        "base": "string",
+        "descricao": "Tipo Pessoa Destinatário.",
+        "minLength": 1,
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "CNPJ_CPFCliCredtd",
+       "nome": "CNPJ ou CPF Cliente Creditado",
+       "descricao": "CNPJ ou CPF do Cliente Creditado",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CNPJ_CPF",
+        "base": "string",
+        "descricao": "Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.",
+        "minLength": 11,
+        "maxLength": 14,
+        "pattern": "[0-9]{11}|[0-9A-Z]{12}[0-9]{2}"
+       }
+      },
+      {
+       "tag": "NomCliCredtd",
+       "nome": "Nome Cliente Creditado",
+       "descricao": "Nome do Cliente creditado.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Nome",
+        "base": "string",
+        "descricao": "Nome",
+        "minLength": 1,
+        "maxLength": 80
+       }
+      },
+      {
+       "tag": "VlrLanc",
+       "nome": "Valor Lançamento",
+       "descricao": "Valor de um Lançamento no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Valor",
+        "base": "decimal",
+        "descricao": "Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal \"-\". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11",
+        "totalDigits": 19,
+        "fractionDigits": 2
+       }
+      },
+      {
+       "tag": "Grupo_STR0008R2_Split",
+       "nome": "Grupo Split",
+       "descricao": "",
+       "obrigatorio": false,
+       "campos": [
+        {
+         "tag": "VlrCBS",
+         "nome": "Valor CBS",
+         "descricao": "Valor do CBS.",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "VlrNNegtv",
+          "base": "decimal",
+          "descricao": "Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.",
+          "totalDigits": 19,
+          "fractionDigits": 2,
+          "minInclusive": 0
+         }
+        },
+        {
+         "tag": "VlrIBS",
+         "nome": "Valor IBS",
+         "descricao": "Valor do IBS.",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "VlrNNegtv",
+          "base": "decimal",
+          "descricao": "Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.",
+          "totalDigits": 19,
+          "fractionDigits": 2,
+          "minInclusive": 0
+         }
+        },
+        {
+         "tag": "CodDocFis",
+         "nome": "Código Documento Fiscal",
+         "descricao": "Código do Documento Fiscal (Nota fiscal ou agregador).",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "CodDocFis",
+          "base": "string",
+          "descricao": "Código do Documento Fiscal (NF-e, NFS-e, Agregador).",
+          "minLength": 1,
+          "maxLength": 50
+         }
+        }
+       ]
+      },
+      {
+       "tag": "FinlddCli",
+       "nome": "Finalidade Cliente",
+       "descricao": "Código da finalidade para cliente.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "FinlddCli",
+        "base": "integer",
+        "descricao": "Código da finalidade do lançamento.",
+        "totalDigits": 5
+       }
+      },
+      {
+       "tag": "CodIdentdTransf",
+       "nome": "Código Identificador Transferência",
+       "descricao": "Campo livre para identificação de transferência.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "CodIdentdTransf",
+        "base": "string",
+        "descricao": "Campo livre para identificação da transferência.",
+        "minLength": 1,
+        "maxLength": 25
+       }
+      },
+      {
+       "tag": "Hist",
+       "nome": "Histórico",
+       "descricao": "Campo descritivo",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Historico",
+        "base": "string",
+        "descricao": "Campo descritivo",
+        "maxLength": 200
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Resposta a Terceiros sobre Transferência entre contas de clientes"
+    }
+   ],
+   "bcmsg": [
+    {
+     "tag": "IdentdEmissor",
+     "nome": "IdentdEmissor",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdDestinatario",
+     "nome": "IdentdDestinatario",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdContg",
+     "nome": "IdentdContg",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdOperad",
+     "nome": "IdentdOperad",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "IdentdOperad",
+      "base": "string",
+      "descricao": "Identificador pessoal do operador.",
+      "maxLength": 32
+     }
+    },
+    {
+     "tag": "IdentdOperadConfc",
+     "nome": "IdentdOperadConfc",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "IdentdOperad",
+      "base": "string",
+      "descricao": "Identificador pessoal do operador.",
+      "maxLength": 32
+     }
+    },
+    {
+     "tag": "Grupo_Seq",
+     "nome": "Grupo_Seq",
+     "obrigatorio": false,
+     "campos": [
+      {
+       "tag": "NumSeq",
+       "nome": "NumSeq",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "NumSeq",
+        "base": "integer",
+        "descricao": "Número sequencial que indica a ordem das mensagens particionadas.",
+        "totalDigits": 9
+       }
+      },
+      {
+       "tag": "IndrCont",
+       "nome": "IndrCont",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Indr",
+        "base": "string",
+        "descricao": "Indicador \"Sim\" ou \"Não\"",
+        "minLength": 1,
+        "maxLength": 1,
+        "pattern": "S|N"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "DomSist",
+     "nome": "DomSist",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "DomSist",
+      "base": "string",
+      "descricao": "Domínio de sistema",
+      "minLength": 5,
+      "maxLength": 5
+     }
+    },
+    {
+     "tag": "NUOp",
+     "nome": "NUOp",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "NUOp",
+      "base": "string",
+      "descricao": "Número único da operação. Formato: para o Domínio de Sistema SPB02 = XXXXXXXXAAMMDDSSSSSSSSS em que XXXXXXXX - ISPB; AAMMDD - data; SSSSSSSSS - sequencial. Para os demais domínios de sistema = XXXXXXXXAAAAMMDDSSSSSSS em que XXXXXXXX - ISPB ou CNPJ de 8 posições; AAAAMMDD - data; SSSSSSS - sequencial.",
+      "minLength": 23,
+      "maxLength": 23,
+      "pattern": "[0-9A-Z]{8}[0-9]{15}"
+     }
+    }
+   ]
+  },
+  {
+   "codigo": "STR0010",
+   "grupo": "STR",
+   "volume": "I",
+   "papel": "devolucao",
+   "titulo": "IF requisita Transferência para devolução de transferência indevida",
+   "descricao": "Destinado à IF requisitar transferência para devolução de recursos transferidos",
+   "fluxo": "Fluxo2",
+   "regras": [],
+   "xsd": "STR/STR0010.XSD",
+   "mensagens": [
+    {
+     "codigo": "STR0010",
+     "emissor": "IF-DEBITADA",
+     "destinatario": "STR",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "STR0010",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlIF",
+       "nome": "Número Controle IF",
+       "descricao": "Número de controleda IF",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "ISPBIFCredtd",
+       "nome": "ISPB IF Creditada",
+       "descricao": "Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "VlrLanc",
+       "nome": "Valor Lançamento",
+       "descricao": "Valor de um Lançamento no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Valor",
+        "base": "decimal",
+        "descricao": "Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal \"-\". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11",
+        "totalDigits": 19,
+        "fractionDigits": 2
+       }
+      },
+      {
+       "tag": "CodDevTransf",
+       "nome": "Código Devolução Transferência",
+       "descricao": "Código de devolução da transferência",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CodDevTransf",
+        "base": "integer",
+        "descricao": "Código de devolução da transferência",
+        "totalDigits": 2
+       }
+      },
+      {
+       "tag": "NumCtrlSTROr",
+       "nome": "Número Controle STR Original",
+       "descricao": "Número de controle STR Original",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Controle",
+        "base": "string",
+        "descricao": "Formato = XXXAAAAMMDDnnnnnnnnn;XXX - Sigla Sistema;AAAA - ano;MM - mês, 01 a 12;DD - dia, 01  a 31;nnnnnnnnn - Sequencial.",
+        "minLength": 20,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "Hist",
+       "nome": "Histórico",
+       "descricao": "Campo descritivo",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Historico",
+        "base": "string",
+        "descricao": "Campo descritivo",
+        "maxLength": 200
+       }
+      },
+      {
+       "tag": "DtAgendt",
+       "nome": "Data Agendamento",
+       "descricao": "Data futura para a qual a mensagem será processada",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      },
+      {
+       "tag": "HrAgendt",
+       "nome": "Hora Agendamento",
+       "descricao": "Hora para agendamento.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "xs:time",
+        "base": "time"
+       }
+      },
+      {
+       "tag": "NivelPref",
+       "nome": "Nível Preferência",
+       "descricao": "Nível de preferência atribuido pela IF para processamento de um evento.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Pref",
+        "base": "string",
+        "descricao": "Nível de Preferência.",
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Requisição de Transferência Devolução de Transferência Indevida"
+    },
+    {
+     "codigo": "STR0010R1",
+     "emissor": "STR",
+     "destinatario": "IF-DEBITADA",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "STR0010R1",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlIF",
+       "nome": "Número Controle IF",
+       "descricao": "Número de controleda IF",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "NumCtrlSTR",
+       "nome": "Número Controle STR",
+       "descricao": "Número de controle STR",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Controle",
+        "base": "string",
+        "descricao": "Formato = XXXAAAAMMDDnnnnnnnnn;XXX - Sigla Sistema;AAAA - ano;MM - mês, 01 a 12;DD - dia, 01  a 31;nnnnnnnnn - Sequencial.",
+        "minLength": 20,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "SitLancSTR",
+       "nome": "Situação Lançamento STR",
+       "descricao": "Situação de um lançamento que foi comandado no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "SitLancSTR",
+        "base": "integer",
+        "descricao": "Situação de um lançamento que foi comandado no STR.",
+        "totalDigits": 3
+       }
+      },
+      {
+       "tag": "DtHrSit",
+       "nome": "Data Hora Situação",
+       "descricao": "Data e hora da situação.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:dateTime",
+        "base": "dateTime"
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Resposta ao Requisitante de Transferência para Devolução de Transferência Indevida"
+    },
+    {
+     "codigo": "STR0010R2",
+     "emissor": "STR",
+     "destinatario": "IF-CREDITADA",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "STR0010R2",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlSTR",
+       "nome": "Número Controle STR",
+       "descricao": "Número de controle STR",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Controle",
+        "base": "string",
+        "descricao": "Formato = XXXAAAAMMDDnnnnnnnnn;XXX - Sigla Sistema;AAAA - ano;MM - mês, 01 a 12;DD - dia, 01  a 31;nnnnnnnnn - Sequencial.",
+        "minLength": 20,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "DtHrBC",
+       "nome": "Data Hora Bacen",
+       "descricao": "Data e hora do processamento no Banco Central",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:dateTime",
+        "base": "dateTime"
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "ISPBIFCredtd",
+       "nome": "ISPB IF Creditada",
+       "descricao": "Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "VlrLanc",
+       "nome": "Valor Lançamento",
+       "descricao": "Valor de um Lançamento no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Valor",
+        "base": "decimal",
+        "descricao": "Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal \"-\". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11",
+        "totalDigits": 19,
+        "fractionDigits": 2
+       }
+      },
+      {
+       "tag": "CodDevTransf",
+       "nome": "Código Devolução Transferência",
+       "descricao": "Código de devolução da transferência",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CodDevTransf",
+        "base": "integer",
+        "descricao": "Código de devolução da transferência",
+        "totalDigits": 2
+       }
+      },
+      {
+       "tag": "NumCtrlSTROr",
+       "nome": "Número Controle STR Original",
+       "descricao": "Número de controle STR Original",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Controle",
+        "base": "string",
+        "descricao": "Formato = XXXAAAAMMDDnnnnnnnnn;XXX - Sigla Sistema;AAAA - ano;MM - mês, 01 a 12;DD - dia, 01  a 31;nnnnnnnnn - Sequencial.",
+        "minLength": 20,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "Hist",
+       "nome": "Histórico",
+       "descricao": "Campo descritivo",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Historico",
+        "base": "string",
+        "descricao": "Campo descritivo",
+        "maxLength": 200
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Resposta a Terceiros sobre Transferência para Devolução de Transferência Indevida"
+    }
+   ],
+   "bcmsg": [
+    {
+     "tag": "IdentdEmissor",
+     "nome": "IdentdEmissor",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdDestinatario",
+     "nome": "IdentdDestinatario",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdContg",
+     "nome": "IdentdContg",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdOperad",
+     "nome": "IdentdOperad",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "IdentdOperad",
+      "base": "string",
+      "descricao": "Identificador pessoal do operador.",
+      "maxLength": 32
+     }
+    },
+    {
+     "tag": "IdentdOperadConfc",
+     "nome": "IdentdOperadConfc",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "IdentdOperad",
+      "base": "string",
+      "descricao": "Identificador pessoal do operador.",
+      "maxLength": 32
+     }
+    },
+    {
+     "tag": "Grupo_Seq",
+     "nome": "Grupo_Seq",
+     "obrigatorio": false,
+     "campos": [
+      {
+       "tag": "NumSeq",
+       "nome": "NumSeq",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "NumSeq",
+        "base": "integer",
+        "descricao": "Número sequencial que indica a ordem das mensagens particionadas.",
+        "totalDigits": 9
+       }
+      },
+      {
+       "tag": "IndrCont",
+       "nome": "IndrCont",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Indr",
+        "base": "string",
+        "descricao": "Indicador \"Sim\" ou \"Não\"",
+        "minLength": 1,
+        "maxLength": 1,
+        "pattern": "S|N"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "DomSist",
+     "nome": "DomSist",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "DomSist",
+      "base": "string",
+      "descricao": "Domínio de sistema",
+      "minLength": 5,
+      "maxLength": 5
+     }
+    },
+    {
+     "tag": "NUOp",
+     "nome": "NUOp",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "NUOp",
+      "base": "string",
+      "descricao": "Número único da operação. Formato: para o Domínio de Sistema SPB02 = XXXXXXXXAAMMDDSSSSSSSSS em que XXXXXXXX - ISPB; AAMMDD - data; SSSSSSSSS - sequencial. Para os demais domínios de sistema = XXXXXXXXAAAAMMDDSSSSSSS em que XXXXXXXX - ISPB ou CNPJ de 8 posições; AAAAMMDD - data; SSSSSSS - sequencial.",
+      "minLength": 23,
+      "maxLength": 23,
+      "pattern": "[0-9A-Z]{8}[0-9]{15}"
+     }
+    }
+   ]
+  },
+  {
+   "codigo": "PAG0108",
+   "grupo": "PAG",
+   "volume": "II",
+   "papel": "ted",
+   "titulo": "IF requisita Transferência de recursos entre contas de clientes",
+   "descricao": "Destinado à IF requisitar transferência de recursos entre pessoas físicas ou jurídicas em",
+   "fluxo": "Fluxo2",
+   "regras": [
+    {
+     "codigo": "RSTR0027",
+     "texto": "O campo Código Identificador Transferência é opcional, devendo sua existência e seu conteúdo serem ajustados entre as partes, emissor e destinatário."
+    },
+    {
+     "codigo": "RSTR0034",
+     "texto": "Se o campo Finalidade for preenchido com o domínio \"99999\" (\"Outros\"), a descrição da finalidade da transferência deverá ser especificada no campo Histórico da mensagem."
+    },
+    {
+     "codigo": "RSTR0035",
+     "texto": "Se o tipo da conta informado for diferente de conta de pagamento, a agência deverá ser informada."
+    },
+    {
+     "codigo": "RSTR0036",
+     "texto": "Se o tipo de conta indicar conta de pagamento, a conta de pagamento deverá ser preenchida e o uso do campo Agência é opcional."
+    },
+    {
+     "codigo": "RSTR0039",
+     "texto": "O Valor CBS somado ao Valor IBS não pode ser maior que o Valor Lançamento."
+    },
+    {
+     "codigo": "RSTR0040",
+     "texto": "O preenchimento do grupo de informações do split somente é permitido quando o Tipo de Pessoa Remetente ou Tipo Pessoa Debitada e o Tipo de Pessoa Destinatária ou Tipo Pessoa Creditada forem ambos Pessoa Jurídica."
+    }
+   ],
+   "xsd": "PAG/PAG0108.XSD",
+   "mensagens": [
+    {
+     "codigo": "PAG0108",
+     "emissor": "IF-DEBITADA",
+     "destinatario": "Câmara PAG",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "PAG0108",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlIF",
+       "nome": "Número Controle IF",
+       "descricao": "Número de controleda IF",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "AgDebtd",
+       "nome": "Agência Debitada",
+       "descricao": "Número da agência da Instituição Financeira a ser debitada.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Agencia",
+        "base": "integer",
+        "descricao": "Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.",
+        "totalDigits": 4
+       }
+      },
+      {
+       "tag": "TpCtDebtd",
+       "nome": "Tipo Conta Debitada",
+       "descricao": "Identifica o tipo da conta bancária do cliente a ser debitada.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpCt",
+        "base": "string",
+        "descricao": "Indica o tipo da conta do cliente.",
+        "minLength": 2,
+        "maxLength": 2
+       }
+      },
+      {
+       "tag": "CtDebtd",
+       "nome": "Conta Debitada",
+       "descricao": "Número da conta bancária de débito.",
+       "obrigatorio": true,
+       "ou": 1,
+       "tipo": {
+        "nome": "CtBancaria",
+        "base": "integer",
+        "descricao": "Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por \"0\" (zero).",
+        "totalDigits": 13
+       }
+      },
+      {
+       "tag": "CtPgtoDebtd",
+       "nome": "Conta Pagamento Debitada",
+       "descricao": "Número da conta pagamento debitada.",
+       "obrigatorio": true,
+       "ou": 1,
+       "tipo": {
+        "nome": "CtPgto",
+        "base": "integer",
+        "descricao": "Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.",
+        "totalDigits": 20
+       }
+      },
+      {
+       "tag": "TpPessoaDebtd",
+       "nome": "Tipo Pessoa Debitada",
+       "descricao": "Identifica o tipo pessoa titular do débito.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpPessoa",
+        "base": "string",
+        "descricao": "Tipo Pessoa Destinatário.",
+        "minLength": 1,
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "CNPJ_CPFCliDebtd",
+       "nome": "CNPJ ou CPF Cliente Debitado",
+       "descricao": "CNPJ ou CPF do Cliente Debitado",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CNPJ_CPF",
+        "base": "string",
+        "descricao": "Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.",
+        "minLength": 11,
+        "maxLength": 14,
+        "pattern": "[0-9]{11}|[0-9A-Z]{12}[0-9]{2}"
+       }
+      },
+      {
+       "tag": "NomCliDebtd",
+       "nome": "Nome Cliente Debitado",
+       "descricao": "Nome do Cliente debitado.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Nome",
+        "base": "string",
+        "descricao": "Nome",
+        "minLength": 1,
+        "maxLength": 80
+       }
+      },
+      {
+       "tag": "ISPBIFCredtd",
+       "nome": "ISPB IF Creditada",
+       "descricao": "Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "AgCredtd",
+       "nome": "Agência Creditada",
+       "descricao": "Número da agência da Instituição Financeira a ser creditada.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Agencia",
+        "base": "integer",
+        "descricao": "Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.",
+        "totalDigits": 4
+       }
+      },
+      {
+       "tag": "TpCtCredtd",
+       "nome": "Tipo Conta Creditada",
+       "descricao": "Identifica o tipo de conta bancária do cliente a ser creditada.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpCt",
+        "base": "string",
+        "descricao": "Indica o tipo da conta do cliente.",
+        "minLength": 2,
+        "maxLength": 2
+       }
+      },
+      {
+       "tag": "CtCredtd",
+       "nome": "Conta Creditada",
+       "descricao": "Número da conta bancária de crédito.",
+       "obrigatorio": true,
+       "ou": 2,
+       "tipo": {
+        "nome": "CtBancaria",
+        "base": "integer",
+        "descricao": "Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por \"0\" (zero).",
+        "totalDigits": 13
+       }
+      },
+      {
+       "tag": "CtPgtoCredtd",
+       "nome": "Conta Pagamento Creditada",
+       "descricao": "Número da conta pagamento creditada.",
+       "obrigatorio": true,
+       "ou": 2,
+       "tipo": {
+        "nome": "CtPgto",
+        "base": "integer",
+        "descricao": "Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.",
+        "totalDigits": 20
+       }
+      },
+      {
+       "tag": "TpPessoaCredtd",
+       "nome": "Tipo Pessoa Creditada",
+       "descricao": "Identifica o tipo pessoa titular do crédito.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpPessoa",
+        "base": "string",
+        "descricao": "Tipo Pessoa Destinatário.",
+        "minLength": 1,
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "CNPJ_CPFCliCredtd",
+       "nome": "CNPJ ou CPF Cliente Creditado",
+       "descricao": "CNPJ ou CPF do Cliente Creditado",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CNPJ_CPF",
+        "base": "string",
+        "descricao": "Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.",
+        "minLength": 11,
+        "maxLength": 14,
+        "pattern": "[0-9]{11}|[0-9A-Z]{12}[0-9]{2}"
+       }
+      },
+      {
+       "tag": "NomCliCredtd",
+       "nome": "Nome Cliente Creditado",
+       "descricao": "Nome do Cliente creditado.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Nome",
+        "base": "string",
+        "descricao": "Nome",
+        "minLength": 1,
+        "maxLength": 80
+       }
+      },
+      {
+       "tag": "VlrLanc",
+       "nome": "Valor Lançamento",
+       "descricao": "Valor de um Lançamento no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Valor",
+        "base": "decimal",
+        "descricao": "Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal \"-\". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11",
+        "totalDigits": 19,
+        "fractionDigits": 2
+       }
+      },
+      {
+       "tag": "Grupo_PAG0108_Split",
+       "nome": "Grupo Split",
+       "descricao": "",
+       "obrigatorio": false,
+       "campos": [
+        {
+         "tag": "VlrCBS",
+         "nome": "Valor CBS",
+         "descricao": "Valor do CBS.",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "VlrNNegtv",
+          "base": "decimal",
+          "descricao": "Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.",
+          "totalDigits": 19,
+          "fractionDigits": 2,
+          "minInclusive": 0
+         }
+        },
+        {
+         "tag": "VlrIBS",
+         "nome": "Valor IBS",
+         "descricao": "Valor do IBS.",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "VlrNNegtv",
+          "base": "decimal",
+          "descricao": "Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.",
+          "totalDigits": 19,
+          "fractionDigits": 2,
+          "minInclusive": 0
+         }
+        },
+        {
+         "tag": "CodDocFis",
+         "nome": "Código Documento Fiscal",
+         "descricao": "Código do Documento Fiscal (Nota fiscal ou agregador).",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "CodDocFis",
+          "base": "string",
+          "descricao": "Código do Documento Fiscal (NF-e, NFS-e, Agregador).",
+          "minLength": 1,
+          "maxLength": 50
+         }
+        }
+       ]
+      },
+      {
+       "tag": "FinlddCli",
+       "nome": "Finalidade Cliente",
+       "descricao": "Código da finalidade para cliente.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "FinlddCli",
+        "base": "integer",
+        "descricao": "Código da finalidade do lançamento.",
+        "totalDigits": 5
+       }
+      },
+      {
+       "tag": "CodIdentdTransf",
+       "nome": "Código Identificador Transferência",
+       "descricao": "Campo livre para identificação de transferência.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "CodIdentdTransf",
+        "base": "string",
+        "descricao": "Campo livre para identificação da transferência.",
+        "minLength": 1,
+        "maxLength": 25
+       }
+      },
+      {
+       "tag": "Hist",
+       "nome": "Histórico",
+       "descricao": "Campo descritivo",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Historico",
+        "base": "string",
+        "descricao": "Campo descritivo",
+        "maxLength": 200
+       }
+      },
+      {
+       "tag": "NivelPrefPAG",
+       "nome": "Nível Preferência PAG",
+       "descricao": "Nível preferência Câmara PAG",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "PrefPAG",
+        "base": "string",
+        "descricao": "Nível de preferência da Câmara PAG",
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      },
+      {
+       "tag": "DtAgendt",
+       "nome": "Data Agendamento",
+       "descricao": "Data futura para a qual a mensagem será processada",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Requisição de Transferência de recursos entre contas de clientes"
+    },
+    {
+     "codigo": "PAG0108R1",
+     "emissor": "Câmara PAG",
+     "destinatario": "IF-DEBITADA",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "PAG0108R1",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlIF",
+       "nome": "Número Controle IF",
+       "descricao": "Número de controleda IF",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "NumCtrlPAG",
+       "nome": "Número Controle PAG",
+       "descricao": "Número de controle PAG",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "SitLancPAG",
+       "nome": "Situação Lançamento PAG",
+       "descricao": "Situação Lançamento na Câmara CIP",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "SitLancPAG",
+        "base": "string",
+        "descricao": "Situação de um lançamento que foi comandado no sistema PAG",
+        "maxLength": 3
+       }
+      },
+      {
+       "tag": "DtHrSit",
+       "nome": "Data Hora Situação",
+       "descricao": "Data e hora da situação.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:dateTime",
+        "base": "dateTime"
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Resposta ao Requisitante de Transferência de recursos entre contas de clientes"
+    },
+    {
+     "codigo": "PAG0108R2",
+     "emissor": "Câmara PAG",
+     "destinatario": "IF-CREDITADA",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "PAG0108R2",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlPAG",
+       "nome": "Número Controle PAG",
+       "descricao": "Número de controle PAG",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "DtHrPAG",
+       "nome": "Data Hora PAG",
+       "descricao": "Data e Hora do sistema PAG",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:dateTime",
+        "base": "dateTime"
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "AgDebtd",
+       "nome": "Agência Debitada",
+       "descricao": "Número da agência da Instituição Financeira a ser debitada.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Agencia",
+        "base": "integer",
+        "descricao": "Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.",
+        "totalDigits": 4
+       }
+      },
+      {
+       "tag": "TpCtDebtd",
+       "nome": "Tipo Conta Debitada",
+       "descricao": "Identifica o tipo da conta bancária do cliente a ser debitada.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpCt",
+        "base": "string",
+        "descricao": "Indica o tipo da conta do cliente.",
+        "minLength": 2,
+        "maxLength": 2
+       }
+      },
+      {
+       "tag": "CtDebtd",
+       "nome": "Conta Debitada",
+       "descricao": "Número da conta bancária de débito.",
+       "obrigatorio": true,
+       "ou": 1,
+       "tipo": {
+        "nome": "CtBancaria",
+        "base": "integer",
+        "descricao": "Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por \"0\" (zero).",
+        "totalDigits": 13
+       }
+      },
+      {
+       "tag": "CtPgtoDebtd",
+       "nome": "Conta Pagamento Debitada",
+       "descricao": "Número da conta pagamento debitada.",
+       "obrigatorio": true,
+       "ou": 1,
+       "tipo": {
+        "nome": "CtPgto",
+        "base": "integer",
+        "descricao": "Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.",
+        "totalDigits": 20
+       }
+      },
+      {
+       "tag": "TpPessoaDebtd",
+       "nome": "Tipo Pessoa Debitada",
+       "descricao": "Identifica o tipo pessoa titular do débito.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpPessoa",
+        "base": "string",
+        "descricao": "Tipo Pessoa Destinatário.",
+        "minLength": 1,
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "CNPJ_CPFCliDebtd",
+       "nome": "CNPJ ou CPF Cliente Debitado",
+       "descricao": "CNPJ ou CPF do Cliente Debitado",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CNPJ_CPF",
+        "base": "string",
+        "descricao": "Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.",
+        "minLength": 11,
+        "maxLength": 14,
+        "pattern": "[0-9]{11}|[0-9A-Z]{12}[0-9]{2}"
+       }
+      },
+      {
+       "tag": "NomCliDebtd",
+       "nome": "Nome Cliente Debitado",
+       "descricao": "Nome do Cliente debitado.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Nome",
+        "base": "string",
+        "descricao": "Nome",
+        "minLength": 1,
+        "maxLength": 80
+       }
+      },
+      {
+       "tag": "ISPBIFCredtd",
+       "nome": "ISPB IF Creditada",
+       "descricao": "Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "AgCredtd",
+       "nome": "Agência Creditada",
+       "descricao": "Número da agência da Instituição Financeira a ser creditada.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Agencia",
+        "base": "integer",
+        "descricao": "Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.",
+        "totalDigits": 4
+       }
+      },
+      {
+       "tag": "TpCtCredtd",
+       "nome": "Tipo Conta Creditada",
+       "descricao": "Identifica o tipo de conta bancária do cliente a ser creditada.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpCt",
+        "base": "string",
+        "descricao": "Indica o tipo da conta do cliente.",
+        "minLength": 2,
+        "maxLength": 2
+       }
+      },
+      {
+       "tag": "CtCredtd",
+       "nome": "Conta Creditada",
+       "descricao": "Número da conta bancária de crédito.",
+       "obrigatorio": true,
+       "ou": 2,
+       "tipo": {
+        "nome": "CtBancaria",
+        "base": "integer",
+        "descricao": "Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por \"0\" (zero).",
+        "totalDigits": 13
+       }
+      },
+      {
+       "tag": "CtPgtoCredtd",
+       "nome": "Conta Pagamento Creditada",
+       "descricao": "Número da conta pagamento creditada.",
+       "obrigatorio": true,
+       "ou": 2,
+       "tipo": {
+        "nome": "CtPgto",
+        "base": "integer",
+        "descricao": "Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.",
+        "totalDigits": 20
+       }
+      },
+      {
+       "tag": "TpPessoaCredtd",
+       "nome": "Tipo Pessoa Creditada",
+       "descricao": "Identifica o tipo pessoa titular do crédito.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "TpPessoa",
+        "base": "string",
+        "descricao": "Tipo Pessoa Destinatário.",
+        "minLength": 1,
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "CNPJ_CPFCliCredtd",
+       "nome": "CNPJ ou CPF Cliente Creditado",
+       "descricao": "CNPJ ou CPF do Cliente Creditado",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CNPJ_CPF",
+        "base": "string",
+        "descricao": "Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.",
+        "minLength": 11,
+        "maxLength": 14,
+        "pattern": "[0-9]{11}|[0-9A-Z]{12}[0-9]{2}"
+       }
+      },
+      {
+       "tag": "NomCliCredtd",
+       "nome": "Nome Cliente Creditado",
+       "descricao": "Nome do Cliente creditado.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Nome",
+        "base": "string",
+        "descricao": "Nome",
+        "minLength": 1,
+        "maxLength": 80
+       }
+      },
+      {
+       "tag": "VlrLanc",
+       "nome": "Valor Lançamento",
+       "descricao": "Valor de um Lançamento no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Valor",
+        "base": "decimal",
+        "descricao": "Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal \"-\". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11",
+        "totalDigits": 19,
+        "fractionDigits": 2
+       }
+      },
+      {
+       "tag": "Grupo_PAG0108R2_Split",
+       "nome": "Grupo Split",
+       "descricao": "",
+       "obrigatorio": false,
+       "campos": [
+        {
+         "tag": "VlrCBS",
+         "nome": "Valor CBS",
+         "descricao": "Valor do CBS.",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "VlrNNegtv",
+          "base": "decimal",
+          "descricao": "Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.",
+          "totalDigits": 19,
+          "fractionDigits": 2,
+          "minInclusive": 0
+         }
+        },
+        {
+         "tag": "VlrIBS",
+         "nome": "Valor IBS",
+         "descricao": "Valor do IBS.",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "VlrNNegtv",
+          "base": "decimal",
+          "descricao": "Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.",
+          "totalDigits": 19,
+          "fractionDigits": 2,
+          "minInclusive": 0
+         }
+        },
+        {
+         "tag": "CodDocFis",
+         "nome": "Código Documento Fiscal",
+         "descricao": "Código do Documento Fiscal (Nota fiscal ou agregador).",
+         "obrigatorio": true,
+         "tipo": {
+          "nome": "CodDocFis",
+          "base": "string",
+          "descricao": "Código do Documento Fiscal (NF-e, NFS-e, Agregador).",
+          "minLength": 1,
+          "maxLength": 50
+         }
+        }
+       ]
+      },
+      {
+       "tag": "FinlddCli",
+       "nome": "Finalidade Cliente",
+       "descricao": "Código da finalidade para cliente.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "FinlddCli",
+        "base": "integer",
+        "descricao": "Código da finalidade do lançamento.",
+        "totalDigits": 5
+       }
+      },
+      {
+       "tag": "CodIdentdTransf",
+       "nome": "Código Identificador Transferência",
+       "descricao": "Campo livre para identificação de transferência.",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "CodIdentdTransf",
+        "base": "string",
+        "descricao": "Campo livre para identificação da transferência.",
+        "minLength": 1,
+        "maxLength": 25
+       }
+      },
+      {
+       "tag": "Hist",
+       "nome": "Histórico",
+       "descricao": "Campo descritivo",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Historico",
+        "base": "string",
+        "descricao": "Campo descritivo",
+        "maxLength": 200
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Resposta a Terceiros sobre Transferência de recursos entre contas de clientes"
+    }
+   ],
+   "bcmsg": [
+    {
+     "tag": "IdentdEmissor",
+     "nome": "IdentdEmissor",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdDestinatario",
+     "nome": "IdentdDestinatario",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdContg",
+     "nome": "IdentdContg",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdOperad",
+     "nome": "IdentdOperad",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "IdentdOperad",
+      "base": "string",
+      "descricao": "Identificador pessoal do operador.",
+      "maxLength": 32
+     }
+    },
+    {
+     "tag": "IdentdOperadConfc",
+     "nome": "IdentdOperadConfc",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "IdentdOperad",
+      "base": "string",
+      "descricao": "Identificador pessoal do operador.",
+      "maxLength": 32
+     }
+    },
+    {
+     "tag": "Grupo_Seq",
+     "nome": "Grupo_Seq",
+     "obrigatorio": false,
+     "campos": [
+      {
+       "tag": "NumSeq",
+       "nome": "NumSeq",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "NumSeq",
+        "base": "integer",
+        "descricao": "Número sequencial que indica a ordem das mensagens particionadas.",
+        "totalDigits": 9
+       }
+      },
+      {
+       "tag": "IndrCont",
+       "nome": "IndrCont",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Indr",
+        "base": "string",
+        "descricao": "Indicador \"Sim\" ou \"Não\"",
+        "minLength": 1,
+        "maxLength": 1,
+        "pattern": "S|N"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "DomSist",
+     "nome": "DomSist",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "DomSist",
+      "base": "string",
+      "descricao": "Domínio de sistema",
+      "minLength": 5,
+      "maxLength": 5
+     }
+    },
+    {
+     "tag": "NUOp",
+     "nome": "NUOp",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "NUOp",
+      "base": "string",
+      "descricao": "Número único da operação. Formato: para o Domínio de Sistema SPB02 = XXXXXXXXAAMMDDSSSSSSSSS em que XXXXXXXX - ISPB; AAMMDD - data; SSSSSSSSS - sequencial. Para os demais domínios de sistema = XXXXXXXXAAAAMMDDSSSSSSS em que XXXXXXXX - ISPB ou CNPJ de 8 posições; AAAAMMDD - data; SSSSSSS - sequencial.",
+      "minLength": 23,
+      "maxLength": 23,
+      "pattern": "[0-9A-Z]{8}[0-9]{15}"
+     }
+    }
+   ]
+  },
+  {
+   "codigo": "PAG0111",
+   "grupo": "PAG",
+   "volume": "II",
+   "papel": "devolucao",
+   "titulo": "IF requisita Transferência de recursos para devolução de transferência indevida",
+   "descricao": "Destinado à IF requisitar devolução de recursos transferidos indevidamente por uma IF ou na",
+   "fluxo": "Fluxo2",
+   "regras": [
+    {
+     "codigo": "RPAG0003",
+     "texto": "O campo Número Controle PAG Original deve ser preenchido com o Número Controle PAG da mensagem enviada previamente que motivou a devolução."
+    }
+   ],
+   "xsd": "PAG/PAG0111.XSD",
+   "mensagens": [
+    {
+     "codigo": "PAG0111",
+     "emissor": "IF-DEBITADA",
+     "destinatario": "Câmara PAG",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "PAG0111",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlIF",
+       "nome": "Número Controle IF",
+       "descricao": "Número de controleda IF",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "ISPBIFCredtd",
+       "nome": "ISPB IF Creditada",
+       "descricao": "Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "VlrLanc",
+       "nome": "Valor Lançamento",
+       "descricao": "Valor de um Lançamento no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Valor",
+        "base": "decimal",
+        "descricao": "Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal \"-\". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11",
+        "totalDigits": 19,
+        "fractionDigits": 2
+       }
+      },
+      {
+       "tag": "CodDevTransf",
+       "nome": "Código Devolução Transferência",
+       "descricao": "Código de devolução da transferência",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CodDevTransf",
+        "base": "integer",
+        "descricao": "Código de devolução da transferência",
+        "totalDigits": 2
+       }
+      },
+      {
+       "tag": "NumCtrlPAGOr",
+       "nome": "Número Controle PAG Original",
+       "descricao": "Número de controle PAG Original",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "Hist",
+       "nome": "Histórico",
+       "descricao": "Campo descritivo",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Historico",
+        "base": "string",
+        "descricao": "Campo descritivo",
+        "maxLength": 200
+       }
+      },
+      {
+       "tag": "NivelPrefPAG",
+       "nome": "Nível Preferência PAG",
+       "descricao": "Nível preferência Câmara PAG",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "PrefPAG",
+        "base": "string",
+        "descricao": "Nível de preferência da Câmara PAG",
+        "maxLength": 1
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Requisição de Devolução de recursos recebidos indevidamente"
+    },
+    {
+     "codigo": "PAG0111R1",
+     "emissor": "Câmara PAG",
+     "destinatario": "IF-DEBITADA",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "PAG0111R1",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlIF",
+       "nome": "Número Controle IF",
+       "descricao": "Número de controleda IF",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "NumCtrlPAG",
+       "nome": "Número Controle PAG",
+       "descricao": "Número de controle PAG",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "SitLancPAG",
+       "nome": "Situação Lançamento PAG",
+       "descricao": "Situação Lançamento na Câmara CIP",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "SitLancPAG",
+        "base": "string",
+        "descricao": "Situação de um lançamento que foi comandado no sistema PAG",
+        "maxLength": 3
+       }
+      },
+      {
+       "tag": "DtHrSit",
+       "nome": "Data Hora Situação",
+       "descricao": "Data e hora da situação.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:dateTime",
+        "base": "dateTime"
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Resposta ao Requisitante de devolução de recursos recebidos indevidamente"
+    },
+    {
+     "codigo": "PAG0111R2",
+     "emissor": "Câmara PAG",
+     "destinatario": "IF-CREDITADA",
+     "campos": [
+      {
+       "tag": "CodMsg",
+       "nome": "Código Mensagem",
+       "descricao": "Código da mensagem do sistema associado ao evento.",
+       "obrigatorio": true,
+       "fixo": "PAG0111R2",
+       "tipo": {
+        "nome": "CodMsg",
+        "base": "string",
+        "descricao": "Código da mensagem do sistema associado ao evento.",
+        "minLength": 7,
+        "maxLength": 9,
+        "pattern": "[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?"
+       }
+      },
+      {
+       "tag": "NumCtrlPAG",
+       "nome": "Número Controle PAG",
+       "descricao": "Número de controle PAG",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "DtHrPAG",
+       "nome": "Data Hora PAG",
+       "descricao": "Data e Hora do sistema PAG",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:dateTime",
+        "base": "dateTime"
+       }
+      },
+      {
+       "tag": "ISPBIFDebtd",
+       "nome": "ISPB IF Debitada",
+       "descricao": "Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "ISPBIFCredtd",
+       "nome": "ISPB IF Creditada",
+       "descricao": "Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ISPB",
+        "base": "string",
+        "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+        "minLength": 8,
+        "maxLength": 8,
+        "pattern": "[0-9A-Z]{8}"
+       }
+      },
+      {
+       "tag": "VlrLanc",
+       "nome": "Valor Lançamento",
+       "descricao": "Valor de um Lançamento no STR.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Valor",
+        "base": "decimal",
+        "descricao": "Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal \"-\". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11",
+        "totalDigits": 19,
+        "fractionDigits": 2
+       }
+      },
+      {
+       "tag": "CodDevTransf",
+       "nome": "Código Devolução Transferência",
+       "descricao": "Código de devolução da transferência",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "CodDevTransf",
+        "base": "integer",
+        "descricao": "Código de devolução da transferência",
+        "totalDigits": 2
+       }
+      },
+      {
+       "tag": "NumCtrlPAGOr",
+       "nome": "Número Controle PAG Original",
+       "descricao": "Número de controle PAG Original",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "ControleIF",
+        "base": "string",
+        "descricao": "Número de Controle da IF",
+        "minLength": 1,
+        "maxLength": 20
+       }
+      },
+      {
+       "tag": "Hist",
+       "nome": "Histórico",
+       "descricao": "Campo descritivo",
+       "obrigatorio": false,
+       "tipo": {
+        "nome": "Historico",
+        "base": "string",
+        "descricao": "Campo descritivo",
+        "maxLength": 200
+       }
+      },
+      {
+       "tag": "DtMovto",
+       "nome": "Data Movimento",
+       "descricao": "Data de movimento.",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "xs:date",
+        "base": "date"
+       }
+      }
+     ],
+     "titulo": "Resposta a Terceiros sobre Devolução de recursos recebidos indevidamente"
+    }
+   ],
+   "bcmsg": [
+    {
+     "tag": "IdentdEmissor",
+     "nome": "IdentdEmissor",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdDestinatario",
+     "nome": "IdentdDestinatario",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdContg",
+     "nome": "IdentdContg",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "ISPB",
+      "base": "string",
+      "descricao": "Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.",
+      "minLength": 8,
+      "maxLength": 8,
+      "pattern": "[0-9A-Z]{8}"
+     }
+    },
+    {
+     "tag": "IdentdOperad",
+     "nome": "IdentdOperad",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "IdentdOperad",
+      "base": "string",
+      "descricao": "Identificador pessoal do operador.",
+      "maxLength": 32
+     }
+    },
+    {
+     "tag": "IdentdOperadConfc",
+     "nome": "IdentdOperadConfc",
+     "obrigatorio": false,
+     "tipo": {
+      "nome": "IdentdOperad",
+      "base": "string",
+      "descricao": "Identificador pessoal do operador.",
+      "maxLength": 32
+     }
+    },
+    {
+     "tag": "Grupo_Seq",
+     "nome": "Grupo_Seq",
+     "obrigatorio": false,
+     "campos": [
+      {
+       "tag": "NumSeq",
+       "nome": "NumSeq",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "NumSeq",
+        "base": "integer",
+        "descricao": "Número sequencial que indica a ordem das mensagens particionadas.",
+        "totalDigits": 9
+       }
+      },
+      {
+       "tag": "IndrCont",
+       "nome": "IndrCont",
+       "obrigatorio": true,
+       "tipo": {
+        "nome": "Indr",
+        "base": "string",
+        "descricao": "Indicador \"Sim\" ou \"Não\"",
+        "minLength": 1,
+        "maxLength": 1,
+        "pattern": "S|N"
+       }
+      }
+     ]
+    },
+    {
+     "tag": "DomSist",
+     "nome": "DomSist",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "DomSist",
+      "base": "string",
+      "descricao": "Domínio de sistema",
+      "minLength": 5,
+      "maxLength": 5
+     }
+    },
+    {
+     "tag": "NUOp",
+     "nome": "NUOp",
+     "obrigatorio": true,
+     "tipo": {
+      "nome": "NUOp",
+      "base": "string",
+      "descricao": "Número único da operação. Formato: para o Domínio de Sistema SPB02 = XXXXXXXXAAMMDDSSSSSSSSS em que XXXXXXXX - ISPB; AAMMDD - data; SSSSSSSSS - sequencial. Para os demais domínios de sistema = XXXXXXXXAAAAMMDDSSSSSSS em que XXXXXXXX - ISPB ou CNPJ de 8 posições; AAAAMMDD - data; SSSSSSS - sequencial.",
+      "minLength": 23,
+      "maxLength": 23,
+      "pattern": "[0-9A-Z]{8}[0-9]{15}"
+     }
+    }
+   ]
+  }
+ ]
+}

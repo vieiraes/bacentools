@@ -23,14 +23,46 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import { ToolIcon } from '@/components/ToolIcon';
-import { CRIADOR, SITE, TOOLS } from '@/lib/tools';
+import { CRIADOR, SITE, TOOLS, secaoDe, type Tool } from '@/lib/tools';
+import SyncAltIcon from '@mui/icons-material/SyncAlt';
+
+/** Menu suspenso da barra do topo ("Ferramentas" do Pix, "SPB e TED"). */
+function NavDropdown({ id, label, icon, items, isActive }: { id: string; label: string; icon: ReactNode; items: Tool[]; isActive: (p: string) => boolean }) {
+  const [el, setEl] = useState<HTMLElement | null>(null);
+  return (
+    <>
+      <Button
+        id={`menu-${id}`}
+        color="inherit"
+        aria-haspopup="true"
+        aria-expanded={el ? 'true' : undefined}
+        aria-controls={el ? `lista-${id}` : undefined}
+        onClick={(e: MouseEvent<HTMLElement>) => setEl(e.currentTarget)}
+        startIcon={icon}
+        endIcon={<ExpandMoreIcon />}
+        sx={{ whiteSpace: 'nowrap', px: 0.75, '& .MuiButton-startIcon': { mr: 0.5 }, borderBottom: '2px solid', borderColor: items.some((t) => isActive(t.path)) ? 'currentColor' : 'transparent', borderRadius: 0 }}
+      >
+        {label}
+      </Button>
+      <Menu id={`lista-${id}`} anchorEl={el} open={!!el} onClose={() => setEl(null)} slotProps={{ list: { 'aria-labelledby': `menu-${id}` } }}>
+        {items.map((t) => (
+          <MenuItem key={t.path} component={Link} href={t.path} selected={isActive(t.path)} onClick={() => setEl(null)}>
+            <ListItemIcon><ToolIcon icon={t.icon} fontSize="small" /></ListItemIcon>
+            <ListItemText primary={t.menu} />
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+}
 
 /** Moldura do site: barra com as ferramentas (gaveta no celular), conteúdo e rodapé. */
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const [menuEl, setMenuEl] = useState<HTMLElement | null>(null);
-  const principais = TOOLS.filter((t) => !t.menu);
-  const avulsas = TOOLS.filter((t) => t.menu);
+  const pix = TOOLS.filter((t) => secaoDe(t) === 'pix');
+  const principais = pix.filter((t) => !t.menu);
+  const avulsas = pix.filter((t) => t.menu);
+  const spb = TOOLS.filter((t) => secaoDe(t) === 'spb');
   const pathname = usePathname() ?? '/';
   const isActive = (p: string) => pathname === p || pathname === p.replace(/\/$/, '');
 
@@ -47,7 +79,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Typography component={Link} href="/" variant="h6" sx={{ fontWeight: 800, textDecoration: 'none', color: 'inherit', flexGrow: { xs: 1, lg: 0 }, mr: 1.5 }}>
             {SITE.name}
           </Typography>
-          <Box component="nav" aria-label="Ferramentas" sx={{ display: { xs: 'none', lg: 'flex' }, gap: 0.5, flexGrow: 1 }}>
+          <Box component="nav" aria-label="Ferramentas" sx={{ display: { xs: 'none', lg: 'flex' }, gap: 0.25, flexGrow: 1 }}>
             {principais.map((t) => (
               <Button
                 key={t.path}
@@ -56,32 +88,13 @@ export function AppShell({ children }: { children: ReactNode }) {
                 color="inherit"
                 aria-current={isActive(t.path) ? 'page' : undefined}
                 startIcon={<ToolIcon icon={t.icon} fontSize="small" />}
-                sx={{ whiteSpace: 'nowrap', borderBottom: '2px solid', borderColor: isActive(t.path) ? 'currentColor' : 'transparent', borderRadius: 0 }}
+                sx={{ whiteSpace: 'nowrap', px: 0.75, '& .MuiButton-startIcon': { mr: 0.5 }, borderBottom: '2px solid', borderColor: isActive(t.path) ? 'currentColor' : 'transparent', borderRadius: 0 }}
               >
                 {t.short}
               </Button>
             ))}
-            <Button
-              id="menu-ferramentas"
-              color="inherit"
-              aria-haspopup="true"
-              aria-expanded={menuEl ? 'true' : undefined}
-              aria-controls={menuEl ? 'lista-ferramentas' : undefined}
-              onClick={(e: MouseEvent<HTMLElement>) => setMenuEl(e.currentTarget)}
-              startIcon={<HandymanIcon fontSize="small" />}
-              endIcon={<ExpandMoreIcon />}
-              sx={{ whiteSpace: 'nowrap', borderBottom: '2px solid', borderColor: avulsas.some((t) => isActive(t.path)) ? 'currentColor' : 'transparent', borderRadius: 0 }}
-            >
-              Ferramentas
-            </Button>
-            <Menu id="lista-ferramentas" anchorEl={menuEl} open={!!menuEl} onClose={() => setMenuEl(null)} slotProps={{ list: { 'aria-labelledby': 'menu-ferramentas' } }}>
-              {avulsas.map((t) => (
-                <MenuItem key={t.path} component={Link} href={t.path} selected={isActive(t.path)} onClick={() => setMenuEl(null)}>
-                  <ListItemIcon><ToolIcon icon={t.icon} fontSize="small" /></ListItemIcon>
-                  <ListItemText primary={t.menu} />
-                </MenuItem>
-              ))}
-            </Menu>
+            <NavDropdown id="ferramentas" label="Ferramentas" icon={<HandymanIcon fontSize="small" />} items={avulsas} isActive={isActive} />
+            <NavDropdown id="spb" label="SPB e TED" icon={<SyncAltIcon fontSize="small" />} items={spb} isActive={isActive} />
           </Box>
           <Button component={Link} href="/sobre/" color="inherit" aria-current={isActive('/sobre/') ? 'page' : undefined} sx={{ display: { xs: 'none', lg: 'inline-flex' } }}>
             Sobre
@@ -104,6 +117,13 @@ export function AppShell({ children }: { children: ReactNode }) {
             ))}
             <ListSubheader component="p" disableSticky>Ferramentas</ListSubheader>
             {avulsas.map((t) => (
+              <ListItemButton key={t.path} component={Link} href={t.path} selected={isActive(t.path)}>
+                <ListItemIcon><ToolIcon icon={t.icon} /></ListItemIcon>
+                <ListItemText primary={t.menu} />
+              </ListItemButton>
+            ))}
+            <ListSubheader component="p" disableSticky>SPB e TED</ListSubheader>
+            {spb.map((t) => (
               <ListItemButton key={t.path} component={Link} href={t.path} selected={isActive(t.path)}>
                 <ListItemIcon><ToolIcon icon={t.icon} /></ListItemIcon>
                 <ListItemText primary={t.menu} />
