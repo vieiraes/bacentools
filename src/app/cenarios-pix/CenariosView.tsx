@@ -112,10 +112,15 @@ export function CenariosView() {
   const [origem, setOrigem] = useState<'' | Origem>('');
   const cenario = useMemo(() => cenarioPorId(id) ?? cenarioPorId('sucesso')!, [id]);
 
-  // link direto: /cenarios-pix/#pacs002-AC06
+  // link direto: /cenarios-pix/#pacs002-AC06 (ao abrir e quando o endereço muda na mesma página)
   useEffect(() => {
-    const h = decodeURIComponent(window.location.hash.slice(1));
-    if (h && cenarioPorId(h)) setId(h);
+    const ler = () => {
+      const h = decodeURIComponent(window.location.hash.slice(1));
+      if (h && cenarioPorId(h)) setId(h);
+    };
+    ler();
+    window.addEventListener('hashchange', ler);
+    return () => window.removeEventListener('hashchange', ler);
   }, []);
   const escolher = (novo: string) => {
     setId(novo);
