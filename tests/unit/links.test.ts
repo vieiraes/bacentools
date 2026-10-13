@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { GRUPOS } from '@/lib/links';
 import { FONTE_BRCODE } from '@/lib/brcode/brcode';
+import { GRUPOS_SPB } from '@/lib/links-spb';
+import { FONTES_SPB } from '@/lib/spb/catalogo';
 
 const todos = GRUPOS.flatMap((g) => g.links);
 
@@ -29,10 +31,6 @@ describe('links oficiais do Pix', () => {
 });
 
 describe('links oficiais do SPB', () => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { GRUPOS_SPB } = require('@/lib/links-spb') as typeof import('@/lib/links-spb');
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { FONTES_SPB } = require('@/lib/spb/catalogo') as typeof import('@/lib/spb/catalogo');
   const spb = GRUPOS_SPB.flatMap((g) => g.links);
 
   it('só BCB e Tesouro Nacional, por HTTPS, sem repetir', () => {
