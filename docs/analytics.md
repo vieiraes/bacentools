@@ -18,12 +18,12 @@ Tudo é do Google e gratuito: **Google Analytics 4** (propriedade ligada ao proj
 | Evento | Quando | Parâmetros |
 |---|---|---|
 | `search` | Busca em bancos, participantes, informes e catálogo de erros (só quando a pessoa para de digitar) | `search_term`, `area` |
-| `select_content` | Escolheu um código de erro, filtro, tipo ou ano de informe | `content_type`, `item_id` |
+| `select_content` | Escolheu um código de erro, filtro, tipo ou ano de informe, mensagem do SPB (`mensagem_spb`) ou cenário da TED (`cenario_ted`) | `content_type`, `item_id` |
 | `scenario_play` | Rodou a animação de um cenário do Pix | `item_id`, `mode` |
 | `simulator_action` | Consulta 200/404 ou Pix enviado no simulador do DICT | `action`, `key_type` |
 | `copy_ispb` | Copiou um ISPB | `item_id` |
 | `generate_brcode` | Copiou ou baixou um QR Code do gerador (a chave não é enviada) | `action` (copiar, baixar_png), `key_type`, `item_id` (com_valor, sem_valor) |
-| `decode` | Colou algo no decodificador de QR Code Pix ou de EndToEndId/UUID (só quando para de digitar; o código colado não é enviado) | `area` (brcode, identificador), `item_id` (tipo), `result` |
+| `decode` | Colou algo no decodificador de QR Code Pix, de EndToEndId/UUID ou no validador de XML da TED (`area` = xml-spb) (só quando para de digitar; o código colado não é enviado) | `area` (brcode, identificador), `item_id` (tipo), `result` |
 | `file_download` | Abriu o PDF de um informe do BCB | `file_name`, `link_url`, `area` |
 | `source_fallback` | A BrasilAPI caiu e o site usou a cópia diária | `source` |
 | `consent_choice` | Aceitou ou recusou o aviso de cookies | `choice` |

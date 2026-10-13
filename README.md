@@ -11,7 +11,7 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 [![CI](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/ci.yml)
 [![Dados](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml/badge.svg)](https://github.com/vieiraes/bacentools/actions/workflows/dados.yml)
 [![Licença](https://img.shields.io/badge/licença-Apache%202.0-0b4f9c)](LICENSE)
-![Testes](https://img.shields.io/badge/testes-196%20unit%20%2B%20108%20E2E-2e7d32)
+![Testes](https://img.shields.io/badge/testes-239%20unit%20%2B%20146%20E2E-2e7d32)
 ![Acessibilidade](https://img.shields.io/badge/axe-WCAG%202.2%20AA-0b4f9c)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs)
 
@@ -32,6 +32,20 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 | 🆔 | **[Decodificador de EndToEndId e UUID](https://bacentools.web.app/identificadores-pix/)** | Quem gerou um EndToEndId ou RtrId (nome da instituição pelo ISPB), quando (UTC e Brasília) e o que está fora do formato. Também lê UUID, inclusive a data do v7 | Catálogo do SPI 5.13.2 e RFC 9562 |
 | 🔗 | **[Links oficiais do Pix](https://bacentools.web.app/links-pix/)** | Regulamento, manuais (com a versão vigente), instruções normativas, catálogos, API Pix e API do DICT, agrupados por uso | Página "Normas sobre o Pix" do BCB |
 | 💧 | **[Simulador de fichas do DICT](https://bacentools.web.app/simulador-dict/)** | O *token bucket* das consultas de chave Pix: 200, 404, 429, reposição e devolução por pagamento | Especificação da API do DICT |
+
+### 🔁 SPB e TED
+
+Área própria, com menu próprio, só sobre o Sistema de Pagamentos Brasileiro e a TED. Os dados saem dos arquivos oficiais do BCB por um script (`scripts/spb-catalogo.mjs`), não são digitados.
+
+| | Ferramenta | Para que serve | Fonte |
+|---|---|---|---|
+| 🧭 | **[Visão geral e horário](https://bacentools.web.app/spb/)** | O que é SPB, STR e TED, e se a TED está aberta agora (grade STR02, fuso de Brasília) | Páginas do SPB e do STR; Grade de horários do SPB |
+| 🎬 | **[Como funciona a TED](https://bacentools.web.app/spb/ted/)** | Animação da STR0008 com R1 e R2, fila por falta de saldo, agendamento, recusas (ESTR0146, ESTR0300, EGEN0001), devolução (STR0010) e SITRAF (PAG0108) | Catálogo de Serviços do SFN 5.13 |
+| 📨 | **[Mensagens da TED](https://bacentools.web.app/spb/mensagens/)** | STR0008, STR0010, PAG0108, PAG0111 e respostas campo a campo: tags, obrigatoriedade, formato, grupos OU, Split, domínios e regras | XSD oficiais 5.13 |
+| 🧾 | **[Montar e validar XML](https://bacentools.web.app/spb/xml/)** | Formulário gerado do XSD que monta o `DOC/BCMSG/SISMSG` (NUOp, UTF-16 BE) e validador que diz com qual código o STR recusaria | XSD, Dicionário de Regras e Relação de Erros |
+| 📚 | **[Finalidades e domínios](https://bacentools.web.app/spb/dominios/)** | FinlddCli, códigos de devolução, situação no STR e no SITRAF, só os vigentes | Dicionário de Domínios |
+| ⚠️ | **[Códigos de erro](https://bacentools.web.app/spb/erros/)** | ESTR, EPAG e EGEN vigentes, uma página por código | Relação de Códigos de Erros |
+| 🔗 | **[Links oficiais do SPB](https://bacentools.web.app/spb/links/)** | Catálogo, XSD, domínios, erros, STR, RSFN e Tesouro, conferidos toda semana | BCB e Tesouro Nacional |
 
 <details>
 <summary>📸 Mais telas</summary>
@@ -61,6 +75,7 @@ Este projeto também é uma vitrine de QA. A pirâmide de testes é esta:
 | **Resiliência** | Vitest | Fonte fora do ar: o site usa a cópia diária. Fonte e cópia fora: o erro chega à tela. Um item quebrado é descartado sem derrubar a lista |
 | **E2E** | Playwright (desktop e celular) | Page Object, **rede simulada** (`page.route` com fixtures), **relógio controlado** (`page.clock`), espera da hidratação, redirecionamento 301, sitemap e falha automática com erro no console |
 | **Acessibilidade** | axe-core | WCAG 2.2 AA em todas as páginas, no desktop e no celular, e sem rolagem lateral |
+| **XSD oficial** | xmllint (libxml2 em WebAssembly) | O XML que o site monta é validado contra os XSD oficiais do BCB (`tests/fixtures/xsd`), e a prova contrária: o que o site recusa, o XSD também recusa |
 | **Estático** | TypeScript estrito + ESLint | Na CI, junto com a cobertura mínima de 95% nas regras (`src/lib`) |
 
 ### 🐞 Bugs que os testes encontraram
@@ -77,6 +92,9 @@ Este projeto também é uma vitrine de QA. A pirâmide de testes é esta:
 | Site | Contraste insuficiente no laranja de aviso e no botão não selecionado do ToggleButton | axe |
 | Decodificador de QR Code (versão da extensão QA Tools) | O CRC era procurado pelo **primeiro** `6304` do texto: uma chave como `ana6304@ex.com` fazia um código válido ser dado como inválido | Teste de regressão; o CRC agora é o último elemento da estrutura |
 | Decodificador de QR Code | Nos exemplos reais de cobrança com vencimento, o valor vem no BR Code dinâmico, que o app pagador deve ignorar (seção 2.7) | Virou aviso na conferência e teste com URL de 77 caracteres (o limite) |
+| Área SPB (planejamento) | Eu ia anunciar o grupo Split (CBS/IBS) como novidade da versão 5.13 do catálogo, mas a comparação dos XSD mostrou que a TED é igual na 5.12; a Planilha de Alterações confirmou que o Split entrou na 5.12 | Script que compara as duas versões a cada atualização |
+| Mensagens e cenários | Um link para outra mensagem (`#PAG0108`) na mesma página não trocava o conteúdo; o mesmo valia nos cenários do Pix | E2E que navega pelo endereço na mesma página |
+| Testes | Um arquivo de teste com `require` e alias não carregava, e o resumo mostrava "205 passed" mesmo assim | Conferir também a linha "Test Files" |
 | Site | "1 instituições" | Revisão visual, depois virou teste da função `plural` |
 
 A avaliação que deu início a esse trabalho está em [docs/historico/](docs/historico/avaliacao-simulador-dict-2026-10.md).

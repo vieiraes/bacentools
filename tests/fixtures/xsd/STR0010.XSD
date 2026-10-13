@@ -1,0 +1,605 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+    xmlns:cat='http://www.bcb.gov.br/catalogomsg'
+    targetNamespace='http://www.bcb.gov.br/SPB/STR0010.xsd'
+    xmlns='http://www.bcb.gov.br/SPB/STR0010.xsd'
+    elementFormDefault='qualified'
+    version='5.13'>
+ 
+<!-- Definicao da mensagem -->
+ 
+<xs:element name='DOC' type='DOCComplexType'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfEvento>
+        <cat:Evento>STR0010 - IF requisita Transferência para devolução de transferência indevida</cat:Evento>
+        <cat:Descricao>Destinado à IF requisitar transferência para devolução de recursos transferidos indevidamente por uma IF ou na situação em que a IF de destino não consiga acatá-los.</cat:Descricao>
+        <cat:Servico>Transferência de Devolução</cat:Servico>
+        <cat:TipoFluxo>Fluxo2</cat:TipoFluxo>
+      </cat:InfEvento>
+    </xs:documentation>
+  </xs:annotation>
+</xs:element>
+ 
+<xs:complexType name='DOCComplexType'>
+  <xs:sequence>
+    <xs:element name='BCMSG' type='BCMSGComplexType'/>
+    <xs:element name='SISMSG' type='SISMSGComplexType'/>
+    <xs:element name='USERMSG' type='USERMSGSimpleType' minOccurs='0'/>
+  </xs:sequence>
+</xs:complexType>
+ 
+<!-- Definicao do BCMSG da mensagem -->
+ 
+<xs:complexType name='BCMSGComplexType'>
+  <xs:sequence>
+    <xs:element name='IdentdEmissor' type='ISPB'/>
+    <xs:element name='IdentdDestinatario' type='ISPB'/>
+    <xs:element name='IdentdContg' type='ISPB' minOccurs='0'/>
+    <xs:element name='IdentdOperad' type='IdentdOperad' minOccurs='0'/>
+    <xs:element name='IdentdOperadConfc' type='IdentdOperad' minOccurs='0'/>
+    <xs:element name='Grupo_Seq' type='Grupo_SeqComplexType' minOccurs='0'/>
+    <xs:element name='DomSist' type='DomSist'/>
+    <xs:element name='NUOp' type='NUOp'/>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name='Grupo_SeqComplexType'>
+  <xs:sequence>
+    <xs:element name='NumSeq' type='NumSeq'/>
+    <xs:element name='IndrCont' type='Indr'/>
+  </xs:sequence>
+</xs:complexType>
+ 
+<!-- Definicao do SISMSG da mensagem -->
+ 
+<xs:complexType name='SISMSGComplexType'>
+  <xs:choice>
+    <xs:element name='STR0010' type='STR0010ComplexType'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfMensagem>
+            <cat:Mensagem>Requisição de Transferência Devolução de Transferência Indevida</cat:Mensagem>
+            <cat:Emissor>IF-DEBITADA</cat:Emissor>
+            <cat:Destinatario>STR</cat:Destinatario>
+          </cat:InfMensagem>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='STR0010R1' type='STR0010R1ComplexType'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfMensagem>
+            <cat:Mensagem>Resposta ao Requisitante de Transferência para Devolução de Transferência Indevida</cat:Mensagem>
+            <cat:Emissor>STR</cat:Emissor>
+            <cat:Destinatario>IF-DEBITADA</cat:Destinatario>
+          </cat:InfMensagem>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='STR0010R2' type='STR0010R2ComplexType'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfMensagem>
+            <cat:Mensagem>Resposta a Terceiros sobre Transferência para Devolução de Transferência Indevida</cat:Mensagem>
+            <cat:Emissor>STR</cat:Emissor>
+            <cat:Destinatario>IF-CREDITADA</cat:Destinatario>
+          </cat:InfMensagem>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:choice>
+</xs:complexType>
+ 
+<xs:complexType name='STR0010ComplexType'>
+  <xs:sequence>
+    <xs:element name='CodMsg' type='CodMsg' fixed='STR0010'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Mensagem</cat:NomeCampo>
+            <cat:DescricaoCampo>Código da mensagem do sistema associado ao evento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlIF' type='ControleIF'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle IF</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controleda IF</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFDebtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFCredtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='VlrLanc' type='Valor'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Valor Lançamento</cat:NomeCampo>
+            <cat:DescricaoCampo>Valor de um Lançamento no STR.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CodDevTransf' type='CodDevTransf'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Devolução Transferência</cat:NomeCampo>
+            <cat:DescricaoCampo>Código de devolução da transferência</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlSTROr' type='Controle'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle STR Original</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controle STR Original</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='Hist' type='Historico' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Histórico</cat:NomeCampo>
+            <cat:DescricaoCampo>Campo descritivo</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtAgendt' type='xs:date' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Agendamento</cat:NomeCampo>
+            <cat:DescricaoCampo>Data futura para a qual a mensagem será processada</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='HrAgendt' type='xs:time' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Hora Agendamento</cat:NomeCampo>
+            <cat:DescricaoCampo>Hora para agendamento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NivelPref' type='Pref' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Nível Preferência</cat:NomeCampo>
+            <cat:DescricaoCampo>Nível de preferência atribuido pela IF para processamento de um evento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtMovto' type='xs:date'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Movimento</cat:NomeCampo>
+            <cat:DescricaoCampo>Data de movimento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name='STR0010R1ComplexType'>
+  <xs:sequence>
+    <xs:element name='CodMsg' type='CodMsg' fixed='STR0010R1'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Mensagem</cat:NomeCampo>
+            <cat:DescricaoCampo>Código da mensagem do sistema associado ao evento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlIF' type='ControleIF'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle IF</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controleda IF</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFDebtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlSTR' type='Controle'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle STR</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controle STR</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='SitLancSTR' type='SitLancSTR'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Situação Lançamento STR</cat:NomeCampo>
+            <cat:DescricaoCampo>Situação de um lançamento que foi comandado no STR.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtHrSit' type='xs:dateTime'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Hora Situação</cat:NomeCampo>
+            <cat:DescricaoCampo>Data e hora da situação.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtMovto' type='xs:date'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Movimento</cat:NomeCampo>
+            <cat:DescricaoCampo>Data de movimento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name='STR0010R2ComplexType'>
+  <xs:sequence>
+    <xs:element name='CodMsg' type='CodMsg' fixed='STR0010R2'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Mensagem</cat:NomeCampo>
+            <cat:DescricaoCampo>Código da mensagem do sistema associado ao evento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlSTR' type='Controle'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle STR</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controle STR</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtHrBC' type='xs:dateTime'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Hora Bacen</cat:NomeCampo>
+            <cat:DescricaoCampo>Data e hora do processamento no Banco Central</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFDebtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFCredtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='VlrLanc' type='Valor'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Valor Lançamento</cat:NomeCampo>
+            <cat:DescricaoCampo>Valor de um Lançamento no STR.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CodDevTransf' type='CodDevTransf'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Devolução Transferência</cat:NomeCampo>
+            <cat:DescricaoCampo>Código de devolução da transferência</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlSTROr' type='Controle'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle STR Original</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controle STR Original</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='Hist' type='Historico' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Histórico</cat:NomeCampo>
+            <cat:DescricaoCampo>Campo descritivo</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtMovto' type='xs:date'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Movimento</cat:NomeCampo>
+            <cat:DescricaoCampo>Data de movimento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+ 
+<!-- Definicao do USRMSG da mensagem -->
+ 
+<xs:simpleType name='USERMSGSimpleType'>
+  <xs:restriction base='xs:string'>
+    <xs:maxLength value='1048576'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<!-- Definicao dos tipos simples do evento -->
+ 
+<xs:simpleType name='DomSist'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Domínio de sistema</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='5'/>
+    <xs:maxLength value='5'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='IdentdOperad'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Identificador pessoal do operador.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:maxLength value='32'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Indr'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Indicador "Sim" ou "Não"</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='1'/>
+    <xs:maxLength value='1'/>
+    <xs:pattern value='S|N'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='ISPB'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='8'/>
+    <xs:maxLength value='8'/>
+    <xs:pattern value='[0-9A-Z]{8}'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='NumSeq'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número sequencial que indica a ordem das mensagens particionadas.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='9'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='NUOp'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número único da operação. Formato: para o Domínio de Sistema SPB02 = XXXXXXXXAAMMDDSSSSSSSSS em que XXXXXXXX - ISPB; AAMMDD - data; SSSSSSSSS - sequencial. Para os demais domínios de sistema = XXXXXXXXAAAAMMDDSSSSSSS em que XXXXXXXX - ISPB ou CNPJ de 8 posições; AAAAMMDD - data; SSSSSSS - sequencial.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='23'/>
+    <xs:maxLength value='23'/>
+    <xs:pattern value='[0-9A-Z]{8}[0-9]{15}'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='CodDevTransf'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Código de devolução da transferência</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='2'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='CodMsg'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Código da mensagem do sistema associado ao evento.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='7'/>
+    <xs:maxLength value='9'/>
+    <xs:pattern value='[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Controle'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Formato = XXXAAAAMMDDnnnnnnnnn;XXX - Sigla Sistema;AAAA - ano;MM - mês, 01 a 12;DD - dia, 01  a 31;nnnnnnnnn - Sequencial.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='20'/>
+    <xs:maxLength value='20'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='ControleIF'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número de Controle da IF</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='1'/>
+    <xs:maxLength value='20'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Historico'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Campo descritivo</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:maxLength value='200'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Pref'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Nível de Preferência. </cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:maxLength value='1'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='SitLancSTR'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Situação de um lançamento que foi comandado no STR.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='3'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Valor'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal "-". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:decimal'>
+    <xs:totalDigits value='19'/>
+    <xs:fractionDigits value='2'/>
+    <xs:minExclusive value='-100000000000000000'/>
+    <xs:maxExclusive value='100000000000000000'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+</xs:schema>

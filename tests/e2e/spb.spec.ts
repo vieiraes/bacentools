@@ -100,3 +100,35 @@ test.describe('TED animada', () => {
     await expect(page.getByTestId('steps')).toContainText('Banco B → STR');
   });
 });
+
+test.describe('XML da TED', () => {
+  test('montar: exemplo já vem válido; finalidade 99999 sem histórico mostra RSTR0034 e ESTR0146; abre no validador', async ({ page, context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await mockSources(page);
+    await page.goto('/spb/xml/');
+    await expect(page.getByTestId('xml-veredito')).toContainText('XML válido');
+    await expect(page.getByTestId('xml-saida')).toHaveValue(/<DOC xmlns="http:\/\/www.bcb.gov.br\/SPB\/STR0008.xsd">/);
+    await page.getByLabel(/Finalidade Cliente/).click();
+    await page.getByRole('option', { name: /^99999 · Outros/ }).click();
+    await expect(page.getByTestId('xml-veredito')).toContainText('1 erro(s)');
+    await expect(page.getByTestId('xml-achados').locator('[data-codigo="ESTR0146"]')).toContainText('RSTR0034');
+    await page.getByRole('button', { name: 'Copiar XML' }).click();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('<FinlddCli>99999</FinlddCli>');
+    await page.getByRole('button', { name: 'Abrir no validador' }).click();
+    await expect(page.getByTestId('xml-entrada')).toHaveValue(/<FinlddCli>99999<\/FinlddCli>/);
+    await expect(page.getByTestId('xml-achados').locator('[data-codigo="ESTR0146"]')).toBeVisible();
+  });
+
+  test('validar: XML quebrado → EGEN0001 na GEN0004; troca para STR0010 no montar', async ({ page }) => {
+    await mockSources(page);
+    await page.goto('/spb/xml/');
+    await page.getByTestId('aba-validar').click();
+    await page.getByTestId('xml-entrada').fill('<DOC><BCMSG>');
+    await expect(page.getByTestId('xml-achados').locator('[data-codigo="EGEN0001"]')).toContainText('Voltaria na GEN0004');
+    await page.getByTestId('aba-montar').click();
+    await page.getByLabel('Mensagem').click();
+    await page.getByRole('option', { name: /STR0010/ }).click();
+    await expect(page.getByTestId('xml-saida')).toHaveValue(/<CodDevTransf>2<\/CodDevTransf>/);
+    await expect(page.getByTestId('xml-veredito')).toContainText('XML válido');
+  });
+});

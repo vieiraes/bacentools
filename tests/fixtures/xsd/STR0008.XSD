@@ -1,0 +1,1146 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+    xmlns:cat='http://www.bcb.gov.br/catalogomsg'
+    targetNamespace='http://www.bcb.gov.br/SPB/STR0008.xsd'
+    xmlns='http://www.bcb.gov.br/SPB/STR0008.xsd'
+    elementFormDefault='qualified'
+    version='5.13'>
+ 
+<!-- Definicao da mensagem -->
+ 
+<xs:element name='DOC' type='DOCComplexType'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfEvento>
+        <cat:Evento>STR0008 - IF requisita Transferência entre contas de clientes</cat:Evento>
+        <cat:Descricao>Destinado à IF requisitar transferência de recursos entre contas de clientes.</cat:Descricao>
+        <cat:Servico>Transferência entre Instituições Financeiras por conta de cliente</cat:Servico>
+        <cat:TipoFluxo>Fluxo2</cat:TipoFluxo>
+        <cat:InfRegra>
+          <cat:CodigoRegra>RSTR0027</cat:CodigoRegra>
+          <cat:DescricaoRegra>O campo Código Identificador Transferência é opcional, devendo sua existência e seu conteúdo serem ajustados entre as partes, emissor e destinatário.</cat:DescricaoRegra>
+        </cat:InfRegra>
+        <cat:InfRegra>
+          <cat:CodigoRegra>RSTR0034</cat:CodigoRegra>
+          <cat:DescricaoRegra>Se o campo Finalidade for preenchido com o domínio "99999" ("Outros"), a descrição da finalidade da transferência deverá ser especificada no campo Histórico da mensagem.</cat:DescricaoRegra>
+        </cat:InfRegra>
+        <cat:InfRegra>
+          <cat:CodigoRegra>RSTR0035</cat:CodigoRegra>
+          <cat:DescricaoRegra>Se o tipo da conta informado for diferente de conta de pagamento, a agência deverá ser informada.</cat:DescricaoRegra>
+        </cat:InfRegra>
+        <cat:InfRegra>
+          <cat:CodigoRegra>RSTR0036</cat:CodigoRegra>
+          <cat:DescricaoRegra>Se o tipo de conta indicar conta de pagamento, a conta de pagamento deverá ser preenchida e o uso do campo Agência é opcional.</cat:DescricaoRegra>
+        </cat:InfRegra>
+        <cat:InfRegra>
+          <cat:CodigoRegra>RSTR0039</cat:CodigoRegra>
+          <cat:DescricaoRegra>O Valor CBS somado ao Valor IBS não pode ser maior que o Valor Lançamento.</cat:DescricaoRegra>
+        </cat:InfRegra>
+        <cat:InfRegra>
+          <cat:CodigoRegra>RSTR0040</cat:CodigoRegra>
+          <cat:DescricaoRegra>O preenchimento do grupo de informações do split somente é permitido quando o Tipo de Pessoa Remetente ou Tipo Pessoa Debitada e o Tipo de Pessoa Destinatária ou Tipo Pessoa Creditada forem ambos Pessoa Jurídica.</cat:DescricaoRegra>
+        </cat:InfRegra>
+      </cat:InfEvento>
+    </xs:documentation>
+  </xs:annotation>
+</xs:element>
+ 
+<xs:complexType name='DOCComplexType'>
+  <xs:sequence>
+    <xs:element name='BCMSG' type='BCMSGComplexType'/>
+    <xs:element name='SISMSG' type='SISMSGComplexType'/>
+    <xs:element name='USERMSG' type='USERMSGSimpleType' minOccurs='0'/>
+  </xs:sequence>
+</xs:complexType>
+ 
+<!-- Definicao do BCMSG da mensagem -->
+ 
+<xs:complexType name='BCMSGComplexType'>
+  <xs:sequence>
+    <xs:element name='IdentdEmissor' type='ISPB'/>
+    <xs:element name='IdentdDestinatario' type='ISPB'/>
+    <xs:element name='IdentdContg' type='ISPB' minOccurs='0'/>
+    <xs:element name='IdentdOperad' type='IdentdOperad' minOccurs='0'/>
+    <xs:element name='IdentdOperadConfc' type='IdentdOperad' minOccurs='0'/>
+    <xs:element name='Grupo_Seq' type='Grupo_SeqComplexType' minOccurs='0'/>
+    <xs:element name='DomSist' type='DomSist'/>
+    <xs:element name='NUOp' type='NUOp'/>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name='Grupo_SeqComplexType'>
+  <xs:sequence>
+    <xs:element name='NumSeq' type='NumSeq'/>
+    <xs:element name='IndrCont' type='Indr'/>
+  </xs:sequence>
+</xs:complexType>
+ 
+<!-- Definicao do SISMSG da mensagem -->
+ 
+<xs:complexType name='SISMSGComplexType'>
+  <xs:choice>
+    <xs:element name='STR0008' type='STR0008ComplexType'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfMensagem>
+            <cat:Mensagem>Requisição de Transferência entre contas de clientes</cat:Mensagem>
+            <cat:Emissor>IF-DEBITADA</cat:Emissor>
+            <cat:Destinatario>STR</cat:Destinatario>
+          </cat:InfMensagem>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='STR0008R1' type='STR0008R1ComplexType'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfMensagem>
+            <cat:Mensagem>Resposta ao Requisitante de Transferência entre contas de clientes</cat:Mensagem>
+            <cat:Emissor>STR</cat:Emissor>
+            <cat:Destinatario>IF-DEBITADA</cat:Destinatario>
+          </cat:InfMensagem>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='STR0008R2' type='STR0008R2ComplexType'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfMensagem>
+            <cat:Mensagem>Resposta a Terceiros sobre Transferência entre contas de clientes</cat:Mensagem>
+            <cat:Emissor>STR</cat:Emissor>
+            <cat:Destinatario>IF-CREDITADA</cat:Destinatario>
+          </cat:InfMensagem>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:choice>
+</xs:complexType>
+ 
+<xs:complexType name='STR0008ComplexType'>
+  <xs:sequence>
+    <xs:element name='CodMsg' type='CodMsg' fixed='STR0008'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Mensagem</cat:NomeCampo>
+            <cat:DescricaoCampo>Código da mensagem do sistema associado ao evento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlIF' type='ControleIF'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle IF</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controleda IF</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFDebtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='AgDebtd' type='Agencia' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Agência Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da agência da Instituição Financeira a ser debitada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='TpCtDebtd' type='TpCt'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Tipo Conta Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Identifica o tipo da conta bancária do cliente a ser debitada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:choice>
+    <xs:element name='CtDebtd' type='CtBancaria'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Conta Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da conta bancária de débito.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CtPgtoDebtd' type='CtPgto'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Conta Pagamento Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da conta pagamento debitada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    </xs:choice>
+    <xs:element name='TpPessoaDebtd' type='TpPessoa'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Tipo Pessoa Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Identifica o tipo pessoa titular do débito.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CNPJ_CPFCliDebtd' type='CNPJ_CPF'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>CNPJ ou CPF Cliente Debitado</cat:NomeCampo>
+            <cat:DescricaoCampo>CNPJ ou CPF do Cliente Debitado</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NomCliDebtd' type='Nome'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Nome Cliente Debitado</cat:NomeCampo>
+            <cat:DescricaoCampo>Nome do Cliente debitado.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFCredtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='AgCredtd' type='Agencia' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Agência Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da agência da Instituição Financeira a ser creditada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='TpCtCredtd' type='TpCt'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Tipo Conta Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Identifica o tipo de conta bancária do cliente a ser creditada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:choice>
+    <xs:element name='CtCredtd' type='CtBancaria'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Conta Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da conta bancária de crédito.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CtPgtoCredtd' type='CtPgto'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Conta Pagamento Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da conta pagamento creditada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    </xs:choice>
+    <xs:element name='TpPessoaCredtd' type='TpPessoa'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Tipo Pessoa Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Identifica o tipo pessoa titular do crédito.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CNPJ_CPFCliCredtd' type='CNPJ_CPF'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>CNPJ ou CPF Cliente Creditado</cat:NomeCampo>
+            <cat:DescricaoCampo>CNPJ ou CPF do Cliente Creditado</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NomCliCredtd' type='Nome'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Nome Cliente Creditado</cat:NomeCampo>
+            <cat:DescricaoCampo>Nome do Cliente creditado.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='VlrLanc' type='Valor'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Valor Lançamento</cat:NomeCampo>
+            <cat:DescricaoCampo>Valor de um Lançamento no STR.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='Grupo_STR0008_Split' type='Grupo_STR0008_SplitComplexType' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Grupo Split</cat:NomeCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='FinlddCli' type='FinlddCli'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Finalidade Cliente</cat:NomeCampo>
+            <cat:DescricaoCampo>Código da finalidade para cliente.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CodIdentdTransf' type='CodIdentdTransf' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Identificador Transferência</cat:NomeCampo>
+            <cat:DescricaoCampo>Campo livre para identificação de transferência.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='Hist' type='Historico' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Histórico</cat:NomeCampo>
+            <cat:DescricaoCampo>Campo descritivo</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtAgendt' type='xs:date' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Agendamento</cat:NomeCampo>
+            <cat:DescricaoCampo>Data futura para a qual a mensagem será processada</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='HrAgendt' type='xs:time' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Hora Agendamento</cat:NomeCampo>
+            <cat:DescricaoCampo>Hora para agendamento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NivelPref' type='Pref' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Nível Preferência</cat:NomeCampo>
+            <cat:DescricaoCampo>Nível de preferência atribuido pela IF para processamento de um evento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtMovto' type='xs:date'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Movimento</cat:NomeCampo>
+            <cat:DescricaoCampo>Data de movimento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name='STR0008R1ComplexType'>
+  <xs:sequence>
+    <xs:element name='CodMsg' type='CodMsg' fixed='STR0008R1'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Mensagem</cat:NomeCampo>
+            <cat:DescricaoCampo>Código da mensagem do sistema associado ao evento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlIF' type='ControleIF'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle IF</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controleda IF</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFDebtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlSTR' type='Controle'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle STR</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controle STR</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='SitLancSTR' type='SitLancSTR'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Situação Lançamento STR</cat:NomeCampo>
+            <cat:DescricaoCampo>Situação de um lançamento que foi comandado no STR.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtHrSit' type='xs:dateTime'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Hora Situação</cat:NomeCampo>
+            <cat:DescricaoCampo>Data e hora da situação.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtMovto' type='xs:date'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Movimento</cat:NomeCampo>
+            <cat:DescricaoCampo>Data de movimento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name='STR0008R2ComplexType'>
+  <xs:sequence>
+    <xs:element name='CodMsg' type='CodMsg' fixed='STR0008R2'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Mensagem</cat:NomeCampo>
+            <cat:DescricaoCampo>Código da mensagem do sistema associado ao evento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NumCtrlSTR' type='Controle'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Número Controle STR</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de controle STR</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtHrBC' type='xs:dateTime'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Hora Bacen</cat:NomeCampo>
+            <cat:DescricaoCampo>Data e hora do processamento no Banco Central</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFDebtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira debitada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='AgDebtd' type='Agencia' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Agência Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da agência da Instituição Financeira a ser debitada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='TpCtDebtd' type='TpCt'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Tipo Conta Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Identifica o tipo da conta bancária do cliente a ser debitada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:choice>
+    <xs:element name='CtDebtd' type='CtBancaria'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Conta Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da conta bancária de débito.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CtPgtoDebtd' type='CtPgto'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Conta Pagamento Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da conta pagamento debitada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    </xs:choice>
+    <xs:element name='TpPessoaDebtd' type='TpPessoa'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Tipo Pessoa Debitada</cat:NomeCampo>
+            <cat:DescricaoCampo>Identifica o tipo pessoa titular do débito.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CNPJ_CPFCliDebtd' type='CNPJ_CPF'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>CNPJ ou CPF Cliente Debitado</cat:NomeCampo>
+            <cat:DescricaoCampo>CNPJ ou CPF do Cliente Debitado</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NomCliDebtd' type='Nome'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Nome Cliente Debitado</cat:NomeCampo>
+            <cat:DescricaoCampo>Nome do Cliente debitado.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='ISPBIFCredtd' type='ISPB'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>ISPB IF Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número de identificação da Instituição Financeira creditada no Sistema de  Pagamentos Brasileiro</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='AgCredtd' type='Agencia' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Agência Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da agência da Instituição Financeira a ser creditada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='TpCtCredtd' type='TpCt'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Tipo Conta Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Identifica o tipo de conta bancária do cliente a ser creditada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:choice>
+    <xs:element name='CtCredtd' type='CtBancaria'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Conta Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da conta bancária de crédito.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CtPgtoCredtd' type='CtPgto'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Conta Pagamento Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Número da conta pagamento creditada.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    </xs:choice>
+    <xs:element name='TpPessoaCredtd' type='TpPessoa'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Tipo Pessoa Creditada</cat:NomeCampo>
+            <cat:DescricaoCampo>Identifica o tipo pessoa titular do crédito.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CNPJ_CPFCliCredtd' type='CNPJ_CPF'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>CNPJ ou CPF Cliente Creditado</cat:NomeCampo>
+            <cat:DescricaoCampo>CNPJ ou CPF do Cliente Creditado</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='NomCliCredtd' type='Nome'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Nome Cliente Creditado</cat:NomeCampo>
+            <cat:DescricaoCampo>Nome do Cliente creditado.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='VlrLanc' type='Valor'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Valor Lançamento</cat:NomeCampo>
+            <cat:DescricaoCampo>Valor de um Lançamento no STR.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='Grupo_STR0008R2_Split' type='Grupo_STR0008R2_SplitComplexType' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Grupo Split</cat:NomeCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='FinlddCli' type='FinlddCli'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Finalidade Cliente</cat:NomeCampo>
+            <cat:DescricaoCampo>Código da finalidade para cliente.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CodIdentdTransf' type='CodIdentdTransf' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Identificador Transferência</cat:NomeCampo>
+            <cat:DescricaoCampo>Campo livre para identificação de transferência.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='Hist' type='Historico' minOccurs='0'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Histórico</cat:NomeCampo>
+            <cat:DescricaoCampo>Campo descritivo</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='DtMovto' type='xs:date'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Data Movimento</cat:NomeCampo>
+            <cat:DescricaoCampo>Data de movimento.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name='Grupo_STR0008_SplitComplexType'>
+  <xs:sequence>
+    <xs:element name='VlrCBS' type='VlrNNegtv'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Valor CBS</cat:NomeCampo>
+            <cat:DescricaoCampo>Valor do CBS.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='VlrIBS' type='VlrNNegtv'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Valor IBS</cat:NomeCampo>
+            <cat:DescricaoCampo>Valor do IBS.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CodDocFis' type='CodDocFis'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Documento Fiscal</cat:NomeCampo>
+            <cat:DescricaoCampo>Código do Documento Fiscal (Nota fiscal ou agregador).</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name='Grupo_STR0008R2_SplitComplexType'>
+  <xs:sequence>
+    <xs:element name='VlrCBS' type='VlrNNegtv'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Valor CBS</cat:NomeCampo>
+            <cat:DescricaoCampo>Valor do CBS.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='VlrIBS' type='VlrNNegtv'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Valor IBS</cat:NomeCampo>
+            <cat:DescricaoCampo>Valor do IBS.</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name='CodDocFis' type='CodDocFis'>
+      <xs:annotation>
+        <xs:documentation>
+          <cat:InfCampo>
+            <cat:NomeCampo>Código Documento Fiscal</cat:NomeCampo>
+            <cat:DescricaoCampo>Código do Documento Fiscal (Nota fiscal ou agregador).</cat:DescricaoCampo>
+          </cat:InfCampo>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+ 
+<!-- Definicao do USRMSG da mensagem -->
+ 
+<xs:simpleType name='USERMSGSimpleType'>
+  <xs:restriction base='xs:string'>
+    <xs:maxLength value='1048576'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<!-- Definicao dos tipos simples do evento -->
+ 
+<xs:simpleType name='DomSist'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Domínio de sistema</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='5'/>
+    <xs:maxLength value='5'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='IdentdOperad'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Identificador pessoal do operador.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:maxLength value='32'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Indr'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Indicador "Sim" ou "Não"</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='1'/>
+    <xs:maxLength value='1'/>
+    <xs:pattern value='S|N'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='ISPB'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Identificador do participante junto ao Banco Central para o Sistema de Pagamentos Brasileiro.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='8'/>
+    <xs:maxLength value='8'/>
+    <xs:pattern value='[0-9A-Z]{8}'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='NumSeq'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número sequencial que indica a ordem das mensagens particionadas.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='9'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='NUOp'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número único da operação. Formato: para o Domínio de Sistema SPB02 = XXXXXXXXAAMMDDSSSSSSSSS em que XXXXXXXX - ISPB; AAMMDD - data; SSSSSSSSS - sequencial. Para os demais domínios de sistema = XXXXXXXXAAAAMMDDSSSSSSS em que XXXXXXXX - ISPB ou CNPJ de 8 posições; AAAAMMDD - data; SSSSSSS - sequencial.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='23'/>
+    <xs:maxLength value='23'/>
+    <xs:pattern value='[0-9A-Z]{8}[0-9]{15}'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Agencia'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número da agência da instituição que atua no sistema financeiro, sem dígito verificador.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='4'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='CNPJ_CPF'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número de Identificação da Pessoa Jurídica no Cadastro Nacional de Pessoa Jurídica ou o Número no Cadastro de Pessoa Física. 2 - No caso de transferência para pessoas isentas de CNPJ ou CPF, o campo CNPJ ou CPF deve ser preenchido com zeros.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='11'/>
+    <xs:maxLength value='14'/>
+    <xs:pattern value='[0-9]{11}|[0-9A-Z]{12}[0-9]{2}'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='CodDocFis'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Código do Documento Fiscal (NF-e, NFS-e, Agregador).</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='1'/>
+    <xs:maxLength value='50'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='CodIdentdTransf'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Campo livre para identificação da transferência.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='1'/>
+    <xs:maxLength value='25'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='CodMsg'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Código da mensagem do sistema associado ao evento.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='7'/>
+    <xs:maxLength value='9'/>
+    <xs:pattern value='[A-Z]{3}[0-9]{4}(E|R1|R2|R3)?'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Controle'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Formato = XXXAAAAMMDDnnnnnnnnn;XXX - Sigla Sistema;AAAA - ano;MM - mês, 01 a 12;DD - dia, 01  a 31;nnnnnnnnn - Sequencial.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='20'/>
+    <xs:maxLength value='20'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='ControleIF'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número de Controle da IF</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='1'/>
+    <xs:maxLength value='20'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='CtBancaria'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número da conta Bancária, com dígito verificador. Se o dígito verificador for alfa, deverá ser substituído por "0" (zero).</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='13'/>
+    <xs:minExclusive value='0'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='CtPgto'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Número da conta de pagamento na instituição de pagamento emissora de moeda eletrônica ou de instrumento de pagamento pré-pago.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='20'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='FinlddCli'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Código da finalidade do lançamento. </cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='5'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Historico'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Campo descritivo</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:maxLength value='200'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Nome'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Nome</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='1'/>
+    <xs:maxLength value='80'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Pref'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Nível de Preferência. </cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:maxLength value='1'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='SitLancSTR'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Situação de um lançamento que foi comandado no STR.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:integer'>
+    <xs:totalDigits value='3'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='TpCt'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Indica o tipo da conta do cliente.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='2'/>
+    <xs:maxLength value='2'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='TpPessoa'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Tipo Pessoa Destinatário.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:string'>
+    <xs:minLength value='1'/>
+    <xs:maxLength value='1'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='Valor'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Valor. Até dezessete inteiros e dois decimais e sinalizado. Para valores menores que zero, o valor será precedido pelo sinal "-". Exemplo: para 20 negativo informe -20 . Deve ser informado o ponto separador caso tenha  decimais. Exemplo: para R$100,00 informe 100; para R$100,10 informe 100.1; para R$100,11 informe 100.11; para R$100,11 negativo informe -100.11</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:decimal'>
+    <xs:totalDigits value='19'/>
+    <xs:fractionDigits value='2'/>
+    <xs:minExclusive value='-100000000000000000'/>
+    <xs:maxExclusive value='100000000000000000'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name='VlrNNegtv'>
+  <xs:annotation>
+    <xs:documentation>
+      <cat:InfTipo>
+        <cat:DescricaoTipo>Valor não negativo. Até dezessete inteiros e dois decimais. Deve ser informado o ponto separador caso tenha decimais.</cat:DescricaoTipo>
+      </cat:InfTipo>
+    </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base='xs:decimal'>
+    <xs:totalDigits value='19'/>
+    <xs:fractionDigits value='2'/>
+    <xs:minInclusive value='0'/>
+    <xs:maxExclusive value='100000000000000000'/>
+  </xs:restriction>
+</xs:simpleType>
+ 
+</xs:schema>

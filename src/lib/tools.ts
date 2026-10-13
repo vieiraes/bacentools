@@ -124,6 +124,16 @@ TOOLS.push(
     source: 'XSD do Catálogo de Serviços do SFN 5.13',
   },
   {
+    path: '/spb/xml/',
+    title: 'Montar e validar o XML da TED',
+    short: 'XML da TED',
+    description: 'Monte a STR0008 ou a STR0010 num formulário gerado do XSD oficial, ou cole um XML: o site confere estrutura, tipos, domínios e regras e diz com qual código o STR recusaria.',
+    icon: 'qr',
+    menu: 'Montar e validar XML',
+    secao: 'spb',
+    source: 'XSD e Dicionário de Regras do Catálogo de Serviços do SFN 5.13',
+  },
+  {
     path: '/spb/dominios/',
     title: 'Finalidades e domínios da TED',
     short: 'Domínios',
