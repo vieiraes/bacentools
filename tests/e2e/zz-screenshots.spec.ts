@@ -8,6 +8,18 @@ test('imagens do README', async ({ page }, info) => {
   // imagens com dados reais da BrasilAPI (logos de verdade); o resto da suíte usa a rede simulada
   await page.goto('/');
   await page.screenshot({ path: 'docs/img/inicio.png' });
+  await page.goto('/gerador-pix/');
+  await page.getByTestId('gerador-chave').fill('contato@exemplo.com');
+  await page.getByTestId('gerador-nome').fill('Padaria Exemplo');
+  await page.getByTestId('gerador-cidade').fill('São Paulo');
+  await page.getByTestId('gerador-valor').fill('25,90');
+  await page.getByTestId('gerador-txid').fill('PEDIDO123');
+  await page.getByRole('img', { name: 'QR Code Pix gerado' }).locator('svg').waitFor();
+  await page.screenshot({ path: 'docs/img/gerador.png' });
+  await page.goto('/decodificador-pix/');
+  await page.getByRole('button', { name: 'Exemplo dinâmico do manual' }).click();
+  await page.getByTestId('brcode-veredito').waitFor();
+  await page.screenshot({ path: 'docs/img/decodificador.png', fullPage: true });
   await page.goto('/bancos/');
   await page.getByRole('grid').waitFor();
   await page.getByTestId('search').fill('pagamentos');

@@ -36,6 +36,8 @@ Consultas rápidas e simuladores do dia a dia de quem trabalha com pagamentos in
 <details>
 <summary>📸 Mais telas</summary>
 
+![Gerador de QR Code Pix](docs/img/gerador.png)
+![Decodificador de QR Code Pix](docs/img/decodificador.png)
 ![Cenários e erros do Pix](docs/img/cenarios.png)
 ![Bancos](docs/img/bancos.png)
 ![Simulador do DICT](docs/img/simulador.png)
