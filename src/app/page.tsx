@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -7,9 +8,14 @@ import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { JsonLd } from '@/components/JsonLd';
 import { LeadForm } from '@/components/LeadForm';
 import { ToolIcon } from '@/components/ToolIcon';
 import { SITE, TOOLS, secaoDe, type Tool } from '@/lib/tools';
+import { DESCRICAO_SITE, jsonLdSite, metaPagina } from '@/lib/seo';
+
+const TITULO = `${SITE.name} · ${SITE.tagline}`;
+export const metadata: Metadata = { ...metaPagina({ path: '/', title: TITULO, description: DESCRICAO_SITE }), title: { absolute: TITULO } };
 
 const PIX = TOOLS.filter((t) => secaoDe(t) === 'pix');
 const SPB = TOOLS.filter((t) => secaoDe(t) === 'spb');
@@ -40,6 +46,7 @@ function Cartoes({ tools, label }: { tools: Tool[]; label: string }) {
 export default function Home() {
   return (
     <>
+      <JsonLd data={jsonLdSite()} />
       <Box component="section" sx={{ mb: 4 }}>
         <Typography variant="h1">{SITE.name}</Typography>
         <Typography variant="h2" component="p" color="text.secondary" sx={{ mt: 1, fontWeight: 500 }}>{SITE.tagline}</Typography>

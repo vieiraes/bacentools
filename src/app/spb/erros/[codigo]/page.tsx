@@ -12,6 +12,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { ERROS_SPB, FONTES_SPB, erroSpbPorCodigo } from '@/lib/spb/catalogo';
 import { PREFIXO_ERRO, RETORNO_COM_ERRO } from '@/lib/spb/textos';
 import { SITE } from '@/lib/tools';
+import { metaPagina } from '@/lib/seo';
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -25,12 +26,12 @@ const dataBr = (iso?: string) => (iso ? iso.split('-').reverse().join('/') : '')
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const e = erroSpbPorCodigo((await params).codigo);
   if (!e) return {};
-  return {
+  return metaPagina({
+    path: `/spb/erros/${e.codigo.toLowerCase()}/`,
     title: titulo(e.codigo, e.descricao).slice(0, 90),
     description: `${e.codigo} (${PREFIXO_ERRO[e.codigo.slice(0, 4)]}): ${e.descricao}. Código de erro oficial do Catálogo de Serviços do SFN e como ele volta na mensagem.`.slice(0, 160),
-    alternates: { canonical: `/spb/erros/${e.codigo.toLowerCase()}/` },
-    openGraph: { title: titulo(e.codigo, e.descricao), url: `${SITE.url}/spb/erros/${e.codigo.toLowerCase()}/` },
-  };
+    ogTitle: titulo(e.codigo, e.descricao),
+  });
 }
 
 export default async function Page({ params }: Props) {

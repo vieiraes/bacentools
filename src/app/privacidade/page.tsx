@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { BotaoPreferenciasCookies } from '@/components/Analytics';
 import { RECAPTCHA_SITE_KEY } from '@/lib/protecao';
+import { metaPagina } from '@/lib/seo';
 
-export const metadata: Metadata = { title: 'Privacidade e cookies', description: 'Quais dados o BacenTools coleta, para quê e como recusar.' };
+export const metadata: Metadata = metaPagina({ path: '/privacidade/', title: 'Privacidade e cookies', description: 'Quais dados o BacenTools coleta, para quê e como recusar.' });
 
 export default function Page() {
   return (
@@ -17,8 +19,17 @@ export default function Page() {
         dentro das ferramentas, como buscas e cenários abertos, sempre sem dados pessoais.
       </Typography>
       <Typography sx={{ mb: 2 }}>
-        Até você aceitar, o Google Analytics funciona no <strong>modo de consentimento negado</strong>: não grava cookies nem identificadores
-        no seu navegador. Não usamos publicidade nem vendemos dados.
+        O Google Analytics <strong>só é carregado depois que você clica em Aceitar</strong> no aviso de cookies. Antes disso, ou se você
+        recusar, nada do Google é carregado e nenhuma visita é contada. O painel de administração do site nunca é medido.
+      </Typography>
+      <Typography sx={{ mb: 2 }}>
+        Com o aceite, o Google Analytics grava os cookies <code>_ga</code> e <code>_ga_&lt;id&gt;</code>, que duram 13 meses, e o Google
+        guarda os dados das visitas por 14 meses. Só o endereço da página é enviado, nunca o que você digita ou cola nas ferramentas
+        (um código Pix aberto pelo decodificador, por exemplo). O Google Signals e os recursos de publicidade ficam desligados. Não usamos
+        anúncios nem vendemos dados.
+      </Typography>
+      <Typography sx={{ mb: 2 }}>
+        Sua escolha fica guardada no próprio navegador (<code>bt-aviso-cookies</code>), sem cookie e sem envio para lugar nenhum.
       </Typography>
       <Typography component="h2" variant="h2" sx={{ mt: 3, mb: 1 }}>Dados que você nos envia</Typography>
       <Typography sx={{ mb: 2 }}>
@@ -39,7 +50,9 @@ export default function Page() {
       </>}
       <Typography component="h2" variant="h2" sx={{ mt: 3, mb: 1 }}>Mudar sua escolha</Typography>
       <Typography sx={{ mb: 2 }}>
-        Para rever o aviso de cookies, apague os dados deste site no navegador; o aviso aparece de novo na próxima visita.
+        Você pode mudar a qualquer momento: <BotaoPreferenciasCookies>abrir as preferências de cookies</BotaoPreferenciasCookies>. Também
+        fica no rodapé de todas as páginas. Se recusar depois de ter aceitado, a contagem para na hora e os cookies do Google Analytics
+        são apagados.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>Base legal: consentimento (LGPD, art. 7º, I) para o Analytics e para o contato.</Typography>
     </Paper>

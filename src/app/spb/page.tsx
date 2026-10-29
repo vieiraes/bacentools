@@ -14,16 +14,13 @@ import { ToolIcon } from '@/components/ToolIcon';
 import { HorarioTed } from '@/features/spb/HorarioTed';
 import { EVENTOS, FONTES_SPB } from '@/lib/spb/catalogo';
 import { TOOLS, secaoDe } from '@/lib/tools';
+import { metaFerramenta } from '@/lib/seo';
 
 const tool = TOOLS.find((t) => t.path === '/spb/')!;
 const outras = TOOLS.filter((t) => secaoDe(t) === 'spb' && t.path !== '/spb/');
 const dataBr = (iso: string) => iso.split('-').reverse().join('/');
 
-export const metadata: Metadata = {
-  title: 'SPB e TED: horário da TED, mensagens STR0008 e PAG0108',
-  description: tool.description,
-  alternates: { canonical: tool.path },
-};
+export const metadata: Metadata = metaFerramenta(tool, 'SPB e TED: horário da TED, mensagens STR0008 e PAG0108');
 
 export default function Page() {
   const ted = EVENTOS.filter((e) => e.papel === 'ted');

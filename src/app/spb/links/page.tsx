@@ -7,13 +7,10 @@ import { ResumoStatus } from '@/components/links/StatusLinks';
 import { GRUPOS_SPB } from '@/lib/links-spb';
 import { LINKS_CONFERIDOS_EM } from '@/lib/links';
 import { TOOLS } from '@/lib/tools';
+import { metaFerramenta } from '@/lib/seo';
 
 const tool = TOOLS.find((t) => t.path === '/spb/links/')!;
-export const metadata: Metadata = {
-  title: 'Links oficiais do SPB e da TED: catálogo SFN, XSD, domínios, erros e grade do STR',
-  description: tool.description,
-  alternates: { canonical: tool.path },
-};
+export const metadata: Metadata = metaFerramenta(tool, 'Links oficiais do SPB e da TED: catálogo SFN, XSD, domínios, erros e grade do STR');
 
 export default function Page() {
   return (

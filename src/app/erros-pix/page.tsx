@@ -7,12 +7,13 @@ import Typography from '@mui/material/Typography';
 import { ERROS, ORIGEM_LABEL, TIPO_LABEL, resumo, slugDe, type Tipo } from '@/lib/pix-erros/catalogo';
 import { JsonLd } from '@/components/JsonLd';
 import { SITE } from '@/lib/tools';
+import { metaPagina } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = metaPagina({
+  path: '/erros-pix/',
   title: 'Códigos de erro do Pix: lista completa com significado (pacs.002, pacs.004 e DICT)',
   description: `Todos os ${ERROS.length} códigos de rejeição, devolução e erro do DICT do Pix, com o significado oficial do Banco Central, quem gera e o que mostrar ao usuário.`,
-  alternates: { canonical: '/erros-pix/' },
-};
+});
 
 const GRUPOS: Tipo[] = ['rejeicao', 'devolucao', 'dict'];
 

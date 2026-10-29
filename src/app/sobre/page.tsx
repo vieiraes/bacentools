@@ -9,12 +9,13 @@ import { ContactLinks } from '@/components/ContactLinks';
 import { JsonLd } from '@/components/JsonLd';
 import { LeadForm } from '@/components/LeadForm';
 import { CRIADOR, SITE } from '@/lib/tools';
+import { metaPagina } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = metaPagina({
+  path: '/sobre/',
   title: 'Sobre e contato',
   description: `Quem criou o ${SITE.name}: ${CRIADOR.nome}, ${CRIADOR.papel}. Consultoria de QA para Pix, homologação no BCB e automação de testes.`,
-  alternates: { canonical: '/sobre/' },
-};
+});
 
 const SERVICOS = [
   { titulo: 'Testes de Pix de ponta a ponta', texto: 'Cenários de SPI e DICT (pacs.008, pacs.002, devoluções, limites de consulta), com os códigos de erro do Catálogo de Mensagens do BCB.' },

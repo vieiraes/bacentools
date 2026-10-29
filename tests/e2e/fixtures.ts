@@ -34,8 +34,8 @@ export const test = base.extend<{ consoleErrors: string[] }>({
     await page.route('https://content-firebaseappcheck.googleapis.com/**', (r) => r.fulfill({ json: { token: 'appcheck-teste', ttl: '3600s' } }));
     // status da verificação semanal de links (vem do GitHub)
     await page.route('https://raw.githubusercontent.com/**', (r) => r.fulfill({ json: { revisadoEm: '2026-10-11', verificadoEm: '2026-10-12T10:03:00Z', total: 29, quebrados: [] } }));
-    // o banner de cookies já vem respondido, exceto no teste do próprio banner (tag @consentimento)
-    if (!info.title.includes('@consentimento')) await page.addInitScript(() => localStorage.setItem('bt_consent_v1', 'denied'));
+    // o banner de cookies já vem aceito (os testes conferem os eventos no dataLayer), exceto nos testes do próprio banner (tag @consentimento)
+    if (!info.title.includes('@consentimento')) await page.addInitScript(() => localStorage.setItem('bt-aviso-cookies', '2:aceito'));
     const goto = page.goto.bind(page);
     page.goto = async (url, opts) => {
       const res = await goto(url, opts);

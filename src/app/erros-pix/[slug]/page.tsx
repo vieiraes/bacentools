@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import { ERROS, ORIGEM_LABEL, TIPO_LABEL, erroPorSlug, resumo, slugDe } from '@/lib/pix-erros/catalogo';
 import { JsonLd } from '@/components/JsonLd';
 import { SITE } from '@/lib/tools';
+import { metaPagina } from '@/lib/seo';
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -27,12 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const e = erroPorSlug((await params).slug);
   if (!e) return {};
   const r = resumo(e);
-  return {
+  return metaPagina({
+    path: `/erros-pix/${slugDe(e)}/`,
     title: tituloDe(e.codigo, r).slice(0, 90),
     description: `${e.codigo} (${e.mensagemCurta}): ${r}. Quem gera: ${ORIGEM_LABEL[e.origem]}. Significado oficial do Banco Central e o que fazer.`.slice(0, 160),
-    alternates: { canonical: `/erros-pix/${slugDe(e)}/` },
-    openGraph: { title: tituloDe(e.codigo, r), url: `${SITE.url}/erros-pix/${slugDe(e)}/` },
-  };
+    ogTitle: tituloDe(e.codigo, r),
+  });
 }
 
 export default async function Page({ params }: Props) {

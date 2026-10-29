@@ -22,6 +22,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import HandymanIcon from '@mui/icons-material/Handyman';
+import { BotaoPreferenciasCookies } from '@/components/Analytics';
 import { ToolIcon } from '@/components/ToolIcon';
 import { CRIADOR, SITE, TOOLS, secaoDe, type Tool } from '@/lib/tools';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
@@ -145,7 +146,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Typography variant="body2" color="text.secondary" align="center">
             {SITE.name}: ferramentas gratuitas, sem cadastro. Dados públicos do Banco Central (direto ou pela BrasilAPI). Não é um
             serviço oficial do BCB. <a href={SITE.repo}>Código aberto no GitHub</a>. Criado por{' '}
-            <Link href="/sobre/">{CRIADOR.nome}</Link>, {CRIADOR.papel}. <Link href="/privacidade/">Privacidade</Link>.
+            <Link href="/sobre/">{CRIADOR.nome}</Link>, {CRIADOR.papel}. <Link href="/privacidade/">Privacidade</Link> · <BotaoPreferenciasCookies />.
           </Typography>
         </Container>
       </Box>

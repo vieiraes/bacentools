@@ -2,10 +2,26 @@
 
 Tudo é do Google e gratuito: **Google Analytics 4** (propriedade ligada ao projeto Firebase `bacentools`, ID `G-69FZL5N4D5`), **Looker Studio** para o painel e **Search Console** para o SEO. Nada fica público: os três exigem login na conta Google do administrador.
 
+## Regras (LGPD)
+
+Implementado em 27/10/2026, no mesmo modelo do RTQuímico:
+
+| Regra | Onde |
+|---|---|
+| **Nada do Google carrega antes do Aceitar** no aviso de cookies. Sem aceite, não há `gtag`, `dataLayer` nem pedido ao `googletagmanager.com`. | `registrarVisita()` em `src/lib/analytics.ts` |
+| O painel `/admin/` nunca é medido (abrir direto nele nem carrega o GA; ir para ele trava a medição até sair). | `paginaMedida()` |
+| Vai só o caminho da página e os parâmetros de campanha `utm_*` (de onde veio a visita); o resto da `?` e o `#` não vão. O decodificador recebe o código Pix inteiro em `?codigo=`, e ele não sai do navegador. | `gtag('set', { page_location })` |
+| Sem Google Signals, sem sinais de anúncio, cookie `_ga` de 13 meses. | `carregar()` |
+| Recusar depois de ter aceitado para a medição na hora e apaga os cookies `_ga`. | `desligarAnalytics()` |
+| Aviso com **Recusar** e **Aceitar**, versão `2` na chave `bt-aviso-cookies` do navegador. Quem respondeu o aviso antigo (`bt_consent_v1`) é perguntado de novo. Reabre por **Preferências de cookies** no rodapé e na página de privacidade. | `src/components/Analytics.tsx` |
+
+**ID do GA:** `NEXT_PUBLIC_GA_ID` no `.env.production` (versionado, o ID é público), lido só pelo build de produção (`npm run build`, CI e E2E). No `npm run dev` fica vazio e nada é carregado, para visita de teste não entrar no relatório. Nos E2E, a rede do Google é simulada e os eventos são conferidos no `window.dataLayer`.
+
 ## O que é coletado
 
+**Pelo próprio site:** `page_view` a cada troca de página, com o caminho e o título.
+
 **Automático, pela "medição otimizada" do GA4:**
-- páginas vistas, inclusive navegação dentro do site;
 - tempo de engajamento;
 - rolagem;
 - cliques em links externos;
@@ -26,29 +42,41 @@ Tudo é do Google e gratuito: **Google Analytics 4** (propriedade ligada ao proj
 | `decode` | Colou algo no decodificador de QR Code Pix, de EndToEndId/UUID ou no validador de XML da TED (`area` = xml-spb) (só quando para de digitar; o código colado não é enviado) | `area` (brcode, identificador), `item_id` (tipo), `result` |
 | `file_download` | Abriu o PDF de um informe do BCB | `file_name`, `link_url`, `area` |
 | `source_fallback` | A BrasilAPI caiu e o site usou a cópia diária | `source` |
-| `consent_choice` | Aceitou ou recusou o aviso de cookies | `choice` |
+| `consent_choice` | Aceitou o aviso de cookies (quem recusa não é medido, então a recusa não aparece) | `choice` (`granted`) |
 | `generate_lead` | Deixou contato (newsletter ou contratação) | `lead_type`, `perfil` |
 | `contact_click` | Clicou no e-mail, LinkedIn ou site do criador | `channel` |
 
-**LGPD:** o Consent Mode v2 começa **negado**. Antes do aceite, o GA4 recebe só sinais sem cookies (`gcs=G100`), que o Google usa na modelagem. Depois do aceite, a medição é completa (`gcs=G101`). Anúncios ficam sempre negados.
+**Números a partir de 27/10/2026:** antes, o GA recebia sinais sem cookie de quem não aceitava e o Google estimava essas visitas. Agora só conta quem aceita, então usuários e sessões caem nos relatórios. Não é queda de audiência.
 
 ## Passo a passo no GA4 (uma vez, uns 10 minutos)
 
-Entre em **analytics.google.com** › propriedade **bacentools**:
+Entre em **analytics.google.com** › propriedade **bacentools** › **Administrador** (engrenagem):
 
-1. **Admin › Fluxos de dados › bacentools › Medição otimizada:** confira se tudo está ligado, principalmente "Mudanças de página com base no histórico do navegador".
-2. **Admin › Definições personalizadas › Criar dimensão personalizada.** Escopo: evento. Uma para cada:
+1. **Fluxos de dados › bacentools › Medição otimizada › engrenagem:** **desligue** "Mudanças de página com base no histórico do navegador". O site manda a visita sozinho; ligado, conta em dobro e leva a query da URL. Deixe o resto ligado (rolagem, cliques de saída, downloads).
+2. **Coleta e modificação de dados › Coleta de dados:** deixe **Google Signals** desligado.
+3. **Definições personalizadas › Criar dimensão personalizada.** Escopo: evento. Uma para cada:
    - `search_term`, `area`, `content_type`, `item_id`, `action`, `key_type`, `lead_type`, `perfil`, `channel` e `result`.
    - Sem isso, os parâmetros não aparecem nos relatórios. Só vale daqui para frente.
-3. **Admin › Eventos-chave:** marque `generate_lead` e `contact_click`. Eles são as "conversões".
-4. **Admin › Retenção de dados:** 14 meses.
-5. **Admin › Links de produto › Search Console:** ligue o Search Console (passo seguinte) para ver por quais buscas do Google as pessoas chegam.
+4. **Eventos-chave:** marque `generate_lead` e `contact_click`. Eles são as "conversões".
+5. **Coleta e modificação de dados › Retenção de dados:** "Retenção de dados de eventos" em **14 meses** › Salvar (a página de privacidade promete 14 meses).
+6. **Links de produto › Search Console:** ligue o Search Console (passo seguinte) para ver por quais buscas do Google as pessoas chegam.
 
 ## Search Console (SEO)
 
 1. Acesse **search.google.com/search-console**. A propriedade `https://bacentools.web.app` já está verificada pela meta tag do site.
-2. Em **Sitemaps**, envie `https://bacentools.web.app/sitemap.xml`, com 83 endereços, sendo 75 de códigos de erro.
-3. Em 2 a 4 semanas, o relatório **Desempenho** mostra as buscas que trazem gente (ex.: "AC06 pix"), as impressões e a posição.
+2. Em **Sitemaps**, envie `https://bacentools.web.app/sitemap.xml`, com 420 endereços: 75 códigos de erro do Pix e 325 do SPB. Se já estava enviado, clique nele e em **Reenviar**.
+3. Opcional: em **Inspeção de URL**, cole `https://bacentools.web.app/` › **Solicitar indexação**, para o Google ler o cabeçalho novo.
+4. Em 2 a 4 semanas, o relatório **Desempenho** mostra as buscas que trazem gente (ex.: "AC06 pix"), as impressões e a posição.
+
+## O que cada página leva para o Google
+
+| Parte | Onde |
+|---|---|
+| Título, descrição, canonical, Open Graph e cartão `summary_large_image` | `metaPagina()` e `metaFerramenta()` em `src/lib/seo.ts`. Toda página nova usa um dos dois: no Next, o `openGraph` da página substitui o do layout, e sem eles a página herda o `og:url` da inicial e fica sem imagem. |
+| Imagem de prévia (WhatsApp, LinkedIn) | `public/og-bacentools.png`, 1200×630 |
+| Dados estruturados | `WebSite` na inicial, `WebApplication` grátis em cada ferramenta (pelo `PageHeader`), `FAQPage`/`DefinedTerm` nas páginas de erro |
+| Ícones e manifest | `src/app/favicon.ico`, `icon.png`, `apple-icon.png`, `src/app/manifest.ts` (sem service worker) |
+| Fora do Google | `/admin/` com `noindex`, bloqueado no `robots.txt` e fora do sitemap |
 
 ## Painel no Looker Studio (grátis)
 

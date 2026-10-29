@@ -4,15 +4,12 @@ import Typography from '@mui/material/Typography';
 import { PageHeader } from '@/components/PageHeader';
 import { GRUPOS, LINKS_CONFERIDOS_EM } from '@/lib/links';
 import { TOOLS } from '@/lib/tools';
+import { metaFerramenta } from '@/lib/seo';
 import { ListaLinks } from '@/components/links/ListaLinks';
 import { ResumoStatus } from '@/components/links/StatusLinks';
 
 const tool = TOOLS.find((t) => t.path === '/links-pix/')!;
-export const metadata: Metadata = {
-  title: 'Links oficiais do Pix: regulamento, manuais, API e normas do BCB',
-  description: tool.description,
-  alternates: { canonical: tool.path },
-};
+export const metadata: Metadata = metaFerramenta(tool, 'Links oficiais do Pix: regulamento, manuais, API e normas do BCB');
 
 export default function Page() {
   return (

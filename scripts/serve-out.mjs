@@ -5,7 +5,7 @@ import { extname, join, normalize } from 'node:path';
 
 const ROOT = new URL('../out/', import.meta.url).pathname;
 const PORT = Number(process.env.PORT ?? 4180);
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.txt': 'text/plain', '.xml': 'application/xml' };
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.txt': 'text/plain', '.xml': 'application/xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const REDIRECTS = [[/^\/banks(\/.*)?$/, '/bancos/'], [/^\/pix-participants(\/.*)?$/, '/participantes-pix/']];
 
 createServer(async (req, res) => {
