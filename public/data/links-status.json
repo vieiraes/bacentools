@@ -1,6 +1,12 @@
 {
   "revisadoEm": "2026-10-13",
-  "verificadoEm": "2026-11-02T20:05:04.180Z",
+  "verificadoEm": "2026-11-09T20:32:36.269Z",
   "total": 52,
-  "quebrados": []
+  "quebrados": [
+    {
+      "titulo": "Manual de Segurança do SFN, Volume I",
+      "url": "https://www.bcb.gov.br/content/estabilidadefinanceira/cedsfn/Manual%20de%20Seguran%C3%A7a%20do%20SFN%20-%20Vol.I%20-%20v6_00.pdf",
+      "motivo": "HTTP 404"
+    }
+  ]
 }
